@@ -1,0 +1,11 @@
+export PROJ_DIR=`pwd`
+export DESIGN_DIR="$PROJ_DIR/design"
+export VERIF_DIR="$PROJ_DIR/verif"
+alias design="cd $DESIGN_DIR"
+alias verif="cd $VERIF_DIR"
+alias iveri="iverilog -o compiled -c"
+alias irun="vvp -l isim.log compiled"
+alias wave="gtkwave"
+alias xcompile="xrun -clean -access +rwc +xm64bit +xmstatus +xmtimescale+1ns/1ps +xmoveride_timescale -l xmsim.log -f"
+alias xwaves="simvision -64"
+alias dc_shell="dc_shell -output_log_file dc.log"
