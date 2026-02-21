@@ -1,1 +1,0 @@
-../../../design/common_ip/sync.v

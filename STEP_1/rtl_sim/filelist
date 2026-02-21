@@ -1,2 +1,0 @@
-+define+STEP1
--f $(VERIF_DIR)/filelist
