@@ -1,0 +1,16 @@
+$(DESIGN_DIR)/common_ip/fifo_mux_2_1.v
+$(DESIGN_DIR)/common_ip/fifo_mux_8_1.v
+$(DESIGN_DIR)/common_ip/fifo_mux_16_1.v
+$(DESIGN_DIR)/common_ip/fifo_depth16.v
+$(DESIGN_DIR)/common_ip/ofifo_depth16.v
+$(DESIGN_DIR)/common_ip/sync.v
+$(DESIGN_DIR)/common_ip/buffer.v
+$(DESIGN_DIR)/MAC/mac_16in.v
+$(DESIGN_DIR)/MAC/mac_col.v
+$(DESIGN_DIR)/MAC/mac_array.v
+$(DESIGN_DIR)/OFIFO/ofifo.v
+$(DESIGN_DIR)/memories/sram_w8.v
+$(DESIGN_DIR)/memories/sram_w16.v
+$(DESIGN_DIR)/SFP/sfp_row.v
+$(DESIGN_DIR)/core.v
+$(DESIGN_DIR)/fullchip.v

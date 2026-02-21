@@ -1,0 +1,1 @@
+../../../design/memories/sram_w8.v

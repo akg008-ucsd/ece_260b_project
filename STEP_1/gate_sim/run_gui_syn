@@ -1,0 +1,16 @@
+xrun \
++gui \
+-clean \
+-l xmsim.log \
++access+rwc \
++xm64bit \
++xmstatus \
++xmtimescale+1ns/1ps \
++xmoveride_timescale \
+-v ./netlist/core.out.v \
+-v $DESIGN_DIR/common_ip/buffer.v \
+-v $DESIGN_DIR/fullchip.v \
+-v /home/linux/ieng6/ee260bwi25/public/PDKdata/verilog/tcbn65gplus.v \
+$VERIF_DIR/fullchip_tb.v \
++xmseq_udp_delay+20ps \
++define+STEP1+GLS \
