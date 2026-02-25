@@ -1,0 +1,60 @@
+[*]
+[*] GTKWave Analyzer v3.3.118 (w)1999-2023 BSI
+[*] Wed Feb 25 22:32:12 2026
+[*]
+[dumpfile] "/home/linux/ieng6/students/360/akg008/Downloads/k-furthest-neighbors-260b-main/ece_260b_project/verif/fullchip_tb.vcd"
+[dumpfile_mtime] "Wed Feb 25 22:18:38 2026"
+[dumpfile_size] 283507
+[savefile] "/home/linux/ieng6/students/360/akg008/Downloads/k-furthest-neighbors-260b-main/ece_260b_project/verif/save_control.gtkw"
+[timestart] 1590
+[size] 1920 977
+[pos] -1 -1
+*-13.399712 44500 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] fullchip_tb.
+[treeopen] fullchip_tb.fullchip_instance.
+[treeopen] fullchip_tb.fullchip_instance.core_instance0.
+[treeopen] fullchip_tb.fullchip_instance.core_instance0.mac_array_instance.
+[sst_width] 229
+[signals_width] 266
+[sst_expanded] 1
+[sst_vpaned_height] 148
+@28
+fullchip_tb.clk
+fullchip_tb.kmem_wr_q
+@22
+fullchip_tb.core0_mem_in[63:0]
+fullchip_tb.inst[19:0]
+@28
+fullchip_tb.qmem_wr
+@22
+fullchip_tb.qkmem_add[3:0]
+@28
+fullchip_tb.qmem_wr_q
+@22
+fullchip_tb.out[159:0]
+fullchip_tb.qkmem_add_q[3:0]
+@28
+fullchip_tb.kmem_wr_q
+fullchip_tb.kmem_rd_q
+@22
+fullchip_tb.fullchip_instance.core_instance0.kqmem_addr[3:0]
+@29
+fullchip_tb.fullchip_instance.core_instance0.kmem_wr
+@22
+fullchip_tb.fullchip_instance.core_instance0.kmem_out[63:0]
+fullchip_tb.fullchip_instance.core_instance0.qmem_out[63:0]
+@28
+fullchip_tb.load
+fullchip_tb.load_q
+fullchip_tb.qmem_rd
+fullchip_tb.qmem_rd_q
+fullchip_tb.ofifo_rd
+fullchip_tb.ofifo_rd_q
+fullchip_tb.pmem_wr
+fullchip_tb.pmem_wr_q
+@22
+fullchip_tb.fullchip_instance.core_instance0.mac_array_instance.in[63:0]
+@28
+fullchip_tb.fullchip_instance.core_instance0.mac_array_instance.inst[1:0]
+[pattern_trace] 1
+[pattern_trace] 0

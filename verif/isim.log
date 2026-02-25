@@ -1,0 +1,22 @@
+VCD info: dumpfile fullchip_tb.vcd opened for output.
+##### Reading qdata.txt #####
+##### Reading vdata.txt #####
+##### Reading kdata.txt #####
+##### Reading norm.txt #####
+##### QMEM Writing  #####
+##### Vdata Writing  #####
+##### KMEM Writing #####
+##### Keys loading to processor #####
+##### Execute (Query) #####
+##### Moving OFIFO data to PMEM #####
+##### Moving PMEM data to SFP for Accumulation #####
+##### Verifying K*Q values #####
+
+K*Q matched for cycle 0: 0005dfffecffff90005efffd0fffd3fffc1fffaa
+K*Q matched for cycle 1: 00034fffebfffb700018ffffbfffdffffd7fffe9
+K*Q matched for cycle 2: 000260001b000320003ffffe400015ffffdfffc9
+K*Q matched for cycle 3: 00021fffb6000110007dfffdbfffeffffe5fffcd
+K*Q matched for cycle 4: 00050ffff6ffff60000dfff76fffdbfffa6fffc8
+K*Q matched for cycle 5: 0002a000010001a000440000700007ffff8fffd3
+K*Q matched for cycle 6: fffed0003000063ffff9fffff000170002efffec
+K*Q matched for cycle 7: fffc10002900080fffd2fffff0004e0004a00025

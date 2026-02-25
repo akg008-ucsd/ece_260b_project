@@ -114,6 +114,9 @@ end
 initial begin
     seed = `SEED;
 
+    $dumpfile("fullchip_tb.vcd");
+    $dumpvars(0,fullchip_tb);
+
     $display("##### Reading qdata.txt #####");
     qk_file = $fopen("./test_data/qdata.txt", "r");
 
@@ -207,11 +210,11 @@ initial begin
 
     //------------------- QMEM Writing -----------------------------
     $display("##### QMEM Writing  #####");
-    for (q=0; q<10; q=q+1) #1;
-
+    for (q=0; q<10; q=q+1) begin
+	#1;
+    end
     reset = 0;
     #2;
-
     for (q=0; q<total_cycle; q=q+1) begin
         qmem_wr = 1; 
         if (q>0) qkmem_add = qkmem_add + 1; 
@@ -225,11 +228,152 @@ initial begin
         core0_mem_in[7*bw-1:6*bw] = Q[q][6];
         core0_mem_in[8*bw-1:7*bw] = Q[q][7];
     end
+    qkmem_add 	= qkmem_add + 1;
 
-    qkmem_add = 0;
-    qmem_wr = 0;
-    #10
-    $finish;
+
+    $display("##### Vdata Writing  #####");
+    for (q=0; q<total_cycle; q=q+1) begin
+	qmem_wr = 1;  
+	if (q>0) 
+		qkmem_add = qkmem_add + 1; 
+	#1;
+	core0_mem_in[1*bw-1:0*bw] = V[q][0];
+	core0_mem_in[2*bw-1:1*bw] = V[q][1];
+	core0_mem_in[3*bw-1:2*bw] = V[q][2];
+	core0_mem_in[4*bw-1:3*bw] = V[q][3];
+	core0_mem_in[5*bw-1:4*bw] = V[q][4];
+	core0_mem_in[6*bw-1:5*bw] = V[q][5];
+	core0_mem_in[7*bw-1:6*bw] = V[q][6];
+	core0_mem_in[8*bw-1:7*bw] = V[q][7];
+    end
+
+    qmem_wr 	= 0; 
+    qkmem_add 	= 0;
+    #1;
+
+    $display("##### KMEM Writing #####");
+    for (q=0; q<col; q=q+1) begin
+	kmem_wr = 1; 
+	if (q>0) 
+		qkmem_add = qkmem_add + 1; 
+	#1;  
+	core0_mem_in[1*bw-1:0*bw] = K[q][0];
+	core0_mem_in[2*bw-1:1*bw] = K[q][1];
+	core0_mem_in[3*bw-1:2*bw] = K[q][2];
+	core0_mem_in[4*bw-1:3*bw] = K[q][3];
+	core0_mem_in[5*bw-1:4*bw] = K[q][4];
+	core0_mem_in[6*bw-1:5*bw] = K[q][5];
+	core0_mem_in[7*bw-1:6*bw] = K[q][6];
+	core0_mem_in[8*bw-1:7*bw] = K[q][7];
+
+    end
+    qkmem_add 	= qkmem_add + 1;
+    #1;
+    kmem_wr     = 0;
+    qkmem_add   = 0;
+    #6; 
+
+
+//----------------------  KEYS LOADING ----------------------
+$display("##### Keys loading to processor #####");
+
+kmem_rd = 1;
+load = 1; 
+for (q=0; q<8; q=q+1) begin
+	if(q>0)
+		qkmem_add = qkmem_add + 1;
+	#1;
+end
+
+kmem_rd 	= 0; 
+qkmem_add 	= 0;
+load 		= 0; 
+#1;
+
+
+// -------------- Execution (Query Loading) ------------------
+$display("##### Execute (Query) #####");
+
+qmem_rd = 1;
+execute = 1; 
+for (q=0; q<total_cycle; q=q+1) begin
+	if(q>0)
+		qkmem_add = qkmem_add + 1;
+	#1;
+end
+
+qmem_rd 	= 0; 
+qkmem_add 	= 0;
+load		= 1;
+#1;
+load 		= 0;
+execute 	= 0;
+#1;
+
+//----------------- OFIFO Read and Write to PMEM ---------------------
+
+$display("##### Moving OFIFO data to PMEM #####");
+#1;
+ofifo_rd = 1; 
+#1;
+pmem_wr = 1; 
+for (q=0; q<total_cycle; q=q+1) begin
+	if (q>0)
+		pmem_add = pmem_add + 1;
+	#1;
+end
+
+ofifo_rd 	= 0;
+#1;
+pmem_wr 	= 0; 
+pmem_add 	= 0; 
+#1;
+
+//--------------- PMEM to SFP for Accumulation ------------------------
+
+$display("##### Moving PMEM data to SFP for Accumulation #####");
+$display("##### Verifying K*Q values #####\n");
+
+fork
+	begin
+		pmem_rd = 1; 
+		#1;
+		sfp_acc = 1;
+		for (t=0; t<total_cycle; t=t+1) begin
+			if (t>0) begin
+				pmem_add = pmem_add + 1;
+			end
+			#1;
+		end
+		
+		pmem_rd 	= 0; 
+		pmem_add	= 0; 
+		sfp_acc 	= 0;
+		#1;
+	end
+	begin
+		#3;
+		for (n=0; n<total_cycle; n=n+1) begin
+				for (q=0; q<col; q=q+1) begin
+					temp5b = result[n][q];
+						temp16b = {temp16b[139:0], temp5b};
+				end
+			if (temp16b == out) begin
+					$display("K*Q matched for cycle%2d: %40h", n, temp16b);
+			end
+			else begin
+				$display("ERROR incorrect K*Q for cycle%2d", n);
+					$display("Expected: %40h", temp16b);
+					$display("Observed: %40h", out);
+			end
+			#1;
+		end
+	end
+join
+
+$finish;
+
+
 end
 
 always @(posedge clk) begin
