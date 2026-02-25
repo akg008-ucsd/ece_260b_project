@@ -1,12 +1,7 @@
+// Simplified core module (no EXPER, no CU_EN)
 // Created by prof. Mingu Kang @VVIP Lab, UCSD ECE
 
-module core #(
-parameter col = 8,
-parameter bw = 8,
-parameter bw_psum = 2*bw+4,
-parameter bw_psum_sum = bw_psum+4,
-parameter pr = 8)
-(
+module core (
     input clk,
     input reset,
     input [pr*bw-1:0] mem_in,
@@ -18,11 +13,11 @@ parameter pr = 8)
     output [bw_psum*col-1:0] out
 );
 
-//parameter col = 8;
-//parameter bw = 8;
-//parameter bw_psum = 2*bw+4;
-//parameter bw_psum_sum = bw_psum+4;
-//parameter pr = 8;
+parameter col = 8;
+parameter bw = 8;
+parameter bw_psum = 2*bw+4;
+parameter bw_psum_sum = bw_psum+4;
+parameter pr = 8;
 
 // Internal wires
 wire [pr*bw-1:0] mac_in;
