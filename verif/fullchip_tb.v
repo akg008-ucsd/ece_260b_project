@@ -371,6 +371,67 @@ fork
 	end
 join
 
+// Need to pull down sfp_acc 1 cycle after PMEM read complete
+
+	pmem_src_sel = 0;
+	$display("\n##### Normalization and Writing back to PMEM #####");
+	for (q=0; q<total_cycle; q=q+1) begin
+		pmem_rd = 1; 
+		pmem_wr = 0;
+		if (q > 0)
+			pmem_add = pmem_add + 1;
+		#1;
+		sfp_div = 1;
+		pmem_rd = 0;
+		pmem_wr = 0;
+		#1;
+		sfp_div = 0;
+		#4;
+		pmem_wr = 1;
+		#1;
+	end
+	
+	pmem_rd 	= 0; 
+	pmem_wr 	= 0;
+	pmem_add 	= 0;
+	sfp_div 	= 0;
+	#1;
+	
+	$display("##### Reading PMEM to verify normalized outputs #####\n");
+	pmem_rd 	= 1;
+	pmem_add	= 0;
+	#1;
+	fork
+		begin
+			for (q=0; q<total_cycle-1; q=q+1) begin
+				pmem_add = pmem_add + 1;
+				#1;
+			end
+			
+			pmem_rd		= 0;
+			pmem_add	= 0;
+			#1;
+		end
+		begin
+			#1;
+			for (t=0; t<total_cycle; t=t+1) begin
+					for (n=0; n<col; n=n+1) begin
+						temp5b = norm_result[t][n];
+							temp16b = {temp16b[139:0], temp5b};
+					end
+				if (temp16b == out) begin
+						$display("norm(K*Q) matched for cycle%2d: %40h", t, temp16b);
+				end
+				else begin
+					$display("ERROR incorrect norm(K*Q) for cycle%2d", t);
+						$display("Expected: %40h", temp16b);
+						$display("Observed: %40h", out);
+				end
+				#1;
+			end
+		end
+	join
+
 $finish;
 
 

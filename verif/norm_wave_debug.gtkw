@@ -1,0 +1,79 @@
+[*]
+[*] GTKWave Analyzer v3.3.118 (w)1999-2023 BSI
+[*] Sat Feb 28 03:35:33 2026
+[*]
+[dumpfile] "/home/linux/ieng6/students/360/akg008/Downloads/k-furthest-neighbors-260b-main/ece_260b_project/verif/fullchip_tb.vcd"
+[dumpfile_mtime] "Sat Feb 28 02:04:51 2026"
+[dumpfile_size] 424243
+[savefile] "/home/linux/ieng6/students/360/akg008/Downloads/k-furthest-neighbors-260b-main/ece_260b_project/verif/norm_wave_debug.gtkw"
+[timestart] 135320
+[size] 1536 626
+[pos] -51 -1
+*-11.751669 143500 75000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] fullchip_tb.
+[treeopen] fullchip_tb.fullchip_instance.
+[treeopen] fullchip_tb.fullchip_instance.core_instance0.
+[sst_width] 229
+[signals_width] 308
+[sst_expanded] 1
+[sst_vpaned_height] 148
+@28
+fullchip_tb.clk
+fullchip_tb.pmem_wr
+@22
+fullchip_tb.pmem_add[3:0]
+@28
+fullchip_tb.pmem_wr_q
+fullchip_tb.ofifo_rd
+fullchip_tb.ofifo_rd_q
+@22
+fullchip_tb.out[159:0]
+@28
+fullchip_tb.pmem_rd
+fullchip_tb.sfp_acc
+[color] 3
+fullchip_tb.clk
+@22
+[color] 2
+fullchip_tb.pmem_add_q[3:0]
+@28
+[color] 2
+fullchip_tb.pmem_rd_q
+@22
+[color] 2
+fullchip_tb.fullchip_instance.core_instance0.pmem_out[159:0]
+@28
+fullchip_tb.sfp_acc_q
+@22
+fullchip_tb.temp16b[159:0]
+@28
+fullchip_tb.fullchip_instance.core_instance0.psum_mem_instance.CEN
+fullchip_tb.fullchip_instance.core_instance0.psum_mem_instance.A[2:0]
+fullchip_tb.fullchip_instance.core_instance0.psum_mem_instance.WEN
+@22
+fullchip_tb.fullchip_instance.core_instance0.psum_mem_instance.Q[159:0]
+@28
+fullchip_tb.clk
+fullchip_tb.pmem_src_sel
+fullchip_tb.pmem_src_sel_q
+fullchip_tb.sfp_div
+@29
+fullchip_tb.pmem_rd
+@23
+fullchip_tb.pmem_add[3:0]
+@28
+[color] 6
+fullchip_tb.pmem_rd_q
+fullchip_tb.sfp_div_q
+@22
+fullchip_tb.pmem_add_q[3:0]
+fullchip_tb.fullchip_instance.core_instance0.pmem_out[159:0]
+fullchip_tb.fullchip_instance.core_instance0.sfp_out[159:0]
+@28
+[color] 6
+fullchip_tb.pmem_wr_q
+@22
+fullchip_tb.fullchip_instance.core_instance0.out[159:0]
+fullchip_tb.temp16b[159:0]
+[pattern_trace] 1
+[pattern_trace] 0
