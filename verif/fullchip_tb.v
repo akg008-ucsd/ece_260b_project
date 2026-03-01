@@ -329,6 +329,7 @@ pmem_wr 	= 0;
 pmem_add 	= 0; 
 #1;
 
+`ifdef STEP_1
 //--------------- PMEM to SFP for Accumulation ------------------------
 
 $display("##### Moving PMEM data to SFP for Accumulation #####");
@@ -371,6 +372,9 @@ fork
 	end
 join
 
+`endif
+
+`ifdef STEP_2
 // Need to pull down sfp_acc 1 cycle after PMEM read complete
 
 	pmem_src_sel = 0;
@@ -432,8 +436,9 @@ join
 		end
 	join
 
-$finish;
+`endif
 
+$finish;
 
 end
 
