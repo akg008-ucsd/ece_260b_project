@@ -1,0 +1,4 @@
+$(DESIGN_DIR)/common_ip/sync.v
+$(DESIGN_DIR)/ASYNC_FIFO/async_wr_fifo.v
+$(DESIGN_DIR)/ASYNC_FIFO/async_rd_fifo.v
+$(DESIGN_DIR)/ASYNC_FIFO/async_fifo.v

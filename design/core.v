@@ -18,11 +18,6 @@ parameter pr = 8)
     output [bw_psum*col-1:0] out
 );
 
-//parameter col = 8;
-//parameter bw = 8;
-//parameter bw_psum = 2*bw+4;
-//parameter bw_psum_sum = bw_psum+4;
-//parameter pr = 8;
 
 // Internal wires
 wire [pr*bw-1:0] mac_in;

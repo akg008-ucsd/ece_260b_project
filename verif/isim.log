@@ -9,6 +9,11 @@ VCD info: dumpfile fullchip_tb.vcd opened for output.
 ##### Keys loading to processor #####
 ##### Execute (Query) #####
 ##### Moving OFIFO data to PMEM #####
+
+
+-----------STEP_1-------------
+
+
 ##### Moving PMEM data to SFP for Accumulation #####
 ##### Verifying K*Q values #####
 
@@ -20,6 +25,11 @@ K*Q matched for cycle 4: 00050ffff6ffff60000dfff76fffdbfffa6fffc8
 K*Q matched for cycle 5: 0002a000010001a000440000700007ffff8fffd3
 K*Q matched for cycle 6: fffed0003000063ffff9fffff000170002efffec
 K*Q matched for cycle 7: fffc10002900080fffd2fffff0004e0004a00025
+
+
+-----------STEP_2-------------
+
+
 
 ##### Normalization and Writing back to PMEM #####
 ##### Reading PMEM to verify normalized outputs #####

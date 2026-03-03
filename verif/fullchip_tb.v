@@ -3,8 +3,6 @@
 
 `timescale 1ns/1ps
 
-`define SEED 43
-
 module fullchip_tb;
 
 parameter total_cycle = 8;   // how many streamed Q vectors will be processed
@@ -17,7 +15,6 @@ integer qk_file ; // file handler
 integer qk_scan_file ; // file handler
 integer captured_data;
 integer weight [col*pr-1:0];
-`define NULL 0
 
 integer K[2*col-1:0][pr-1:0];
 integer N[2*col-1:0][pr-1:0];
@@ -33,8 +30,14 @@ integer i,j,k,t,p,q,s,u,n,m;
 integer seed;
 
 wire [19:0] inst;
-wire [bw_psum*col-1:0] out;
-reg [pr*bw-1:0] core0_mem_in; 
+`ifdef DUAL_CORE_EN
+      wire [2*bw_psum*col-1:0] out;
+      reg [pr*bw-1:0] core1_mem_in; 
+`else
+      wire [bw_psum*col-1:0] out;
+`endif
+
+reg [pr*bw-1:0] core0_mem_in;
 
 reg reset = 1;
 reg clk = 0;
@@ -92,7 +95,11 @@ assign inst[0] = pmem_wr_q;
 
 reg [bw_psum-1:0] temp5b;
 reg [bw_psum+3:0] temp_sum;
-reg [bw_psum*col-1:0] temp16b;
+`ifndef DUAL_CORE_EN
+reg [bw_psum*col-1:0] 	temp16b;
+`else
+reg [2*bw_psum*col-1:0] 	temp16b;
+`endif
 
 fullchip #(
     .bw(bw),
@@ -101,6 +108,9 @@ fullchip #(
     .pr(pr)
 ) fullchip_instance (
     .core0_mem_in(core0_mem_in),
+`ifdef DUAL_CORE_EN
+    .core1_mem_in(core1_mem_in), 
+`endif
     .out(out),
     .inst(inst),
     .reset(reset),
@@ -112,7 +122,6 @@ initial begin
 end
 
 initial begin
-    seed = `SEED;
 
     $dumpfile("fullchip_tb.vcd");
     $dumpvars(0,fullchip_tb);
@@ -332,6 +341,7 @@ pmem_add 	= 0;
 `ifdef STEP_1
 //--------------- PMEM to SFP for Accumulation ------------------------
 
+$display("\n\n-----------STEP_1-------------\n\n");
 $display("##### Moving PMEM data to SFP for Accumulation #####");
 $display("##### Verifying K*Q values #####\n");
 
@@ -377,6 +387,7 @@ join
 `ifdef STEP_2
 // Need to pull down sfp_acc 1 cycle after PMEM read complete
 
+$display("\n\n-----------STEP_2-------------\n\n");
 	pmem_src_sel = 0;
 	$display("\n##### Normalization and Writing back to PMEM #####");
 	for (q=0; q<total_cycle; q=q+1) begin
