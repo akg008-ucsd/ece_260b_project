@@ -6,6 +6,7 @@ VCD info: dumpfile fullchip_tb.vcd opened for output.
 ##### QMEM Writing  #####
 ##### Vdata Writing  #####
 ##### KMEM Writing #####
+##### Norm writing #####
 ##### Keys loading to processor #####
 ##### Execute (Query) #####
 ##### Moving OFIFO data to PMEM #####
@@ -42,3 +43,17 @@ norm(K*Q) matched for cycle 4: 0001a0000300003000040002e0000c0001e00012
 norm(K*Q) matched for cycle 5: 0002a000010001a000440000700007000080002d
 norm(K*Q) matched for cycle 6: 00009000180003100003000000000b000170000a
 norm(K*Q) matched for cycle 7: 000150000d0002a0000f000000001a000180000c
+
+##### Norm(K*Q) loading to processor #####
+##### Execute (Value) #####
+##### Moving OFIFO data to PMEM #####
+##### Reading PMEM to verify norm(K*Q)*V outputs #####
+
+N*V matched for cycle 0: fff94fff66fff21fff95fffbcfff05fff98fff9e
+N*V matched for cycle 1: 0007b0007800097000450002b000a00005800051
+N*V matched for cycle 2: fff92fff7bfff4cfff87fffb8fffb90000bfff80
+N*V matched for cycle 3: fffcffffe3fffcfffff1fffb3fffa3fffaafffe5
+N*V matched for cycle 4: ffedcfff5bfff2bfff36fff61fff7dfff7ffff31
+N*V matched for cycle 5: fffa3ffff3fffb4fffd1fff9afffaefffa0fffb9
+N*V matched for cycle 6: fff99fff6efff6efff9bfffab00053fffe1fff9b
+N*V matched for cycle 7: fff5ffffd0fff7efffc8fffb1fff5dfff65fffd0

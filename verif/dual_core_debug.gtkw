@@ -1,0 +1,63 @@
+[*]
+[*] GTKWave Analyzer v3.3.118 (w)1999-2023 BSI
+[*] Wed Mar  4 04:40:52 2026
+[*]
+[dumpfile] "/home/linux/ieng6/students/360/akg008/Downloads/k-furthest-neighbors-260b-main/ece_260b_project/verif/fullchip_tb.vcd"
+[dumpfile_mtime] "Tue Mar  3 19:34:37 2026"
+[dumpfile_size] 1042695
+[savefile] "/home/linux/ieng6/students/360/akg008/Downloads/k-furthest-neighbors-260b-main/ece_260b_project/verif/dual_core_debug.gtkw"
+[timestart] 10360
+[size] 1536 626
+[pos] -51 -1
+*-12.233060 13000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] fullchip_tb.
+[treeopen] fullchip_tb.fullchip_instance.
+[sst_width] 298
+[signals_width] 174
+[sst_expanded] 1
+[sst_vpaned_height] 195
+@28
+fullchip_tb.fullchip_instance.core_instance0.clk
+@22
+[color] 3
+fullchip_tb.fullchip_instance.core_instance0.inst[19:0]
+[color] 3
+fullchip_tb.fullchip_instance.core_instance0.mem_in[63:0]
+[color] 3
+fullchip_tb.fullchip_instance.core_instance0.sum_in[23:0]
+[color] 3
+fullchip_tb.fullchip_instance.core_instance0.sum_out[23:0]
+[color] 3
+fullchip_tb.fullchip_instance.core_instance0.out[159:0]
+@28
+[color] 3
+fullchip_tb.fullchip_instance.core_instance0.fifo_ext_wr
+[color] 3
+fullchip_tb.fullchip_instance.core_instance0.fifo_ext_rd
+[color] 2
+fullchip_tb.fullchip_instance.core_instance1.clk
+@22
+[color] 2
+fullchip_tb.fullchip_instance.core_instance1.inst[19:0]
+[color] 2
+fullchip_tb.fullchip_instance.core_instance1.mem_in[63:0]
+[color] 2
+fullchip_tb.fullchip_instance.core_instance1.sum_in[23:0]
+[color] 2
+fullchip_tb.fullchip_instance.core_instance1.sum_out[23:0]
+@28
+[color] 2
+fullchip_tb.fullchip_instance.core_instance1.fifo_ext_wr
+[color] 2
+fullchip_tb.fullchip_instance.core_instance1.fifo_ext_rd
+@23
+fullchip_tb.core0_mem_in[63:0]
+@22
+fullchip_tb.core1_mem_in[63:0]
+fullchip_tb.qkmem_add[3:0]
+fullchip_tb.qkmem_add_q[3:0]
+@28
+fullchip_tb.qmem_wr
+fullchip_tb.qmem_wr_q
+[pattern_trace] 1
+[pattern_trace] 0

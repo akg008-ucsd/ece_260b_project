@@ -96,9 +96,9 @@ assign inst[0] = pmem_wr_q;
 reg [bw_psum-1:0] temp5b;
 reg [bw_psum+3:0] temp_sum;
 `ifndef DUAL_CORE_EN
-reg [bw_psum*col-1:0] 	temp16b;
+reg [bw_psum*col-1:0] temp16b;
 `else
-reg [2*bw_psum*col-1:0] 	temp16b;
+reg [2*bw_psum*col-1:0] temp16b;
 `endif
 
 fullchip #(
@@ -126,6 +126,10 @@ initial begin
     $dumpfile("fullchip_tb.vcd");
     $dumpvars(0,fullchip_tb);
 
+`ifdef DUAL_CORE_EN
+    $display("\n\n------------DUAL_CORE ENABLED---------------\n\n");
+`endif
+
     $display("##### Reading qdata.txt #####");
     qk_file = $fopen("./test_data/qdata.txt", "r");
 
@@ -144,31 +148,70 @@ initial begin
     for (q=0; q<total_cycle; q=q+1) begin
         for (j=0; j<pr; j=j+1) begin
             qk_scan_file = $fscanf(qk_file, "%d\n", captured_data);
+	    //$display("V[%0d][%0d] captured data is %d",q,j,captured_data);
             V[q][j] = captured_data;
         end
     end
 
     $display("##### Reading kdata.txt #####");
-    qk_file = $fopen("./test_data/kdata.txt", "r");
+    `ifdef DUAL_CORE_EN
+    	qk_file = $fopen("./test_data/kdata_core0.txt", "r");
+    `else  
+        qk_file = $fopen("./test_data/kdata.txt", "r");
+    `endif
 
     // K[col][row]
     for (q=0; q<col; q=q+1) begin
         for (j=0; j<pr; j=j+1) begin
             qk_scan_file = $fscanf(qk_file, "%d\n", captured_data);
+	    //$display("K[%0d][%0d] captured data is %d",q,j,captured_data);	
             K[q][j] = captured_data;
         end
     end
 
-    $display("##### Reading norm.txt #####");
-    qk_file = $fopen("./test_data/norm.txt", "r");
+    `ifdef DUAL_CORE_EN
+	$display("##### Reading kdata_core1.txt #####");
+	qk_file = $fopen("./test_data/kdata_core1.txt", "r");
+	// K[col][row]
+	for (q=8; q<2*col; q=q+1) begin
+		for (j=0; j<pr; j=j+1) begin
+			qk_scan_file = $fscanf(qk_file, "%d\n", captured_data);
+			//$display("K[%0d][%0d] captured data is %d",q,j,captured_data);
+			K[q][j] = captured_data;
+		end
+	end
+    `endif
+    
+    `ifdef DUAL_CORE_EN
+        $display("##### Reading norm_core0.txt #####");
+        qk_file = $fopen("./test_data/norm_core0.txt", "r");
+    `else
+        $display("##### Reading norm.txt #####");
+        qk_file = $fopen("./test_data/norm.txt", "r");
+    `endif
 
     // N[col][row]
     for (q=0; q<col; q=q+1) begin
         for (j=0; j<pr; j=j+1) begin
             qk_scan_file = $fscanf(qk_file, "%d\n", captured_data);
+	    //$display("N[%0d][%0d] captured data is %d",q,j,captured_data);	
             N[q][j] = captured_data;
         end
     end
+
+   `ifdef DUAL_CORE_EN
+   	$display("##### Reading norm_core1.txt #####");
+   	qk_file = $fopen("./test_data/norm_core1.txt", "r");
+   	
+   	// N[col][row]
+   	for (q=8; q<2*col; q=q+1) begin
+   		for (j=0; j<pr; j=j+1) begin
+   			qk_scan_file = $fscanf(qk_file, "%d\n", captured_data);
+			//$display("N[%0d][%0d] captured data is %d",q,j,captured_data);
+   			N[q][j] = captured_data;
+   		end
+   	end
+   `endif
 
     //----------------- Estimated results calculation ---------------------
     // result = K*Q
@@ -176,7 +219,11 @@ initial begin
     // result2 = N*V
 
     for (t=0; t<total_cycle; t=t+1) begin
-        for (q=0; q<col; q=q+1) begin
+  `ifndef DUAL_CORE_EN
+	for (q=0; q<col; q=q+1) begin
+  `else
+	for (q=0; q<2*col; q=q+1) begin
+  `endif
             result[t][q] = 0;
             result2[t][q] = 0;
             norm_result[t][q] = 0;
@@ -190,27 +237,58 @@ initial begin
         for (q=0; q<col; q=q+1) begin
             for (k=0; k<pr; k=k+1) begin
                 result[t][q] = result[t][q] + Q[t][k] * K[q][k];
+		//$display("Q[%0d][%0d] = %d, K[%0d][%0d] = %d, result[%0d][%0d] = %d",t,k,Q[t][k],q,k,K[q][k],t,q,result[t][q]);
             end
             if(result[t][q] < 0)
                 sum[t] = sum[t] - result[t][q];
             else
                 sum[t] = sum[t] + result[t][q];
+	    //$display("sum[%0d] = %d",t,sum[t]);
         end
-    end
+    
 
-    // Norm calculation
-    for (t=0; t<total_cycle; t=t+1) begin
-        for (q=0; q<col; q=q+1) begin
-            if(result[t][q] < 0)
-                norm_result[t][q] = (-result[t][q])/(sum[t]/128);
-            else
-                norm_result[t][q] = (result[t][q])/(sum[t]/128);
-        end
-    end
+	`ifdef DUAL_CORE_EN
+	 for (q=col; q<2*col; q=q+1) begin
+	 	for (k=0; k<pr; k=k+1) begin
+	 		result[t][q] = result[t][q] + Q[t][k] * K[q][k];
+	 		//$display("Q[%0d][%0d] = %d, K[%0d][%0d] = %d, result[%0d][%0d] = %d",t,k,Q[t][k],q,k,K[q][k],t,q,result[t][q]);
+	 	end
+	 	if(result[t][q] < 0)
+	 			sum2[t] = sum2[t] - result[t][q];
+	 	else
+	 			sum2[t] = sum2[t] + result[t][q];
+	 	//$display("sum2[%0d] = %d",t,sum2[t]);
+	 end
+	`endif
+     end
+
+// Norm calculation
+for (t=0; t<total_cycle; t=t+1) begin
+	`ifndef DUAL_CORE_EN
+		for (q=0; q<col; q=q+1) begin
+		        //$display("sum[%0d] = %0d, sum/128 = %0d",t, sum[t], sum[t]/128);
+			if(result[t][q] < 0)
+				norm_result[t][q] = (-result[t][q])/(sum[t]/128);
+			else
+				norm_result[t][q] = (result[t][q])/(sum[t]/128);
+		end
+	`else
+		for (q=0; q<2*col; q=q+1) begin
+			if(result[t][q] < 0)
+				norm_result[t][q] = (-result[t][q])/((sum[t]/128)+(sum2[t]/128));
+			else
+				norm_result[t][q] = (result[t][q])/((sum[t]/128)+(sum2[t]/128));
+		end
+	`endif
+end
 
     // N*V calculation
     for (t=0; t<total_cycle; t=t+1) begin
+    `ifdef DUAL_CORE_EN
+        for (q=0; q<2*col; q=q+1) begin
+    `else
         for (q=0; q<col; q=q+1) begin
+    `endif 
             for (k=0; k<pr; k=k+1) begin
                 result2[t][q] = result2[t][q] + V[t][k] * N[q][k];
             end
@@ -236,6 +314,16 @@ initial begin
         core0_mem_in[6*bw-1:5*bw] = Q[q][5];
         core0_mem_in[7*bw-1:6*bw] = Q[q][6];
         core0_mem_in[8*bw-1:7*bw] = Q[q][7];
+`ifdef DUAL_CORE_EN
+	core1_mem_in[1*bw-1:0*bw] = Q[q][0];
+	core1_mem_in[2*bw-1:1*bw] = Q[q][1];
+	core1_mem_in[3*bw-1:2*bw] = Q[q][2];
+	core1_mem_in[4*bw-1:3*bw] = Q[q][3];
+	core1_mem_in[5*bw-1:4*bw] = Q[q][4];
+	core1_mem_in[6*bw-1:5*bw] = Q[q][5];
+	core1_mem_in[7*bw-1:6*bw] = Q[q][6];
+	core1_mem_in[8*bw-1:7*bw] = Q[q][7];
+`endif
     end
     qkmem_add 	= qkmem_add + 1;
 
@@ -254,6 +342,16 @@ initial begin
 	core0_mem_in[6*bw-1:5*bw] = V[q][5];
 	core0_mem_in[7*bw-1:6*bw] = V[q][6];
 	core0_mem_in[8*bw-1:7*bw] = V[q][7];
+	`ifdef DUAL_CORE
+		core1_mem_in[1*bw-1:0*bw] = V[q][0];
+		core1_mem_in[2*bw-1:1*bw] = V[q][1];
+		core1_mem_in[3*bw-1:2*bw] = V[q][2];
+		core1_mem_in[4*bw-1:3*bw] = V[q][3];
+		core1_mem_in[5*bw-1:4*bw] = V[q][4];
+		core1_mem_in[6*bw-1:5*bw] = V[q][5];
+		core1_mem_in[7*bw-1:6*bw] = V[q][6];
+		core1_mem_in[8*bw-1:7*bw] = V[q][7];
+	`endif
     end
 
     qmem_wr 	= 0; 
@@ -274,10 +372,48 @@ initial begin
 	core0_mem_in[6*bw-1:5*bw] = K[q][5];
 	core0_mem_in[7*bw-1:6*bw] = K[q][6];
 	core0_mem_in[8*bw-1:7*bw] = K[q][7];
+	`ifdef DUAL_CORE_EN
+		core1_mem_in[1*bw-1:0*bw] = K[q+8][0];
+		core1_mem_in[2*bw-1:1*bw] = K[q+8][1];
+		core1_mem_in[3*bw-1:2*bw] = K[q+8][2];
+		core1_mem_in[4*bw-1:3*bw] = K[q+8][3];
+		core1_mem_in[5*bw-1:4*bw] = K[q+8][4];
+		core1_mem_in[6*bw-1:5*bw] = K[q+8][5];
+		core1_mem_in[7*bw-1:6*bw] = K[q+8][6];
+		core1_mem_in[8*bw-1:7*bw] = K[q+8][7];
+	`endif
 
     end
     qkmem_add 	= qkmem_add + 1;
     #1;
+
+    $display("##### Norm writing #####");
+    
+    for (q=0; q<col; q=q+1) begin
+    	kmem_wr = 1; 
+    	if (q>0) 
+    		qkmem_add = qkmem_add + 1; 
+    
+    	#1;  
+    	core0_mem_in[1*bw-1:0*bw] = N[q][0];
+    	core0_mem_in[2*bw-1:1*bw] = N[q][1];
+    	core0_mem_in[3*bw-1:2*bw] = N[q][2];
+    	core0_mem_in[4*bw-1:3*bw] = N[q][3];
+    	core0_mem_in[5*bw-1:4*bw] = N[q][4];
+    	core0_mem_in[6*bw-1:5*bw] = N[q][5];
+    	core0_mem_in[7*bw-1:6*bw] = N[q][6];
+    	core0_mem_in[8*bw-1:7*bw] = N[q][7];
+    	`ifdef DUAL_CORE_EN
+    		core1_mem_in[1*bw-1:0*bw] = N[q+8][0];
+    		core1_mem_in[2*bw-1:1*bw] = N[q+8][1];
+    		core1_mem_in[3*bw-1:2*bw] = N[q+8][2];
+    		core1_mem_in[4*bw-1:3*bw] = N[q+8][3];
+    		core1_mem_in[5*bw-1:4*bw] = N[q+8][4];
+    		core1_mem_in[6*bw-1:5*bw] = N[q+8][5];
+    		core1_mem_in[7*bw-1:6*bw] = N[q+8][6];
+    		core1_mem_in[8*bw-1:7*bw] = N[q+8][7];
+    	`endif
+    end
     kmem_wr     = 0;
     qkmem_add   = 0;
     #6; 
@@ -338,10 +474,16 @@ pmem_wr 	= 0;
 pmem_add 	= 0; 
 #1;
 
+
 `ifdef STEP_1
 //--------------- PMEM to SFP for Accumulation ------------------------
 
-$display("\n\n-----------STEP_1-------------\n\n");
+`ifndef DUAL_CORE_EN
+	$display("\n\n-----------STEP_1-------------\n\n");
+`else 
+	$display("\n\n-----------STEP_1 (DUAL_CORE)-------------\n\n");
+`endif
+
 $display("##### Moving PMEM data to SFP for Accumulation #####");
 $display("##### Verifying K*Q values #####\n");
 
@@ -365,29 +507,51 @@ fork
 	begin
 		#3;
 		for (n=0; n<total_cycle; n=n+1) begin
+			`ifdef DUAL_CORE_EN
+				for (q=0; q<2*col; q=q+1) begin
+			`else
 				for (q=0; q<col; q=q+1) begin
+			`endif
 					temp5b = result[n][q];
+					`ifdef DUAL_CORE_EN
+						temp16b = {temp16b[299:0], temp5b};
+					`else
 						temp16b = {temp16b[139:0], temp5b};
+					`endif
 				end
 			if (temp16b == out) begin
+				`ifdef DUAL_CORE_EN
+					$display("K*Q matched for cycle%2d: %80h", n, temp16b);
+				`else
 					$display("K*Q matched for cycle%2d: %40h", n, temp16b);
+				`endif
 			end
 			else begin
 				$display("ERROR incorrect K*Q for cycle%2d", n);
+				`ifdef DUAL_CORE_EN
+					$display("Expected: %80h", temp16b);
+					$display("Observed: %80h", out);
+				`else
 					$display("Expected: %40h", temp16b);
 					$display("Observed: %40h", out);
+				`endif
 			end
 			#1;
 		end
+
 	end
 join
 
 `endif
 
 `ifdef STEP_2
-// Need to pull down sfp_acc 1 cycle after PMEM read complete
 
-$display("\n\n-----------STEP_2-------------\n\n");
+`ifndef DUAL_CORE_EN
+	$display("\n\n-----------STEP_2-------------\n\n");
+`else 
+	$display("\n\n-----------STEP_2 (DUAL_CORE)-------------\n\n");
+`endif
+
 	pmem_src_sel = 0;
 	$display("\n##### Normalization and Writing back to PMEM #####");
 	for (q=0; q<total_cycle; q=q+1) begin
@@ -430,17 +594,139 @@ $display("\n\n-----------STEP_2-------------\n\n");
 		begin
 			#1;
 			for (t=0; t<total_cycle; t=t+1) begin
+				`ifdef DUAL_CORE_EN
+					for (n=0; n<2*col; n=n+1) begin
+				`else
 					for (n=0; n<col; n=n+1) begin
+				`endif	
 						temp5b = norm_result[t][n];
+						`ifdef DUAL_CORE_EN
+							temp16b = {temp16b[299:0], temp5b};
+						`else
 							temp16b = {temp16b[139:0], temp5b};
+						`endif
 					end
 				if (temp16b == out) begin
+					`ifdef DUAL_CORE_EN
+						$display("norm(K*Q) matched for cycle%2d: %80h", t, temp16b);
+					`else
 						$display("norm(K*Q) matched for cycle%2d: %40h", t, temp16b);
+					`endif
 				end
 				else begin
 					$display("ERROR incorrect norm(K*Q) for cycle%2d", t);
+					`ifdef DUAL_CORE_EN
+						$display("Expected: %80h", temp16b);
+						$display("Observed: %80h", out);
+					`else
 						$display("Expected: %40h", temp16b);
 						$display("Observed: %40h", out);
+					`endif
+				end
+				#1;
+			end
+		end
+	join
+
+	//----------------------  NORM LOADING ----------------------
+	$display("\n##### Norm(K*Q) loading to processor #####");
+	
+	qkmem_add = 8;
+	kmem_rd = 1;
+	load = 1; 
+	for (q=0; q<col; q=q+1) begin
+		if(q>0)
+			qkmem_add = qkmem_add + 1;
+		#1;
+	end
+	
+	kmem_rd 	= 0; 
+	qkmem_add 	= 0;
+	load 		= 0; 
+	#1;
+	
+	// -------------- Execution (Value Loading) ------------------
+	$display("##### Execute (Value) #####");
+	
+	qmem_rd = 1;
+	qkmem_add	= 8;
+	execute = 1; 
+	for (q=0; q<total_cycle; q=q+1) begin
+		if(q>0)
+			qkmem_add = qkmem_add + 1;
+		#1;
+	end
+	
+	qmem_rd 	= 0; 
+	qkmem_add 	= 0;
+	execute 	= 0;
+	#2;
+	
+	//----------------- OFIFO Read and Write to PMEM ---------------------
+	
+	$display("##### Moving OFIFO data to PMEM #####");
+	#1;
+	pmem_src_sel = 1;
+	ofifo_rd = 1; 
+	#1;
+	pmem_wr = 1; 
+	for (q=0; q<total_cycle; q=q+1) begin
+			if(q>0)
+			pmem_add = pmem_add + 1;
+		#1;
+	end
+	
+	ofifo_rd 	= 0;
+	#1;
+	pmem_wr 	= 0; 
+	pmem_add 	= 0; 
+	#1;
+	
+	$display("##### Reading PMEM to verify norm(K*Q)*V outputs #####\n");
+	fork
+		begin
+			for (q=0; q<total_cycle; q=q+1) begin
+				pmem_rd = 1;
+				if (q>0)
+					pmem_add = pmem_add + 1;
+				#1;
+			end
+			
+			pmem_rd		= 0;
+			pmem_add	= 0;
+		end
+		begin
+			#2;
+			for (n=0; n<total_cycle; n=n+1) begin
+				`ifndef DUAL_CORE_EN
+					for (t=0; t<col; t=t+1) begin
+				`else
+					for (t=0; t<2*col; t=t+1) begin
+				`endif
+						temp5b = result2[n][t];
+						`ifndef DUAL_CORE_EN
+							temp16b = {temp16b[139:0], temp5b};
+						`else
+							temp16b = {temp16b[299:0], temp5b};
+						`endif
+					end
+				if (temp16b == out) begin
+					`ifndef DUAL_CORE_EN
+							$display("N*V matched for cycle%2d: %40h", n, temp16b);
+					`else
+							$display("N*V matched for cycle%2d: %80h", n, temp16b);
+					`endif
+	
+				end
+				else begin
+					$display("ERROR incorrect N*V for cycle%2d", n);
+					`ifndef DUAL_CORE_EN	
+						$display("Expected: %40h", temp16b);
+						$display("Observed: %40h", out);
+					`else
+						$display("Expected: %80h", temp16b);
+						$display("Observed: %80h", out);
+					`endif
 				end
 				#1;
 			end

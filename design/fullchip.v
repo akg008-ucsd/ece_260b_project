@@ -12,9 +12,9 @@ module fullchip #(
 `ifdef DUAL_CORE_EN
     input  [pr*bw-1:0] core1_mem_in,
     output [2*bw_psum*col-1:0] out, 
-`endif
-
+`else
     output [bw_psum*col-1:0] out,
+`endif
     input  [pr*bw-1:0] core0_mem_in 
 );
 
