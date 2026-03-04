@@ -271,6 +271,8 @@ for (t=0; t<total_cycle; t=t+1) begin
 				norm_result[t][q] = (-result[t][q])/(sum[t]/128);
 			else
 				norm_result[t][q] = (result[t][q])/(sum[t]/128);
+
+			//$display("norm_result[%0d][%0d] = %0d",t,q,norm_result[t][q]);
 		end
 	`else
 		for (q=0; q<2*col; q=q+1) begin
@@ -289,9 +291,13 @@ end
     `else
         for (q=0; q<col; q=q+1) begin
     `endif 
-            for (k=0; k<pr; k=k+1) begin
-                result2[t][q] = result2[t][q] + V[t][k] * N[q][k];
-            end
+		for (k=0; k<pr; k=k+1) begin
+				result2[t][q] = result2[t][q] + V[t][k] * N[q][k];
+				//if(q<col)
+				//	result2[t][q] = result2[t][q] + V[t][k] * norm_result[q][k];
+				//else
+				//	result2[t][q] = result2[t][q] + V[t][k] * norm_result[q-8][k+8];
+		end
         end
     end
 
@@ -327,7 +333,7 @@ end
     end
     qkmem_add 	= qkmem_add + 1;
 
-
+    //NOTE: V data is stored in the same memory as Q, as it will be later used for N*V computation
     $display("##### Vdata Writing  #####");
     for (q=0; q<total_cycle; q=q+1) begin
 	qmem_wr = 1;  
@@ -342,16 +348,16 @@ end
 	core0_mem_in[6*bw-1:5*bw] = V[q][5];
 	core0_mem_in[7*bw-1:6*bw] = V[q][6];
 	core0_mem_in[8*bw-1:7*bw] = V[q][7];
-	`ifdef DUAL_CORE
-		core1_mem_in[1*bw-1:0*bw] = V[q][0];
-		core1_mem_in[2*bw-1:1*bw] = V[q][1];
-		core1_mem_in[3*bw-1:2*bw] = V[q][2];
-		core1_mem_in[4*bw-1:3*bw] = V[q][3];
-		core1_mem_in[5*bw-1:4*bw] = V[q][4];
-		core1_mem_in[6*bw-1:5*bw] = V[q][5];
-		core1_mem_in[7*bw-1:6*bw] = V[q][6];
-		core1_mem_in[8*bw-1:7*bw] = V[q][7];
-	`endif
+    `ifdef DUAL_CORE_EN
+	core1_mem_in[1*bw-1:0*bw] = V[q][0];
+	core1_mem_in[2*bw-1:1*bw] = V[q][1];
+	core1_mem_in[3*bw-1:2*bw] = V[q][2];
+	core1_mem_in[4*bw-1:3*bw] = V[q][3];
+	core1_mem_in[5*bw-1:4*bw] = V[q][4];
+	core1_mem_in[6*bw-1:5*bw] = V[q][5];
+	core1_mem_in[7*bw-1:6*bw] = V[q][6];
+	core1_mem_in[8*bw-1:7*bw] = V[q][7];
+    `endif
     end
 
     qmem_wr 	= 0; 
@@ -372,21 +378,22 @@ end
 	core0_mem_in[6*bw-1:5*bw] = K[q][5];
 	core0_mem_in[7*bw-1:6*bw] = K[q][6];
 	core0_mem_in[8*bw-1:7*bw] = K[q][7];
-	`ifdef DUAL_CORE_EN
-		core1_mem_in[1*bw-1:0*bw] = K[q+8][0];
-		core1_mem_in[2*bw-1:1*bw] = K[q+8][1];
-		core1_mem_in[3*bw-1:2*bw] = K[q+8][2];
-		core1_mem_in[4*bw-1:3*bw] = K[q+8][3];
-		core1_mem_in[5*bw-1:4*bw] = K[q+8][4];
-		core1_mem_in[6*bw-1:5*bw] = K[q+8][5];
-		core1_mem_in[7*bw-1:6*bw] = K[q+8][6];
-		core1_mem_in[8*bw-1:7*bw] = K[q+8][7];
-	`endif
+    `ifdef DUAL_CORE_EN
+	core1_mem_in[1*bw-1:0*bw] = K[q+8][0];
+	core1_mem_in[2*bw-1:1*bw] = K[q+8][1];
+	core1_mem_in[3*bw-1:2*bw] = K[q+8][2];
+	core1_mem_in[4*bw-1:3*bw] = K[q+8][3];
+	core1_mem_in[5*bw-1:4*bw] = K[q+8][4];
+	core1_mem_in[6*bw-1:5*bw] = K[q+8][5];
+	core1_mem_in[7*bw-1:6*bw] = K[q+8][6];
+	core1_mem_in[8*bw-1:7*bw] = K[q+8][7];
+    `endif
 
     end
     qkmem_add 	= qkmem_add + 1;
     #1;
 
+//NOTE: The N data is stored in same memory as K, as it will be later used for N*V computation. N is basically stationed same as we stationed K
     $display("##### Norm writing #####");
     
     for (q=0; q<col; q=q+1) begin
@@ -403,16 +410,16 @@ end
     	core0_mem_in[6*bw-1:5*bw] = N[q][5];
     	core0_mem_in[7*bw-1:6*bw] = N[q][6];
     	core0_mem_in[8*bw-1:7*bw] = N[q][7];
-    	`ifdef DUAL_CORE_EN
-    		core1_mem_in[1*bw-1:0*bw] = N[q+8][0];
-    		core1_mem_in[2*bw-1:1*bw] = N[q+8][1];
-    		core1_mem_in[3*bw-1:2*bw] = N[q+8][2];
-    		core1_mem_in[4*bw-1:3*bw] = N[q+8][3];
-    		core1_mem_in[5*bw-1:4*bw] = N[q+8][4];
-    		core1_mem_in[6*bw-1:5*bw] = N[q+8][5];
-    		core1_mem_in[7*bw-1:6*bw] = N[q+8][6];
-    		core1_mem_in[8*bw-1:7*bw] = N[q+8][7];
-    	`endif
+    `ifdef DUAL_CORE_EN
+    	core1_mem_in[1*bw-1:0*bw] = N[q+8][0];
+    	core1_mem_in[2*bw-1:1*bw] = N[q+8][1];
+    	core1_mem_in[3*bw-1:2*bw] = N[q+8][2];
+    	core1_mem_in[4*bw-1:3*bw] = N[q+8][3];
+    	core1_mem_in[5*bw-1:4*bw] = N[q+8][4];
+    	core1_mem_in[6*bw-1:5*bw] = N[q+8][5];
+    	core1_mem_in[7*bw-1:6*bw] = N[q+8][6];
+    	core1_mem_in[8*bw-1:7*bw] = N[q+8][7];
+    `endif
     end
     kmem_wr     = 0;
     qkmem_add   = 0;
@@ -479,7 +486,7 @@ pmem_add 	= 0;
 //--------------- PMEM to SFP for Accumulation ------------------------
 
 `ifndef DUAL_CORE_EN
-	$display("\n\n-----------STEP_1-------------\n\n");
+	$display("\n\n-----------STEP_1 (SINGLE_CORE)-------------\n\n");
 `else 
 	$display("\n\n-----------STEP_1 (DUAL_CORE)-------------\n\n");
 `endif
@@ -547,7 +554,7 @@ join
 `ifdef STEP_2
 
 `ifndef DUAL_CORE_EN
-	$display("\n\n-----------STEP_2-------------\n\n");
+	$display("\n\n-----------STEP_2 (SINGLE_CORE)-------------\n\n");
 `else 
 	$display("\n\n-----------STEP_2 (DUAL_CORE)-------------\n\n");
 `endif
@@ -600,6 +607,7 @@ join
 					for (n=0; n<col; n=n+1) begin
 				`endif	
 						temp5b = norm_result[t][n];
+						//$display("norm_result");
 						`ifdef DUAL_CORE_EN
 							temp16b = {temp16b[299:0], temp5b};
 						`else
@@ -627,12 +635,21 @@ join
 			end
 		end
 	join
+`endif
+
+`ifdef STEP_4
+
+`ifndef DUAL_CORE_EN
+	$display("\n\n-----------STEP_4 (SINGLE_CORE)-------------\n\n");
+`else 
+	$display("\n\n-----------STEP_4 (DUAL_CORE)-------------\n\n");
+`endif
 
 	//----------------------  NORM LOADING ----------------------
-	$display("\n##### Norm(K*Q) loading to processor #####");
+	$display("\n##### N loading to processor #####");
 	
-	qkmem_add = 8;
-	kmem_rd = 1;
+	qkmem_add = 8; //base addr for N stored in kmem
+	kmem_rd = 1;   //start reading out N values
 	load = 1; 
 	for (q=0; q<col; q=q+1) begin
 		if(q>0)
@@ -646,10 +663,10 @@ join
 	#1;
 	
 	// -------------- Execution (Value Loading) ------------------
-	$display("##### Execute (Value) #####");
+	$display("##### V streaming to processor #####");
 	
-	qmem_rd = 1;
-	qkmem_add	= 8;
+	qmem_rd = 1;  //start reading from Q memory and streaming to PE
+	qkmem_add	= 8; //base addr for V values
 	execute = 1; 
 	for (q=0; q<total_cycle; q=q+1) begin
 		if(q>0)
@@ -682,7 +699,7 @@ join
 	pmem_add 	= 0; 
 	#1;
 	
-	$display("##### Reading PMEM to verify norm(K*Q)*V outputs #####\n");
+	$display("##### Reading PMEM to verify N*V outputs #####\n");
 	fork
 		begin
 			for (q=0; q<total_cycle; q=q+1) begin
