@@ -1,2 +1,2 @@
 -f $(DESIGN_DIR)/filelist
-$(VERIF_DIR)/fullchip_tb.v
+$(VERIF_DIR)/fullchip_tb.sv

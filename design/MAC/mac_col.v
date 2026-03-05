@@ -25,9 +25,8 @@ output fifo_wr;
 
 /**
 Instruction Map:
-00: Load
-10: Execute
-11: Soft Reset
+01: Load
+10: Execute 
 */
 
 

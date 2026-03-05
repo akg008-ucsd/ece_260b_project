@@ -1,7 +1,7 @@
 // Created by prof. Mingu Kang @VVIP Lab in UCSD ECE department
 // Please do not spread this code without permission 
 `ifdef CLK_GATE
-module mac_array (clk, reset, in, in_zero, out, fifo_wr, inst);
+module mac_array (clk, reset, in, out, fifo_wr, inst, in_zero);
 `else
 module mac_array (clk, reset, in, out, fifo_wr, inst);
 `endif

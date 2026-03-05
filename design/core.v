@@ -30,6 +30,10 @@ wire [bw_psum*col-1:0] sfp_out;
 wire [bw_psum*col-1:0] array_out;
 wire [col-1:0] ofifo_wr;
 
+`ifdef CLK_GATE
+wire [pr-1:0] mac_in_zero;
+`endif
+
 // Wires derived from instruction
 wire [1:0] mac_inst      = inst[7:6];
 wire qmem_rd             = inst[5];
@@ -44,29 +48,28 @@ wire [2:0] pmem_addr     = inst[10:8];
 wire sfp_acc             = inst[16];
 wire sfp_div             = inst[17];
 wire pmem_src_sel        = inst[18];
-wire kqmem_src_sel       = inst[19];
 
 // Assign output
 assign out = pmem_out;
 
-// Truncate PMEM output for KMEM
 genvar i;
-wire [pr*bw-1:0] kmem_trunc_in;
 generate
     for (i = 0; i<col; i=i+1) begin : loop
-        assign kmem_trunc_in[(i*pr+bw)-1 : i*bw] = pmem_out[((7-i)*bw_psum + bw)-1 : (7-i)*bw_psum];
+`ifdef CLK_GATE
+	assign mac_in_zero[i] = ~(|mac_in[bw*(i+1)-1:bw*i]);
+`endif
     end    
 endgenerate
 
-// MUX inputs
-wire [pr*bw-1:0] kmem_in = kqmem_src_sel ? mem_in : kmem_trunc_in;
 wire [bw_psum*col-1:0] pmem_mux_in = pmem_src_sel ? ofifo_out : sfp_out;
 
 // MAC input selection
 reg mac_in_mux_sel;
 always @(posedge clk or posedge reset) begin
     if (reset) mac_in_mux_sel <= 1'b0;
-    else mac_in_mux_sel <= mac_inst[0];
+    else mac_in_mux_sel <= mac_inst[0]; 
+	//load_phase: kmem data 
+	//execute phase : qmem data
 end
 assign mac_in = mac_in_mux_sel ? kmem_out : qmem_out;
 
@@ -76,6 +79,9 @@ mac_array #(.bw(bw), .bw_psum(bw_psum), .col(col), .pr(pr)) mac_array_instance (
     .clk(clk),
     .reset(reset),
     .inst(mac_inst),
+`ifdef CLK_GATE
+    .in_zero(mac_in_zero),
+`endif
     .fifo_wr(ofifo_wr),
     .out(array_out)
 );
@@ -104,7 +110,7 @@ sram_w16 #(.sram_bit(pr*bw)) qmem_instance (
 // KMEM instance
 sram_w16 #(.sram_bit(pr*bw)) kmem_instance (
     .CLK(clk),
-    .D(kmem_in),
+    .D(mem_in),
     .Q(kmem_out),
     .CEN(!(kmem_rd||kmem_wr)),
     .WEN(!kmem_wr), 

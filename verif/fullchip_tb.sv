@@ -122,14 +122,22 @@ initial begin
     forever #0.5 clk = ~clk;
 end
 
+integer return_val;
+
+initial begin
+    seed = `RAND_SEED;
+    return_val = $urandom(seed);
+end
+
 initial begin
 
-seed = `RAND_SEED;
+//seed = `RAND_SEED;
+//$urandom(seed);
 
 `ifdef RANDOM_TEST_MODE
 	$display("\n\n##### -------VERIFICATION : RANDOM TESTING MODE-------- #####\n\n");
 `else 
-	$display("##### -------VERIFICATION : DIRECTED TESTING MODE-------- #####");
+	$display("\n\n##### -------VERIFICATION : DIRECTED TESTING MODE-------- #####\n\n");
 `endif
 
     $dumpfile("fullchip_tb.vcd");
@@ -146,7 +154,7 @@ seed = `RAND_SEED;
     for (q=0; q<total_cycle; q=q+1) begin
         for (j=0; j<pr; j=j+1) begin
 	`ifdef RANDOM_TEST_MODE
-	    Q[q][j] = $random(seed)%32 - 16;
+	    Q[q][j] = $urandom_range(-16,15);
 	`else
             qk_scan_file = $fscanf(qk_file, "%d\n", captured_data);
             Q[q][j] = captured_data;
@@ -161,7 +169,7 @@ seed = `RAND_SEED;
     for (q=0; q<total_cycle; q=q+1) begin
         for (j=0; j<pr; j=j+1) begin
 	`ifdef RANDOM_TEST_MODE
-	    V[q][j] = $random(seed)%32 - 16;
+	    V[q][j] = $urandom_range(-16,15);
 	`else
             qk_scan_file = $fscanf(qk_file, "%d\n", captured_data);
 	    //$display("V[%0d][%0d] captured data is %d",q,j,captured_data);
@@ -181,7 +189,7 @@ seed = `RAND_SEED;
     for (q=0; q<col; q=q+1) begin
         for (j=0; j<pr; j=j+1) begin
 	`ifdef RANDOM_TEST_MODE
-	    K[q][j] = $random(seed)%32 - 16;		
+	    K[q][j] = $urandom_range(-16,15);		
 	`else
             qk_scan_file = $fscanf(qk_file, "%d\n", captured_data);
 	    //$display("K[%0d][%0d] captured data is %d",q,j,captured_data);	
@@ -197,7 +205,7 @@ seed = `RAND_SEED;
 	for (q=8; q<2*col; q=q+1) begin
 		for (j=0; j<pr; j=j+1) begin
 		`ifdef RANDOM_TEST_MODE
-			K[q][j] = $random(seed)%32 - 16;		
+			K[q][j] = $urandom_range(-16,15);		
 		`else
 			qk_scan_file = $fscanf(qk_file, "%d\n", captured_data);
 			//$display("K[%0d][%0d] captured data is %d",q,j,captured_data);
@@ -219,7 +227,7 @@ seed = `RAND_SEED;
     for (q=0; q<col; q=q+1) begin
         for (j=0; j<pr; j=j+1) begin
 	`ifdef RANDOM_TEST_MODE
-	    N[q][j] = $random(seed)%32;
+	    N[q][j] = $urandom_range(0,31);
 	`else
             qk_scan_file = $fscanf(qk_file, "%d\n", captured_data);
 	    //$display("N[%0d][%0d] captured data is %d",q,j,captured_data);	
@@ -236,7 +244,7 @@ seed = `RAND_SEED;
    	for (q=8; q<2*col; q=q+1) begin
    		for (j=0; j<pr; j=j+1) begin
 		`ifdef RANDOM_TEST_MODE
-			N[q][j] = $random(seed)%32;
+			N[q][j] = $urandom_range(0,31);
 		`else
    			qk_scan_file = $fscanf(qk_file, "%d\n", captured_data);
 			//$display("N[%0d][%0d] captured data is %d",q,j,captured_data);
