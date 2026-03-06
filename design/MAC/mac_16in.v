@@ -93,4 +93,38 @@ always @(posedge clk or posedge reset) begin
 end
 
 
+//wire [bw>>1-1:0]a_lo[pr-1:0]; 
+//wire [bw>>1-1:0]a_hi[pr-1:0]; 
+//wire [bw>>1-1:0]b_lo[pr-1:0]; 
+//wire [bw>>1-1:0]b_hi[pr-1:0];
+//
+//genvar i;
+//generate 
+//	for(i=0; i<pr; i=i+1) begin : split_hi_lo
+//	    assign a_lo[i] = a[(bw*i+bw>>1)-1:bw*i];
+//	    assign a_hi[i] = a[bw*(i+1)-1:bw*i+bw>>1];
+//	    assign b_lo[i] = b[(bw*i+bw>>1)-1:bw*i];
+//	    assign b_hi[i] = b[bw*(i+1)-1:bw*i+bw>>1];
+//	end
+//endgenerate
+//
+//generate 
+//	for(i=0; i<pr; i=i+1) begin : stage_1
+//	    always @(posedge clk or posedge reset) begin
+//		if(reset) begin
+//		   pprod_ll <= {(bw){1'b0}};
+//		   pprod_lh <= {(bw){1'b0}};
+//		   pprod_hl <= {(bw){1'b0}};
+//		   pprod_hh <= {(bw){1'b0}};
+//		end
+//		else begin
+//		   pprod_ll <= a_lo[i] * b_lo[i];
+//		   pprod_lh <= a_lo[i] * b_hi[i];
+//		   pprod_hl <= a_hi[i] * b_lo[i];
+//		   pprod_hh <= a_hi[i] * b_hi[i];
+//		end
+//	    end
+//	end
+//endgenerate 
+
 endmodule

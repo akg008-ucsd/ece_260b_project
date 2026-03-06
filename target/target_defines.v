@@ -3,5 +3,5 @@
 `define STEP_2
 `define STEP_4
 `define DUAL_CORE_EN
-//`define RAND_SEED 50
+`define RAND_SEED 50
 //`define RANDOM_TEST_MODE 

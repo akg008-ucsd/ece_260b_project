@@ -570,9 +570,9 @@ fork
 				end
 			if (temp16b == out) begin
 				`ifdef DUAL_CORE_EN
-					$display("K*Q matched for cycle%2d: %80h", n, temp16b);
+					$display("K*Q value matched with golden ref for cycle%2d: %80h", n, temp16b);
 				`else
-					$display("K*Q matched for cycle%2d: %40h", n, temp16b);
+					$display("K*Q value matched with golden ref for cycle%2d: %40h", n, temp16b);
 				`endif
 			end
 			else begin
@@ -658,9 +658,9 @@ join
 					end
 				if (temp16b == out) begin
 					`ifdef DUAL_CORE_EN
-						$display("norm(K*Q) matched for cycle%2d: %80h", t, temp16b);
+						$display("norm(K*Q) value matched with golden ref for cycle%2d: %80h", t, temp16b);
 					`else
-						$display("norm(K*Q) matched for cycle%2d: %40h", t, temp16b);
+						$display("norm(K*Q) value matched with golden ref for cycle%2d: %40h", t, temp16b);
 					`endif
 				end
 				else begin
@@ -771,9 +771,9 @@ join
 					end
 				if (temp16b == out) begin
 					`ifndef DUAL_CORE_EN
-							$display("N*V matched for cycle%2d: %40h", n, temp16b);
+							$display("N*V matched with golden ref for cycle%2d: %40h", n, temp16b);
 					`else
-							$display("N*V matched for cycle%2d: %80h", n, temp16b);
+							$display("N*V matched with golden ref for cycle%2d: %80h", n, temp16b);
 					`endif
 	
 				end
