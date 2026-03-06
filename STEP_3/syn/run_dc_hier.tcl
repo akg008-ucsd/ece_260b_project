@@ -76,7 +76,7 @@ foreach_in_collection cell [get_cells -hierarchical -filter "ref_name =~ sram_w8
 }
 
 # Constraints
-read_sdc ${SCRIPT_DIR}/constraints/constraints.sdc
+read_sdc ${SCRIPT_DIR}/constraints.sdc
 propagate_constraints
 
 set_cost_priority {max_transition max_fanout max_delay max_capacitance}

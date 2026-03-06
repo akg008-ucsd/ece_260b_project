@@ -1,5 +1,5 @@
 # SRAM constraints for sram_w16
-set clock_cycle 3.0
+set clock_cycle 1.0
 set io_delay    0.1
 
 create_clock -name CLK -period $clock_cycle [get_ports CLK]
