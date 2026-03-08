@@ -3,8 +3,7 @@
 
 
 # Dependency directories
-design/compiled
-verif/compiled
+compiled
 
 # IDE files
 *.swp
