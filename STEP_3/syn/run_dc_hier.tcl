@@ -66,8 +66,7 @@ report_hierarchy
 current_design fullchip
 link
 
-# FIX 1: Removed bare set_dont_touch on design names (UID-95).
-# Must target instances by ref_name instead - the foreach loops do this correctly.
+
 foreach_in_collection cell [get_cells -hierarchical -filter "ref_name =~ sram_w16*"] {
 	set_dont_touch $cell
 }
@@ -85,8 +84,6 @@ if { [sizeof_collection [all_clocks]] > 0 } {
 	set_fix_hold [all_clocks]
 }
 
-# FIX 2: BUFFD4BWP7T does not exist in tcbn65gplustc.db (UID-993).
-# Use BUFFD4BWP65LP which is the correct cell name for this library.
 set_driving_cell -lib_cell BUFFD4BWP7T -pin Z [all_inputs]
 set_load 0.005 [all_outputs]
 
@@ -95,8 +92,6 @@ set_register_merging [get_designs fullchip] false
 set compile_seqmap_propagate_constants        false
 set compile_seqmap_propagate_high_effort      false
 
-# FIX 3: Removed broken foreach loop over all sub-designs that was
-# unconditionally resetting current_design to fullchip every iteration.
 current_design fullchip
 set_fix_multiple_port_nets -all
 
@@ -108,7 +103,6 @@ current_design fullchip
 change_names -rules verilog -hierarchy
 write -format verilog -hier -output gate/${top_module}.hier.out.v
 
-# core is a sub-design inside fullchip after hierarchical compile.
 # Check if DC has it in memory; if so write it, otherwise skip gracefully.
 if { [sizeof_collection [get_designs -quiet core]] > 0 } {
 	current_design core
