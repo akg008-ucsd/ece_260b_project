@@ -1,5 +1,13 @@
 // Created by prof. Mingu Kang @VVIP Lab, UCSD ECE
-
+// Please do not spread this code without permission
+//
+// Conditional compilation:
+//   `define STEP_5_DUAL_PORT  ->  instantiates dual-port SRAMs
+//                                 (sram_w16 for QMEM/KMEM,
+//                                  sram_w8  for PMEM)
+//   (default)                ->  instantiates original single-port SRAMs
+//                                 (sram_w16 for QMEM/KMEM,
+//                                  sram_w8  for PMEM)
 module core #(
 parameter col = 8,
 parameter bw = 8,
@@ -17,7 +25,6 @@ parameter pr = 8)
     output [bw_psum_sum-1:0] sum_out,
     output [bw_psum*col-1:0] out
 );
-
 
 // Internal wires
 wire [pr*bw-1:0] mac_in;
@@ -56,20 +63,18 @@ genvar i;
 generate
     for (i = 0; i<col; i=i+1) begin : loop
 `ifdef CLK_GATE
-	assign mac_in_zero[i] = ~(|mac_in[bw*(i+1)-1:bw*i]);
+        assign mac_in_zero[i] = ~(|mac_in[bw*(i+1)-1:bw*i]);
 `endif
-    end    
+    end
 endgenerate
 
 wire [bw_psum*col-1:0] pmem_mux_in = pmem_src_sel ? ofifo_out : sfp_out;
 
-// MAC input selection
+// MAC input selection: load phase -> kmem data, execute phase -> qmem data
 reg mac_in_mux_sel;
 always @(posedge clk or posedge reset) begin
     if (reset) mac_in_mux_sel <= 1'b0;
-    else mac_in_mux_sel <= mac_inst[0]; 
-	//load_phase: kmem data 
-	//execute phase : qmem data
+    else       mac_in_mux_sel <= mac_inst[0];
 end
 assign mac_in = mac_in_mux_sel ? kmem_out : qmem_out;
 
@@ -97,48 +102,115 @@ ofifo #(.bw(bw_psum), .col(col)) ofifo_instance (
     .out(ofifo_out)
 );
 
-// QMEM instance
+// -----------------------------------------------------------------------
+// QMEM instantiation
+//   Without STEP_5_DUAL_PORT : single-port sram_w16
+//                              CEN = active when rd OR wr asserted
+//                              WEN = 1 for read, 0 for write
+//   With    STEP_5_DUAL_PORT : dual-port sram_w16
+//                              Port A (write) enabled by qmem_wr
+//                              Port B (read)  enabled by qmem_rd
+// -----------------------------------------------------------------------
+`ifndef STEP_5_DUAL_PORT
 sram_w16 #(.sram_bit(pr*bw)) qmem_instance (
-    .CLK(clk),
-    .D(mem_in),
-    .Q(qmem_out),
-    .CEN(!(qmem_rd||qmem_wr)),
-    .WEN(!qmem_wr), 
-    .A(kqmem_addr)
+    .CLK (clk),
+    .D   (mem_in),
+    .Q   (qmem_out),
+    .CEN (!(qmem_wr | qmem_rd)),
+    .WEN (!qmem_wr),
+    .A   (kqmem_addr)
 );
+`else
+sram_w16 #(.sram_bit(pr*bw)) qmem_instance (
+    .CLK   (clk),
+    // Port A: write
+    .D_A   (mem_in),
+    .CEN_A (!qmem_wr),
+    .WEN_A (1'b0),
+    .A_A   (kqmem_addr),
+    // Port B: read
+    .Q_B   (qmem_out),
+    .CEN_B (!qmem_rd),
+    .WEN_B (1'b1),
+    .A_B   (kqmem_addr)
+);
+`endif
 
-// KMEM instance
+// -----------------------------------------------------------------------
+// KMEM instantiation
+//   Without STEP_5_DUAL_PORT : single-port sram_w16
+//   With    STEP_5_DUAL_PORT : dual-port sram_w16
+// -----------------------------------------------------------------------
+`ifndef STEP_5_DUAL_PORT
 sram_w16 #(.sram_bit(pr*bw)) kmem_instance (
-    .CLK(clk),
-    .D(mem_in),
-    .Q(kmem_out),
-    .CEN(!(kmem_rd||kmem_wr)),
-    .WEN(!kmem_wr), 
-    .A(kqmem_addr)
+    .CLK (clk),
+    .D   (mem_in),
+    .Q   (kmem_out),
+    .CEN (!(kmem_wr | kmem_rd)),
+    .WEN (!kmem_wr),
+    .A   (kqmem_addr)
 );
+`else
+sram_w16 #(.sram_bit(pr*bw)) kmem_instance (
+    .CLK   (clk),
+    // Port A: write
+    .D_A   (mem_in),
+    .CEN_A (!kmem_wr),
+    .WEN_A (1'b0),
+    .A_A   (kqmem_addr),
+    // Port B: read
+    .Q_B   (kmem_out),
+    .CEN_B (!kmem_rd),
+    .WEN_B (1'b1),
+    .A_B   (kqmem_addr)
+);
+`endif
 
-// PMEM instance
+// -----------------------------------------------------------------------
+// PMEM instantiation
+//   Without STEP_5_DUAL_PORT : single-port sram_w8
+//                              write data = pmem_mux_in
+//   With    STEP_5_DUAL_PORT : dual-port sram_w8
+//                              Port A (write) enabled by pmem_wr
+//                              Port B (read)  enabled by pmem_rd
+// -----------------------------------------------------------------------
+`ifndef STEP_5_DUAL_PORT
 sram_w8 #(.sram_bit(col*bw_psum)) psum_mem_instance (
-    .CLK(clk),
-    .D(pmem_mux_in),
-    .Q(pmem_out),
-    .CEN(!(pmem_rd||pmem_wr)),
-    .WEN(!pmem_wr), 
-    .A(pmem_addr)
+    .CLK (clk),
+    .D   (pmem_mux_in),
+    .Q   (pmem_out),
+    .CEN (!(pmem_wr | pmem_rd)),
+    .WEN (!pmem_wr),
+    .A   (pmem_addr)
 );
+`else
+sram_w8 #(.sram_bit(col*bw_psum)) psum_mem_instance (
+    .CLK   (clk),
+    // Port A: write
+    .D_A   (pmem_mux_in),
+    .CEN_A (!pmem_wr),
+    .WEN_A (1'b0),
+    .A_A   (pmem_addr),
+    // Port B: read
+    .Q_B   (pmem_out),
+    .CEN_B (!pmem_rd),
+    .WEN_B (1'b1),
+    .A_B   (pmem_addr)
+);
+`endif
 
 // SFP row
 sfp_row #(.bw_psum(bw_psum), .col(col), .bw(bw)) sfp_instance (
-    .clk(clk), 
-    .reset(reset),
-    .div(sfp_div), 
-    .acc(sfp_acc), 
-    .fifo_ext_rd(fifo_ext_rd), 
-    .fifo_ext_wr(fifo_ext_wr), 
-    .sum_in(sum_in),
-    .sfp_in(pmem_out),
-    .sfp_out(sfp_out),
-    .sum_out(sum_out)
+    .clk        (clk),
+    .reset      (reset),
+    .div        (sfp_div),
+    .acc        (sfp_acc),
+    .fifo_ext_rd(fifo_ext_rd),
+    .fifo_ext_wr(fifo_ext_wr),
+    .sum_in     (sum_in),
+    .sfp_in     (pmem_out),
+    .sfp_out    (sfp_out),
+    .sum_out    (sum_out)
 );
 
 endmodule
