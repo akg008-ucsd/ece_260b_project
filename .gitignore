@@ -1,0 +1,11 @@
+# Logs
+*.log
+
+
+# Dependency directories
+design/compiled
+verif/compiled
+
+# IDE files
+*.swp
+*.vcd
