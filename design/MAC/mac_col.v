@@ -5,12 +5,10 @@ module mac_col (clk, reset, out, q_in, in_zero, out_zero, q_out, i_inst, fifo_wr
 `else
 module mac_col (clk, reset, out, q_in, q_out, i_inst, fifo_wr, o_inst);
 `endif
-
 parameter bw = 8;
 parameter bw_psum = 2*bw+4;
 parameter pr = 8;
 parameter col_id = 0;
-
 output signed [bw_psum-1:0] out;
 input  signed [pr*bw-1:0] q_in;
 `ifdef CLK_GATE
@@ -22,14 +20,11 @@ input  clk, reset;
 input  [1:0] i_inst; // [1]: execute, [0]: load 
 output [1:0] o_inst; // [1]: execute, [0]: load 
 output fifo_wr;
-
 /**
 Instruction Map:
 01: Load
 10: Execute 
 */
-
-
 reg    load_ready_q;
 reg    [3:0] cnt_q;
 reg    [1:0] inst_q;
@@ -42,17 +37,13 @@ reg	 	[pr-1:0] key_zero_q;
 reg   signed [pr*bw-1:0] query_q;
 reg   signed [pr*bw-1:0] key_q;
 wire  signed [bw_psum-1:0] psum;
-
 assign o_inst = inst_q;
-
 assign fifo_wr = inst_3q[1] & ~inst_3q[0];
-
 assign out = psum;
 assign q_out  = query_q;
 `ifdef CLK_GATE
 assign out_zero = in_zero_q;
 `endif
-
 mac_16in #(.bw(bw), .bw_psum(bw_psum), .pr(pr)) mac_16in_instance (
         .a		(query_q), 
         .b		(key_q),
@@ -63,8 +54,6 @@ mac_16in #(.bw(bw), .bw_psum(bw_psum), .pr(pr)) mac_16in_instance (
         .reset	(reset),
 		.out	(psum)
 ); 
-
-
 always @ (posedge clk or posedge reset) begin
   if (reset) begin
     cnt_q 			<= 4'b0;
@@ -80,7 +69,7 @@ always @ (posedge clk or posedge reset) begin
 	`endif
   end
   else begin
-    inst_q <= i_inst;
+    inst_q  <= i_inst;
     inst_2q <= inst_q;
     inst_3q <= inst_2q;
 	`ifdef CLK_GATE
@@ -90,59 +79,28 @@ always @ (posedge clk or posedge reset) begin
         load_ready_q <= 1;
 		`ifdef CLK_GATE
 		key_zero_q <= {pr{1'b0}};
-		in_zero_q <= {pr{1'b0}};
+		in_zero_q  <= {pr{1'b0}};
 		`endif
     end
     else if (inst_q[0]) begin
-		`ifdef CLK_GATE
-			if(~in_zero[0]) query_q[bw*1-1:bw*0] <= q_in[bw*1-1:bw*0];
-			if(~in_zero[1]) query_q[bw*2-1:bw*1] <= q_in[bw*2-1:bw*1];
-			if(~in_zero[2]) query_q[bw*3-1:bw*2] <= q_in[bw*3-1:bw*2];
-			if(~in_zero[3]) query_q[bw*4-1:bw*3] <= q_in[bw*4-1:bw*3];
-			if(~in_zero[4]) query_q[bw*5-1:bw*4] <= q_in[bw*5-1:bw*4];
-			if(~in_zero[5]) query_q[bw*6-1:bw*5] <= q_in[bw*6-1:bw*5];
-			if(~in_zero[6]) query_q[bw*7-1:bw*6] <= q_in[bw*7-1:bw*6];
-			if(~in_zero[7]) query_q[bw*8-1:bw*7] <= q_in[bw*8-1:bw*7];
-		`else
-       	query_q <= q_in;
-		`endif
-       	if (cnt_q == 8-col_id)begin
-        	cnt_q <= 0;
+        query_q <= q_in;
+
+       	if (cnt_q == 8-col_id) begin
+        	cnt_q        <= 0;
         	load_ready_q <= 0;
 	    	if(load_ready_q) begin
+                key_q <= q_in;
 				`ifdef CLK_GATE
-				if(~in_zero[0]) key_q[bw*1-1:bw*0] <= q_in[bw*1-1:bw*0];
-				if(~in_zero[1]) key_q[bw*2-1:bw*1] <= q_in[bw*2-1:bw*1];
-				if(~in_zero[2]) key_q[bw*3-1:bw*2] <= q_in[bw*3-1:bw*2];
-				if(~in_zero[3]) key_q[bw*4-1:bw*3] <= q_in[bw*4-1:bw*3];
-				if(~in_zero[4]) key_q[bw*5-1:bw*4] <= q_in[bw*5-1:bw*4];
-				if(~in_zero[5]) key_q[bw*6-1:bw*5] <= q_in[bw*6-1:bw*5];
-				if(~in_zero[6]) key_q[bw*7-1:bw*6] <= q_in[bw*7-1:bw*6];
-				if(~in_zero[7]) key_q[bw*8-1:bw*7] <= q_in[bw*8-1:bw*7];
-				key_zero_q <= in_zero;
-				`else
-        		key_q <= q_in;
+                key_zero_q <= in_zero; 
 				`endif
 			end
        	end
        	else if (load_ready_q)
          	cnt_q <= cnt_q + 1;
-    	end
+    end
     else if(inst_q[1]) begin
-		`ifdef CLK_GATE
-		if(~in_zero[0]) query_q[bw*1-1:bw*0] <= q_in[bw*1-1:bw*0];
-		if(~in_zero[1]) query_q[bw*2-1:bw*1] <= q_in[bw*2-1:bw*1];
-		if(~in_zero[2]) query_q[bw*3-1:bw*2] <= q_in[bw*3-1:bw*2];
-		if(~in_zero[3]) query_q[bw*4-1:bw*3] <= q_in[bw*4-1:bw*3];
-		if(~in_zero[4]) query_q[bw*5-1:bw*4] <= q_in[bw*5-1:bw*4];
-		if(~in_zero[5]) query_q[bw*6-1:bw*5] <= q_in[bw*6-1:bw*5];
-		if(~in_zero[6]) query_q[bw*7-1:bw*6] <= q_in[bw*7-1:bw*6];
-		if(~in_zero[7]) query_q[bw*8-1:bw*7] <= q_in[bw*8-1:bw*7];
-		`else
-      	query_q <= q_in;
-		`endif
+        query_q <= q_in;
     end
   end
 end
-
 endmodule

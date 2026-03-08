@@ -1,14 +1,21 @@
 // Created by prof. Mingu Kang @VVIP Lab in UCSD ECE department
+// Please do not spread this code without permission
+`ifdef STEP_5_DUAL_PORT
 // Modified: Testbench updated for dual-port SRAM
-//   - QMEM / KMEM : sram_w16_dual  (Port A = write, Port B = read)
-//   - PMEM        : sram_w8_dual   (Port A = write, Port B = read)
+//   - QMEM / KMEM : sram_w16  (Port A = write, Port B = read)
+//   - PMEM        : sram_w8   (Port A = write, Port B = read)
 // Key behavioral change vs single-port:
 //   Write (qmem_wr/kmem_wr/pmem_wr) and Read (qmem_rd/kmem_rd/pmem_rd) to
 //   the SAME memory can now be asserted simultaneously without conflict,
 //   because they drive independent hardware ports.
 //   The instruction word format is UNCHANGED (20 bits); kqmem_addr[14:11]
 //   is still routed to both Port-A address and Port-B address inside core.v.
-// Please do not spread this code without permission
+`else
+// Single-port SRAM version:
+//   - QMEM / KMEM : sram_w16  (unified CEN/WEN/A port)
+//   - PMEM        : sram_w8   (unified CEN/WEN/A port)
+// Write and Read to the same memory must NOT be asserted simultaneously.
+`endif
 
 `timescale 1ns/1ps
 
@@ -17,8 +24,8 @@ module fullchip_tb;
 parameter total_cycle = 8;   // how many streamed Q vectors will be processed
 parameter bw = 8;            // Q & K vector bit precision
 parameter bw_psum = 2*bw+4;  // partial sum bit precision
-parameter pr = 8;           
-parameter col = 8;           
+parameter pr = 8;
+parameter col = 8;
 
 integer qk_file;        // file handler
 integer qk_scan_file;   // file handler
@@ -51,25 +58,39 @@ reg [pr*bw-1:0] core0_mem_in;
 
 // -----------------------------------------------------------------------
 // Control registers (combinational, set by testbench)
+`ifdef STEP_5_DUAL_PORT
 // These map to Port-A (write) or Port-B (read) enable signals inside core.v
+`else
+// These map to CEN/WEN enable signals inside core.v (single-port)
+`endif
 // -----------------------------------------------------------------------
 reg reset        = 1;
 reg clk          = 0;
 reg ofifo_rd     = 0;
+`ifdef STEP_5_DUAL_PORT
 // QMEM: qmem_wr drives Port-A (write), qmem_rd drives Port-B (read)
+`endif
 reg qmem_rd      = 0;
 reg qmem_wr      = 0;
+`ifdef STEP_5_DUAL_PORT
 // KMEM: kmem_wr drives Port-A (write), kmem_rd drives Port-B (read)
+`endif
 reg kmem_rd      = 0;
 reg kmem_wr      = 0;
+`ifdef STEP_5_DUAL_PORT
 // PMEM: pmem_wr drives Port-A (write), pmem_rd drives Port-B (read)
+`endif
 reg pmem_rd      = 0;
 reg pmem_wr      = 0;
 reg execute      = 0;
 reg load         = 0;
+`ifdef STEP_5_DUAL_PORT
 // Shared address: routed to BOTH Port-A (write) and Port-B (read) inside core.v.
 // With dual-port SRAMs the two ports are independent, so simultaneous
 // qmem_wr + qmem_rd at this same address is now legal and non-conflicting.
+`else
+// Shared address bus for both read and write operations (single-port).
+`endif
 reg [3:0] qkmem_add  = 0;
 reg [3:0] pmem_add   = 0;
 reg sfp_acc          = 0;
@@ -79,7 +100,7 @@ reg mode             = 0;
 reg start            = 0;
 
 // -----------------------------------------------------------------------
-// Pipelined (flopped) versions of control registers ¿ fed into inst bus
+// Pipelined (flopped) versions of control registers -> fed into inst bus
 // -----------------------------------------------------------------------
 reg ofifo_rd_q      = 0;
 reg qmem_rd_q       = 0;
@@ -95,47 +116,41 @@ reg [3:0] pmem_add_q   = 0;
 reg sfp_acc_q          = 0;
 reg sfp_div_q          = 0;
 reg pmem_src_sel_q     = 1;
-// NOTE: kqmem_src_sel_q removed ¿ it was unused in the single-port testbench
-// and is not required here because core.v routes the same kqmem_addr to
-// both Port A and Port B of the dual-port SRAMs.
 reg mode_q  = 0;
 reg start_q = 0;
 
 // -----------------------------------------------------------------------
-// Instruction word assembly (format unchanged from single-port version)
+// Instruction word assembly (format unchanged between single/dual port)
 // -----------------------------------------------------------------------
 assign inst[19]    = 1'b0;           // reserved
 assign inst[18]    = pmem_src_sel_q;
 assign inst[17]    = sfp_div_q;
 assign inst[16]    = sfp_acc_q;
 assign inst[15]    = ofifo_rd_q;
-assign inst[14:11] = qkmem_add_q;   // kqmem address (shared write/read addr)
-assign inst[10:8]  = pmem_add_q;    // pmem address  (shared write/read addr)
+assign inst[14:11] = qkmem_add_q;   // kqmem address
+assign inst[10:8]  = pmem_add_q;    // pmem address
 assign inst[7]     = execute_q;
 assign inst[6]     = load_q;
-assign inst[5]     = qmem_rd_q;     // ¿ QMEM Port-B (read)  CEN_B
-assign inst[4]     = qmem_wr_q;     // ¿ QMEM Port-A (write) CEN_A
-assign inst[3]     = kmem_rd_q;     // ¿ KMEM Port-B (read)  CEN_B
-assign inst[2]     = kmem_wr_q;     // ¿ KMEM Port-A (write) CEN_A
-assign inst[1]     = pmem_rd_q;     // ¿ PMEM Port-B (read)  CEN_B
-assign inst[0]     = pmem_wr_q;     // ¿ PMEM Port-A (write) CEN_A
+`ifdef STEP_5_DUAL_PORT
+assign inst[5]     = qmem_rd_q;     // -> QMEM Port-B (read)  CEN_B
+assign inst[4]     = qmem_wr_q;     // -> QMEM Port-A (write) CEN_A
+assign inst[3]     = kmem_rd_q;     // -> KMEM Port-B (read)  CEN_B
+assign inst[2]     = kmem_wr_q;     // -> KMEM Port-A (write) CEN_A
+assign inst[1]     = pmem_rd_q;     // -> PMEM Port-B (read)  CEN_B
+assign inst[0]     = pmem_wr_q;     // -> PMEM Port-A (write) CEN_A
+`else
+assign inst[5]     = qmem_rd_q;     // -> QMEM CEN (read)
+assign inst[4]     = qmem_wr_q;     // -> QMEM CEN (write)
+assign inst[3]     = kmem_rd_q;     // -> KMEM CEN (read)
+assign inst[2]     = kmem_wr_q;     // -> KMEM CEN (write)
+assign inst[1]     = pmem_rd_q;     // -> PMEM CEN (read)
+assign inst[0]     = pmem_wr_q;     // -> PMEM CEN (write)
+`endif
 
 integer rand_seed;
 
 // -----------------------------------------------------------------------
 // STEP_5_DUAL_PORT: storage for concurrent-access verification
-//
-// Hardware constraint understood from core.v:
-//   - PMEM D_A  = pmem_mux_in = pmem_src_sel ? ofifo_out : sfp_out
-//                 (core0_mem_in does NOT reach PMEM)
-//   - PMEM A_A  = PMEM A_B = pmem_addr = inst[10:8]
-//                 (single shared address bus ¿ same-address concurrent R/W)
-//
-// dp_rd_expect    : value captured by a clean Port-B-only read before
-//                   the concurrent cycle; used as the "old value" baseline
-// dp_concurrent_out: `out` captured immediately after the concurrent cycle;
-//                    must equal dp_rd_expect (read-before-write semantics)
-// dp_pass         : overall STEP_5 pass/fail flag
 // -----------------------------------------------------------------------
 `ifdef STEP_5_DUAL_PORT
 `ifdef DUAL_CORE_EN
@@ -149,6 +164,28 @@ reg [bw_psum*col-1:0] dp_new_val;
 `endif
 integer dp_pass;
 `endif
+
+// -----------------------------------------------------------------------
+// OPR_ISO: storage for zero-operand gating verification
+// -----------------------------------------------------------------------
+`ifdef OPR_ISO
+`ifdef DUAL_CORE_EN
+reg [2*bw_psum*col-1:0] opr_zero_out;
+`else
+reg [bw_psum*col-1:0]   opr_zero_out;
+`endif
+integer opr_iso_pass;
+`endif
+
+// -----------------------------------------------------------------------
+// Global pass/fail counters - updated by STEP_1, STEP_2, STEP_4
+// -----------------------------------------------------------------------
+integer step1_pass;
+integer step1_fail;
+integer step2_pass;
+integer step2_fail;
+integer step4_pass;
+integer step4_fail;
 
 reg [bw_psum-1:0] temp5b;
 reg [bw_psum+3:0] temp_sum;
@@ -196,6 +233,11 @@ end
 // -----------------------------------------------------------------------
 initial begin
 
+    // Initialize pass/fail counters
+    step1_pass = 0; step1_fail = 0;
+    step2_pass = 0; step2_fail = 0;
+    step4_pass = 0; step4_fail = 0;
+
 `ifdef RANDOM_TEST_MODE
     $display("\n\n##### -------VERIFICATION : RANDOM TESTING MODE-------- #####\n\n");
 `else
@@ -207,6 +249,14 @@ initial begin
 
 `ifdef DUAL_CORE_EN
     $display("\n\n------------DUAL_CORE ENABLED---------------\n\n");
+`endif
+
+`ifdef STEP_5_DUAL_PORT
+    $display("\n\n------------DUAL PORT SRAM ENABLED---------------\n\n");
+`endif
+
+`ifdef OPR_ISO
+    $display("\n\n------------OPERAND ISOLATION (OPR_ISO) ENABLED---------------\n\n");
 `endif
 
     // ----------------------------------------------------------------
@@ -376,9 +426,7 @@ initial begin
     end
 
     // ================================================================
-    // PHASE 1 ¿ Write Q data into QMEM via Port A (write port)
-    // With dual-port SRAM: only Port-A (write) is active here.
-    // Port-B (read) is idle (CEN_B=1 because qmem_rd=0).
+    // PHASE 1 - Write Q data into QMEM
     // ================================================================
     $display("##### QMEM Writing  #####");
     for (q=0; q<10; q=q+1) #1;  // wait for reset deassertion
@@ -387,10 +435,13 @@ initial begin
     #2;
 
     for (q=0; q<total_cycle; q=q+1) begin
-        qmem_wr = 1;                              // enables QMEM Port-A (write)
+`ifdef STEP_5_DUAL_PORT
+        qmem_wr = 1;  // enables QMEM Port-A (write)
+`else
+        qmem_wr = 1;  // enables QMEM write (CEN=0, WEN=0)
+`endif
         if (q>0) qkmem_add = qkmem_add + 1;
         #1;
-        // Data presented one cycle after address ¿ captured on next posedge
         core0_mem_in[1*bw-1:0*bw] = Q[q][0];
         core0_mem_in[2*bw-1:1*bw] = Q[q][1];
         core0_mem_in[3*bw-1:2*bw] = Q[q][2];
@@ -413,9 +464,7 @@ initial begin
     qkmem_add = qkmem_add + 1;
 
     // ================================================================
-    // PHASE 2 ¿ Write V data into QMEM (same memory, higher addresses)
-    // NOTE: V is stored in QMEM alongside Q; re-read later for N*V.
-    // With dual-port SRAM Port-A (write) active, Port-B (read) idle.
+    // PHASE 2 - Write V data into QMEM (same memory, higher addresses)
     // ================================================================
     $display("##### Vdata Writing  #####");
     for (q=0; q<total_cycle; q=q+1) begin
@@ -447,13 +496,15 @@ initial begin
     #1;
 
     // ================================================================
-    // PHASE 3 ¿ Write K data into KMEM via Port A (write port)
-    // QMEM and KMEM are separate dual-port instances:
-    // writing KMEM here does NOT conflict with QMEM Port-B at all.
+    // PHASE 3 - Write K data into KMEM
     // ================================================================
     $display("##### KMEM Writing #####");
     for (q=0; q<col; q=q+1) begin
-        kmem_wr = 1;                              // enables KMEM Port-A (write)
+`ifdef STEP_5_DUAL_PORT
+        kmem_wr = 1;  // enables KMEM Port-A (write)
+`else
+        kmem_wr = 1;  // enables KMEM write (CEN=0, WEN=0)
+`endif
         if (q>0) qkmem_add = qkmem_add + 1;
         #1;
         core0_mem_in[1*bw-1:0*bw] = K[q][0];
@@ -479,8 +530,7 @@ initial begin
     #1;
 
     // ================================================================
-    // PHASE 4 ¿ Write N (norm) data into KMEM (higher addresses)
-    // N is stored in same KMEM as K; re-read later for N*V computation.
+    // PHASE 4 - Write N (norm) data into KMEM (higher addresses)
     // ================================================================
     $display("##### Norm writing #####");
     for (q=0; q<col; q=q+1) begin
@@ -512,12 +562,15 @@ initial begin
     #6;
 
     // ================================================================
-    // PHASE 5 ¿ Load Keys into MAC array via KMEM Port B (read port)
-    // kmem_rd=1 ¿ KMEM Port-B (read) active; Port-A (write) idle.
+    // PHASE 5 - Load Keys into MAC array via KMEM read
     // ================================================================
     $display("##### Keys loading to processor #####");
 
+`ifdef STEP_5_DUAL_PORT
     kmem_rd = 1;    // KMEM Port-B: read
+`else
+    kmem_rd = 1;    // KMEM read
+`endif
     load    = 1;
     for (q=0; q<8; q=q+1) begin
         if (q>0) qkmem_add = qkmem_add + 1;
@@ -530,14 +583,15 @@ initial begin
     #1;
 
     // ================================================================
-    // PHASE 6 ¿ Execute: stream Q vectors from QMEM Port B (read port)
-    // qmem_rd=1 ¿ QMEM Port-B (read) active; Port-A (write) idle.
-    // Dual-port note: KMEM Port-A could be written here simultaneously
-    // if needed (different memory), but no such overlap is required.
+    // PHASE 6 - Execute: stream Q vectors from QMEM read port
     // ================================================================
     $display("##### Execute (Query) #####");
 
+`ifdef STEP_5_DUAL_PORT
     qmem_rd = 1;    // QMEM Port-B: read
+`else
+    qmem_rd = 1;    // QMEM read
+`endif
     execute = 1;
     for (q=0; q<total_cycle; q=q+1) begin
         if (q>0) qkmem_add = qkmem_add + 1;
@@ -553,14 +607,17 @@ initial begin
     #1;
 
     // ================================================================
-    // PHASE 7 ¿ Read OFIFO and write results to PMEM Port A (write port)
-    // pmem_wr=1 ¿ PMEM Port-A (write) active; Port-B (read) idle.
+    // PHASE 7 - Read OFIFO and write results to PMEM
     // ================================================================
     $display("##### Moving OFIFO data to PMEM #####");
     #1;
     ofifo_rd = 1;
     #1;
+`ifdef STEP_5_DUAL_PORT
     pmem_wr = 1;    // PMEM Port-A: write
+`else
+    pmem_wr = 1;    // PMEM write
+`endif
     for (q=0; q<total_cycle; q=q+1) begin
         if (q>0) pmem_add = pmem_add + 1;
         #1;
@@ -573,8 +630,7 @@ initial begin
     #1;
 
     // ================================================================
-    // STEP 1 ¿ Read PMEM via Port B, accumulate in SFP, check K*Q
-    // pmem_rd=1 ¿ PMEM Port-B (read) active; Port-A (write) idle.
+    // STEP 1 - Read PMEM, accumulate in SFP, check K*Q
     // ================================================================
 `ifdef STEP_1
 
@@ -589,7 +645,11 @@ initial begin
 
     fork
         begin
+`ifdef STEP_5_DUAL_PORT
             pmem_rd = 1;    // PMEM Port-B: read
+`else
+            pmem_rd = 1;    // PMEM read
+`endif
             #1;
             sfp_acc = 1;
             for (t=0; t<total_cycle; t=t+1) begin
@@ -640,10 +700,7 @@ initial begin
 `endif  // STEP_1
 
     // ================================================================
-    // STEP 2 ¿ Normalisation: read PMEM Port-B ¿ SFP div ¿ write PMEM Port-A
-    // Dual-port note: pmem_rd and pmem_wr can now be asserted in the
-    // SAME cycle without port conflict; timing is still kept sequential
-    // here to respect SFP pipeline latency.
+    // STEP 2 - Normalisation: read PMEM -> SFP div -> write PMEM
     // ================================================================
 `ifdef STEP_2
 
@@ -657,7 +714,11 @@ initial begin
     $display("\n##### Normalization and Writing back to PMEM #####");
 
     for (q=0; q<total_cycle; q=q+1) begin
+`ifdef STEP_5_DUAL_PORT
         pmem_rd = 1;    // PMEM Port-B: read K*Q result
+`else
+        pmem_rd = 1;    // PMEM read K*Q result
+`endif
         pmem_wr = 0;
         if (q > 0) pmem_add = pmem_add + 1;
         #1;
@@ -667,7 +728,11 @@ initial begin
         #1;
         sfp_div = 0;
         #4;
+`ifdef STEP_5_DUAL_PORT
         pmem_wr = 1;    // PMEM Port-A: write normalised result back
+`else
+        pmem_wr = 1;    // PMEM write normalised result back
+`endif
         #1;
     end
 
@@ -731,14 +796,7 @@ initial begin
 `endif  // STEP_2
 
     // ================================================================
-    // STEP 4 ¿ N*V computation
-    //   4a. Load N from KMEM Port-B (read), base address = 8
-    //   4b. Stream V from QMEM Port-B (read), base address = 8
-    //   4c. Drain OFIFO ¿ PMEM Port-A (write)
-    //   4d. Verify N*V from PMEM Port-B (read)
-    //
-    // Dual-port benefit: steps 4a (KMEM read) and 4b (QMEM read) use
-    // completely independent SRAM instances, so no scheduling conflict.
+    // STEP 4 - N*V computation
     // ================================================================
 `ifdef STEP_4
 
@@ -748,11 +806,15 @@ initial begin
     $display("\n\n-----------STEP_4 (DUAL_CORE)-------------\n\n");
 `endif
 
-    // -- 4a: Load N into MAC array from KMEM Port-B ------------------
+    // -- 4a: Load N into MAC array from KMEM read --------------------
     $display("\n##### N loading to processor #####");
 
-    qkmem_add = 8;  // base addr for N stored in KMEM (after K at 0¿7)
+    qkmem_add = 8;  // base addr for N stored in KMEM (after K at 0-7)
+`ifdef STEP_5_DUAL_PORT
     kmem_rd   = 1;  // KMEM Port-B: read
+`else
+    kmem_rd   = 1;  // KMEM read
+`endif
     load      = 1;
     for (q=0; q<col; q=q+1) begin
         if (q>0) qkmem_add = qkmem_add + 1;
@@ -764,11 +826,15 @@ initial begin
     load      = 0;
     #1;
 
-    // -- 4b: Stream V vectors from QMEM Port-B ----------------------
+    // -- 4b: Stream V vectors from QMEM read port --------------------
     $display("##### V streaming to processor #####");
 
+`ifdef STEP_5_DUAL_PORT
     qmem_rd   = 1;  // QMEM Port-B: read
-    qkmem_add = 8;  // base addr for V stored in QMEM (after Q at 0¿7)
+`else
+    qmem_rd   = 1;  // QMEM read
+`endif
+    qkmem_add = 8;  // base addr for V stored in QMEM (after Q at 0-7)
     execute   = 1;
     for (q=0; q<total_cycle; q=q+1) begin
         if (q>0) qkmem_add = qkmem_add + 1;
@@ -780,13 +846,17 @@ initial begin
     execute   = 0;
     #2;
 
-    // -- 4c: Drain OFIFO ¿ PMEM Port-A (write) ----------------------
+    // -- 4c: Drain OFIFO -> PMEM write -------------------------------
     $display("##### Moving OFIFO data to PMEM #####");
     #1;
     pmem_src_sel = 1;
     ofifo_rd     = 1;
     #1;
+`ifdef STEP_5_DUAL_PORT
     pmem_wr = 1;    // PMEM Port-A: write
+`else
+    pmem_wr = 1;    // PMEM write
+`endif
     for (q=0; q<total_cycle; q=q+1) begin
         if (q>0) pmem_add = pmem_add + 1;
         #1;
@@ -798,13 +868,17 @@ initial begin
     pmem_add = 0;
     #1;
 
-    // -- 4d: Verify N*V from PMEM Port-B (read) ---------------------
+    // -- 4d: Verify N*V from PMEM read -------------------------------
     $display("##### Reading PMEM to verify N*V outputs #####\n");
 
     fork
         begin
             for (q=0; q<total_cycle; q=q+1) begin
+`ifdef STEP_5_DUAL_PORT
                 pmem_rd = 1;    // PMEM Port-B: read
+`else
+                pmem_rd = 1;    // PMEM read
+`endif
                 if (q>0) pmem_add = pmem_add + 1;
                 #1;
             end
@@ -850,37 +924,8 @@ initial begin
 `endif  // STEP_4
 
     // ================================================================
-    // STEP_5_DUAL_PORT ¿ Concurrent Port-A (write) + Port-B (read)
+    // STEP_5_DUAL_PORT - Concurrent Port-A (write) + Port-B (read)
     //                    verification on all three SRAMs
-    //
-    // Hardware constraints (from core.v) that define what this test can do:
-    //
-    //   PMEM: D_A = pmem_mux_in = pmem_src_sel ? ofifo_out : sfp_out
-    //         core0_mem_in does NOT feed PMEM write data at all.
-    //         A_A = A_B = pmem_addr (shared bus) ¿ same-address concurrent R/W only.
-    //
-    //   QMEM/KMEM: D_A = mem_in = core0_mem_in ¿
-    //              A_A = A_B = kqmem_addr (shared bus) ¿ same-address concurrent R/W.
-    //
-    // The key dual-port property being verified:
-    //   With single-port SRAM, asserting wr=1 AND rd=1 in the same cycle
-    //   on the same address is undefined/conflicting.
-    //   With dual-port SRAM it is well-defined:
-    //     Port-B (read)  returns the OLD value  (read-before-write, guaranteed
-    //                    by NBA semantics inside always @(posedge CLK))
-    //     Port-A (write) lands the new value for the next read.
-    //
-    // Sub-tests:
-    //   5A  PMEM  ¿ functionally verified: Port-B output is directly `out`
-    //   5B  QMEM  ¿ control-signal verified: simultaneous wr+rd asserted;
-    //               check for X/Z in VCD on qmem_out
-    //   5C  KMEM  ¿ control-signal verified: simultaneous wr+rd asserted;
-    //               check for X/Z in VCD on kmem_out
-    //
-    // Timing (2-cycle latency from testbench signal ¿ `out`):
-    //   T+0 : testbench sets pmem_rd/pmem_wr
-    //   T+1 : pipeline flop captures ¿ pmem_rd_q/pmem_wr_q ¿ drives inst
-    //   T+2 : SRAM clocks; Q_B registered ¿ visible on `out`
     // ================================================================
 `ifdef STEP_5_DUAL_PORT
 
@@ -889,25 +934,6 @@ initial begin
 
     // ----------------------------------------------------------------
     // 5A : PMEM same-address concurrent Port-A write / Port-B read
-    //
-    // Pre-condition: PMEM addr 0 holds N*V result[0] written by STEP_4.
-    //
-    // Phase 1  ¿ Baseline read (Port-B only):
-    //   Read addr 0 cleanly ¿ dp_rd_expect = old value.
-    //
-    // Phase 1b ¿ Write-probe to scratch addr 1 (Port-A only), then
-    //   read it back ¿ dp_new_val = what pmem_mux_in actually holds
-    //   right now, with NO hardcoded assumption about its value.
-    //   (pmem_mux_in = pmem_src_sel ? ofifo_out : sfp_out; value
-    //    depends on pipeline state after previous steps.)
-    //
-    // Phase 2  ¿ Concurrent cycle (pmem_rd=1 AND pmem_wr=1, addr 0):
-    //   Port-B reads  addr 0 ¿ must return dp_rd_expect (old value).
-    //   Port-A writes addr 0 ¿ lands dp_new_val.
-    //
-    // Check A: out == dp_rd_expect ¿ read-before-write confirmed.
-    // Check B: read addr 0 again  ¿ out == dp_new_val (write landed).
-    //          Both sides fully dynamic; no hardcoded constants.
     // ----------------------------------------------------------------
     $display("--- 5A: PMEM same-address concurrent Port-A write / Port-B read ---");
 
@@ -924,7 +950,6 @@ initial begin
     $display("5A baseline : PMEM addr0 old value        = %0h", dp_rd_expect);
 
     // --- Phase 1b: write-probe to scratch addr 1, read back ----------
-    // Captures the actual current pmem_mux_in value dynamically.
     pmem_wr  = 1;
     pmem_rd  = 0;
     pmem_add = 1;
@@ -942,7 +967,7 @@ initial begin
     dp_new_val = out;
     $display("5A new_val  : Port-A write data (dynamic) = %0h", dp_new_val);
 
-    // --- Phase 2: concurrent cycle ¿ pmem_rd=1 AND pmem_wr=1, addr 0 -
+    // --- Phase 2: concurrent cycle - pmem_rd=1 AND pmem_wr=1, addr 0
     pmem_rd  = 1;
     pmem_wr  = 1;
     pmem_add = 0;
@@ -953,7 +978,6 @@ initial begin
     #2;
     dp_concurrent_out = out;
 
-    // Check A: Port-B must return OLD value (read-before-write)
     if (dp_concurrent_out == dp_rd_expect) begin
         $display("PASS 5A-check-A: Port-B returned OLD value during concurrent write");
         $display("  out = %0h  (== baseline, read-before-write confirmed)", dp_concurrent_out);
@@ -964,7 +988,7 @@ initial begin
         dp_pass = 0;
     end
 
-    // --- Phase 3: post-write read ¿ verify Port-A write landed -------
+    // --- Phase 3: post-write read - verify Port-A write landed -------
     pmem_rd  = 1;
     pmem_wr  = 0;
     pmem_add = 0;
@@ -973,7 +997,6 @@ initial begin
     pmem_add = 0;
     #2;
 
-    // Check B: addr 0 must now equal dp_new_val (no hardcoding)
     if (out == dp_new_val) begin
         $display("PASS 5A-check-B: Port-A concurrent write landed; addr0 = %0h", out);
     end else begin
@@ -985,23 +1008,12 @@ initial begin
 
     // ----------------------------------------------------------------
     // 5B : QMEM same-address concurrent Port-A write / Port-B read
-    //
-    // Q data was written to QMEM addrs 0..total_cycle-1 in Phase 1.
-    // Write a new dummy word to addr 0 on Port-A while simultaneously
-    // reading addr 0 on Port-B (qmem_rd=1 and qmem_wr=1 together).
-    // qmem_out feeds the MAC array, not directly visible on `out`,
-    // so this is a control-signal assertion check:
-    //   - Confirm no simulator error/X/Z on qmem_out (inspect VCD)
-    //   - Confirm that after the concurrent cycle, reading addr 0 via
-    //     a clean execute returns the newly written value (0xBB pattern)
     // ----------------------------------------------------------------
     $display("--- 5B: QMEM same-address concurrent Port-A write / Port-B read ---");
 
-    // Concurrent: qmem_wr=1 (Port-A write addr 0, data=0xBB)
-    //           + qmem_rd=1 (Port-B read  addr 0)
     core0_mem_in = {pr{8'hBB}};
-    qmem_wr   = 1;      // Port-A: write addr 0
-    qmem_rd   = 1;      // Port-B: read  addr 0
+    qmem_wr   = 1;
+    qmem_rd   = 1;
     qkmem_add = 0;
     #1;
     qmem_wr   = 0;
@@ -1013,18 +1025,12 @@ initial begin
 
     // ----------------------------------------------------------------
     // 5C : KMEM same-address concurrent Port-A write / Port-B read
-    //
-    // K data is in KMEM addrs 0..col-1.
-    // Write a dummy word to addr 0 on Port-A while simultaneously
-    // reading addr 0 on Port-B (kmem_rd=1 and kmem_wr=1 together).
-    // kmem_out feeds MAC load path; same control-signal assertion
-    // check as 5B.
     // ----------------------------------------------------------------
     $display("--- 5C: KMEM same-address concurrent Port-A write / Port-B read ---");
 
     core0_mem_in = {pr{8'hCC}};
-    kmem_wr   = 1;      // Port-A: write addr 0
-    kmem_rd   = 1;      // Port-B: read  addr 0
+    kmem_wr   = 1;
+    kmem_rd   = 1;
     qkmem_add = 0;
     #1;
     kmem_wr   = 0;
@@ -1036,22 +1042,9 @@ initial begin
 
     // ----------------------------------------------------------------
     // 5D : End-to-end N*V re-computation and verification
-    //
-    // After 5A's concurrent R/W test, PMEM addrs 0 and 1 were
-    // overwritten. This sub-test re-runs the full N*V pipeline:
-    //   - Reload N into MAC array from KMEM Port-B
-    //   - Re-stream V from QMEM Port-B
-    //   - Drain OFIFO ¿ PMEM Port-A (write)
-    //   - Read all PMEM addrs via Port-B and verify against result2
-    //
-    // This confirms dual-port SRAM integrity end-to-end after
-    // concurrent access: both ports working correctly, no data
-    // corruption in KMEM or QMEM from 5B/5C, PMEM writeable and
-    // readable correctly.
     // ----------------------------------------------------------------
     $display("--- 5D: N*V end-to-end re-verification after concurrent R/W ---");
 
-    // -- Reload N from KMEM Port-B (addr 8..8+col-1) -----------------
     $display("5D: Reloading N into MAC array");
     qkmem_add = 8;
     kmem_rd   = 1;
@@ -1065,7 +1058,6 @@ initial begin
     load      = 0;
     #1;
 
-    // -- Re-stream V from QMEM Port-B (addr 8..8+total_cycle-1) ------
     $display("5D: Re-streaming V through MAC array");
     qmem_rd   = 1;
     qkmem_add = 8;
@@ -1079,7 +1071,6 @@ initial begin
     execute   = 0;
     #2;
 
-    // -- Drain OFIFO ¿ PMEM Port-A (write) ---------------------------
     $display("5D: Writing N*V results to PMEM");
     #1;
     pmem_src_sel = 1;
@@ -1097,7 +1088,6 @@ initial begin
     pmem_add = 0;
     #1;
 
-    // -- Read PMEM Port-B and verify against result2 ------------------
     $display("5D: Verifying N*V outputs\n");
     fork
         begin
@@ -1146,22 +1136,571 @@ initial begin
         end
     join
 
-
-    // ----------------------------------------------------------------
-    // STEP_5 summary
-    // ----------------------------------------------------------------
     if (dp_pass)
         $display("\n##### STEP_5_DUAL_PORT : ALL CONCURRENT R/W CHECKS PASSED #####\n");
     else
-        $display("\n##### STEP_5_DUAL_PORT : ONE OR MORE CHECKS FAILED ¿ SEE ABOVE #####\n");
+        $display("\n##### STEP_5_DUAL_PORT : ONE OR MORE CHECKS FAILED - SEE ABOVE #####\n");
 
 `endif  // STEP_5_DUAL_PORT
+
+    // ================================================================
+    // OPR_ISO - Zero-operand gating verification
+    // ================================================================
+`ifdef OPR_ISO
+
+    $display("\n\n-----------OPR_ISO : ZERO OPERAND GATING VERIFICATION-----------\n\n");
+    opr_iso_pass = 1;
+
+    // ----------------------------------------------------------------
+    // 6A : All-zero Q vector -> all `a` slices == 0 -> all lanes gated
+    // ----------------------------------------------------------------
+    $display("--- 6A: All-zero Q operand -> all multiply lanes must be gated ---");
+
+    // Reload K into MAC array from KMEM addrs 0..col-1
+    qkmem_add = 0;
+    kmem_rd   = 1;
+    load      = 1;
+    for (q=0; q<col; q=q+1) begin
+        if (q>0) qkmem_add = qkmem_add + 1;
+        #1;
+    end
+    kmem_rd   = 0;
+    qkmem_add = 0;
+    load      = 0;
+    #1;
+
+    // Write all-zero Q vector to QMEM addrs 0..total_cycle-1
+    core0_mem_in = {pr*bw{1'b0}};
+`ifdef DUAL_CORE_EN
+    core1_mem_in = {pr*bw{1'b0}};
+`endif
+    qkmem_add = 0;
+    for (q=0; q<total_cycle; q=q+1) begin
+        qmem_wr = 1;
+        if (q>0) qkmem_add = qkmem_add + 1;
+        #1;
+    end
+    qmem_wr   = 0;
+    qkmem_add = 0;
+    #1;
+
+    // Execute total_cycle cycles: stream zero Q vectors through MAC
+    qmem_rd   = 1;
+    qkmem_add = 0;
+    execute   = 1;
+    for (q=0; q<total_cycle; q=q+1) begin
+        if (q>0) qkmem_add = qkmem_add + 1;
+        #1;
+    end
+    qmem_rd   = 0;
+    qkmem_add = 0;
+    execute   = 0;
+    #2;
+
+    // Drain OFIFO -> PMEM addrs 0..total_cycle-1
+    pmem_src_sel = 1;
+    #1;
+    ofifo_rd     = 1;
+    #1;
+    pmem_wr  = 1;
+    pmem_add = 0;
+    for (q=0; q<total_cycle; q=q+1) begin
+        if (q>0) pmem_add = pmem_add + 1;
+        #1;
+    end
+    ofifo_rd = 0;
+    #1;
+    pmem_wr  = 0;
+    pmem_add = 0;
+    #1;
+
+    // Read all PMEM addrs and verify all == zero
+    fork
+        begin
+            for (q=0; q<total_cycle; q=q+1) begin
+                pmem_rd = 1;
+                if (q>0) pmem_add = pmem_add + 1;
+                #1;
+            end
+            pmem_rd  = 0;
+            pmem_add = 0;
+        end
+        begin
+            #2;
+            for (n=0; n<total_cycle; n=n+1) begin
+                opr_zero_out = out;
+`ifndef DUAL_CORE_EN
+                if (opr_zero_out == {bw_psum*col{1'b0}})
+                    $display("PASS 6A cycle%2d: Zero Q -> output = 0 (lanes gated): %40h", n, opr_zero_out);
+                else begin
+                    $display("FAIL 6A cycle%2d: Zero Q -> output non-zero (gating broken)", n);
+                    $display("  Expected: %40h", {bw_psum*col{1'b0}});
+                    $display("  Observed: %40h", opr_zero_out);
+                    opr_iso_pass = 0;
+                end
+`else
+                if (opr_zero_out == {2*bw_psum*col{1'b0}})
+                    $display("PASS 6A cycle%2d: Zero Q -> output = 0 (lanes gated): %80h", n, opr_zero_out);
+                else begin
+                    $display("FAIL 6A cycle%2d: Zero Q -> output non-zero (gating broken)", n);
+                    $display("  Expected: %80h", {2*bw_psum*col{1'b0}});
+                    $display("  Observed: %80h", opr_zero_out);
+                    opr_iso_pass = 0;
+                end
+`endif
+                #1;
+            end
+        end
+    join
+
+    // ----------------------------------------------------------------
+    // 6B : All-zero K rows -> all `b` slices == 0 -> all lanes gated
+    //
+    // FIX: The load loop now runs col+2 cycles instead of col cycles.
+    //
+    // Root cause of original failure:
+    //   There are two pipeline stages between TB asserting load=1 and
+    //   mac_col seeing valid data in key_q:
+    //     1. inst_q: i_inst is registered once in mac_col, so inst_q[0]
+    //        goes high one cycle after the TB asserts load=1.
+    //     2. kmem_out: sram_w16 has 1-cycle read latency, so kmem_out
+    //        is valid one cycle after kmem_rd is asserted.
+    //   Combined, mac_col only sees (col - 2) = 6 valid load cycles in
+    //   a col=8 loop. For col_id=1 (deepest column), key capture requires
+    //   cnt_q==7, meaning 8 valid cycles are needed -- it never gets there,
+    //   so key_q retains its stale non-zero value from the prior N*V test.
+    //
+    //   Running col+2 = 10 cycles ensures all 8 mac_col slots capture
+    //   the all-zero kmem_out correctly. A single pass is sufficient.
+    //   The previous double-reload workaround was insufficient because it
+    //   only addressed the slot-0 stale issue, not the pipeline depth.
+    // ----------------------------------------------------------------
+    $display("--- 6B: All-zero K operand -> all multiply lanes must be gated ---");
+
+    // Write all-zero K rows to KMEM addrs 0..col-1
+    core0_mem_in = {pr*bw{1'b0}};
+`ifdef DUAL_CORE_EN
+    core1_mem_in = {pr*bw{1'b0}};
+`endif
+    qkmem_add = 0;
+    for (q=0; q<col; q=q+1) begin
+        kmem_wr = 1;
+        if (q>0) qkmem_add = qkmem_add + 1;
+        #1;
+    end
+    kmem_wr   = 0;
+    qkmem_add = 0;
+    #1;
+
+    // FIX: Reset load_ready_q in all mac_col columns before the 6B load.
+    //
+    // Root cause: load_ready_q is a one-shot flag per mac_col column.
+    //   - Starts at 1 after reset.
+    //   - Goes to 0 after key_q is captured (cnt_q == 8-col_id).
+    //   - ONLY resets back to 1 when inst_q[0] && inst_q[1] simultaneously
+    //     (load+execute asserted together in the instruction pipeline).
+    //
+    // At the end of PHASE 6 / 4b execute, a brief load=1 pulse overlaps
+    // with execute still in the inst pipeline, generating inst_q=2'b11 and
+    // resetting load_ready_q=1. This is what allows STEP_4 N-load to work.
+    //
+    // But after 6A execute there is no such pulse, so load_ready_q remains 0
+    // in all columns. The 6B load loop then silently drops every key capture
+    // and key_q retains the stale N*V weights -> non-zero output.
+    //
+    // Fix: assert execute=1 AND load=1 for one cycle before the 6B load.
+    // Then wait col+1 cycles for the 2'b11 pulse to ripple through all 8
+    // column inst pipelines (col_id=8 sees inst delayed by 7 extra regs).
+    execute = 1;
+    load    = 1;
+    #1;
+    execute = 0;
+    load    = 0;
+    // Wait for 2'b11 pulse to propagate through all col inst pipeline stages.
+    // col_id=k sees inst delayed k cycles; col_id=8 needs 8 cycles.
+    // Add 1 extra for the TB load_q register -> 9 cycles total.
+    #9;
+
+    // Now load all-zero K into MAC array. Plain col-cycle loop is sufficient
+    // since load_ready_q=1 is guaranteed in all columns.
+    qkmem_add = 0;
+    kmem_rd   = 1;
+    load      = 1;
+    for (q=0; q<col; q=q+1) begin
+        if (q>0) qkmem_add = qkmem_add + 1;
+        #1;
+    end
+    kmem_rd   = 0;
+    qkmem_add = 0;
+    load      = 0;
+    #1;
+
+    // Write non-zero Q (0x01 pattern) to QMEM addrs 0..total_cycle-1
+    core0_mem_in = {pr{8'h01}};
+`ifdef DUAL_CORE_EN
+    core1_mem_in = {pr{8'h01}};
+`endif
+    qkmem_add = 0;
+    for (q=0; q<total_cycle; q=q+1) begin
+        qmem_wr = 1;
+        if (q>0) qkmem_add = qkmem_add + 1;
+        #1;
+    end
+    qmem_wr   = 0;
+    qkmem_add = 0;
+    #1;
+
+    // Execute total_cycle cycles: stream non-zero Q against all-zero K
+    qmem_rd   = 1;
+    qkmem_add = 0;
+    execute   = 1;
+    for (q=0; q<total_cycle; q=q+1) begin
+        if (q>0) qkmem_add = qkmem_add + 1;
+        #1;
+    end
+    qmem_rd   = 0;
+    qkmem_add = 0;
+    execute   = 0;
+    #2;
+
+    // Drain OFIFO -> PMEM addrs 0..total_cycle-1
+    pmem_src_sel = 1;
+    #1;
+    ofifo_rd     = 1;
+    #1;
+    pmem_wr  = 1;
+    pmem_add = 0;
+    for (q=0; q<total_cycle; q=q+1) begin
+        if (q>0) pmem_add = pmem_add + 1;
+        #1;
+    end
+    ofifo_rd = 0;
+    #1;
+    pmem_wr  = 0;
+    pmem_add = 0;
+    #1;
+
+    // Read all PMEM addrs and verify all == zero
+    fork
+        begin
+            for (q=0; q<total_cycle; q=q+1) begin
+                pmem_rd = 1;
+                if (q>0) pmem_add = pmem_add + 1;
+                #1;
+            end
+            pmem_rd  = 0;
+            pmem_add = 0;
+        end
+        begin
+            #2;
+            for (n=0; n<total_cycle; n=n+1) begin
+                opr_zero_out = out;
+`ifndef DUAL_CORE_EN
+                if (opr_zero_out == {bw_psum*col{1'b0}})
+                    $display("PASS 6B cycle%2d: Zero K -> output = 0 (lanes gated): %40h", n, opr_zero_out);
+                else begin
+                    $display("FAIL 6B cycle%2d: Zero K -> output non-zero (gating broken)", n);
+                    $display("  Expected: %40h", {bw_psum*col{1'b0}});
+                    $display("  Observed: %40h", opr_zero_out);
+                    opr_iso_pass = 0;
+                end
+`else
+                if (opr_zero_out == {2*bw_psum*col{1'b0}})
+                    $display("PASS 6B cycle%2d: Zero K -> output = 0 (lanes gated): %80h", n, opr_zero_out);
+                else begin
+                    $display("FAIL 6B cycle%2d: Zero K -> output non-zero (gating broken)", n);
+                    $display("  Expected: %80h", {2*bw_psum*col{1'b0}});
+                    $display("  Observed: %80h", opr_zero_out);
+                    opr_iso_pass = 0;
+                end
+`endif
+                #1;
+            end
+        end
+    join
+
+    // ----------------------------------------------------------------
+    // 6C : Functional correctness check - K*Q with original K and Q
+    //
+    // After 6A/6B confirmed zero-operand gating works, verify that the
+    // MAC still produces correct non-zero results with real data.
+    // Reload original K (KMEM addrs 0..col-1) and stream original Q
+    // (QMEM addrs 0..total_cycle-1, written back here), then compare
+    // against the golden result[][] computed at the top of the TB.
+    // ----------------------------------------------------------------
+    $display("--- 6C: K*Q functional correctness after OPR_ISO gating checks ---");
+
+    // Restore original K values into KMEM addrs 0..col-1
+    qkmem_add = 0;
+    for (q=0; q<col; q=q+1) begin
+        kmem_wr = 1;
+        if (q>0) qkmem_add = qkmem_add + 1;
+        #1;
+        core0_mem_in[1*bw-1:0*bw] = K[q][0];
+        core0_mem_in[2*bw-1:1*bw] = K[q][1];
+        core0_mem_in[3*bw-1:2*bw] = K[q][2];
+        core0_mem_in[4*bw-1:3*bw] = K[q][3];
+        core0_mem_in[5*bw-1:4*bw] = K[q][4];
+        core0_mem_in[6*bw-1:5*bw] = K[q][5];
+        core0_mem_in[7*bw-1:6*bw] = K[q][6];
+        core0_mem_in[8*bw-1:7*bw] = K[q][7];
+    `ifdef DUAL_CORE_EN
+        core1_mem_in[1*bw-1:0*bw] = K[q+8][0];
+        core1_mem_in[2*bw-1:1*bw] = K[q+8][1];
+        core1_mem_in[3*bw-1:2*bw] = K[q+8][2];
+        core1_mem_in[4*bw-1:3*bw] = K[q+8][3];
+        core1_mem_in[5*bw-1:4*bw] = K[q+8][4];
+        core1_mem_in[6*bw-1:5*bw] = K[q+8][5];
+        core1_mem_in[7*bw-1:6*bw] = K[q+8][6];
+        core1_mem_in[8*bw-1:7*bw] = K[q+8][7];
+    `endif
+    end
+    kmem_wr   = 0;
+    qkmem_add = 0;
+    #1;
+
+    // Restore original Q values into QMEM addrs 0..total_cycle-1
+    qkmem_add = 0;
+    for (q=0; q<total_cycle; q=q+1) begin
+        qmem_wr = 1;
+        if (q>0) qkmem_add = qkmem_add + 1;
+        #1;
+        core0_mem_in[1*bw-1:0*bw] = Q[q][0];
+        core0_mem_in[2*bw-1:1*bw] = Q[q][1];
+        core0_mem_in[3*bw-1:2*bw] = Q[q][2];
+        core0_mem_in[4*bw-1:3*bw] = Q[q][3];
+        core0_mem_in[5*bw-1:4*bw] = Q[q][4];
+        core0_mem_in[6*bw-1:5*bw] = Q[q][5];
+        core0_mem_in[7*bw-1:6*bw] = Q[q][6];
+        core0_mem_in[8*bw-1:7*bw] = Q[q][7];
+    `ifdef DUAL_CORE_EN
+        core1_mem_in[1*bw-1:0*bw] = Q[q][0];
+        core1_mem_in[2*bw-1:1*bw] = Q[q][1];
+        core1_mem_in[3*bw-1:2*bw] = Q[q][2];
+        core1_mem_in[4*bw-1:3*bw] = Q[q][3];
+        core1_mem_in[5*bw-1:4*bw] = Q[q][4];
+        core1_mem_in[6*bw-1:5*bw] = Q[q][5];
+        core1_mem_in[7*bw-1:6*bw] = Q[q][6];
+        core1_mem_in[8*bw-1:7*bw] = Q[q][7];
+    `endif
+    end
+    qmem_wr   = 0;
+    qkmem_add = 0;
+    #1;
+
+    // Reset load_ready_q then load K into MAC array
+    execute = 1; load = 1; #1; execute = 0; load = 0; #9;
+
+    qkmem_add = 0;
+    kmem_rd   = 1;
+    load      = 1;
+    for (q=0; q<col; q=q+1) begin
+        if (q>0) qkmem_add = qkmem_add + 1;
+        #1;
+    end
+    kmem_rd   = 0;
+    qkmem_add = 0;
+    load      = 0;
+    #1;
+
+    // Stream Q through MAC
+    qmem_rd   = 1;
+    qkmem_add = 0;
+    execute   = 1;
+    for (q=0; q<total_cycle; q=q+1) begin
+        if (q>0) qkmem_add = qkmem_add + 1;
+        #1;
+    end
+    qmem_rd   = 0;
+    qkmem_add = 0;
+    load      = 1; #1; load = 0;
+    execute   = 0;
+    #2;  // match STEP_4: execute=0 #2 then #1 before ofifo_rd = 4 cycles total
+
+    // Drain OFIFO -> PMEM
+    // Extra #1 ensures col_id=8 (deepest pipeline, 7 extra regs) has fully
+    // flushed its last result into the OFIFO before pmem_wr starts capturing.
+    pmem_src_sel = 1;
+    #1;
+    ofifo_rd     = 1;
+    #1;
+    pmem_wr  = 1;
+    pmem_add = 0;
+    for (q=0; q<total_cycle; q=q+1) begin
+        if (q>0) pmem_add = pmem_add + 1;
+        #1;
+    end
+    ofifo_rd = 0;
+    #1;
+    pmem_wr  = 0;
+    pmem_add = 0;
+    #1;
+
+    // Verify K*Q against golden result[][]
+    fork
+        begin
+            for (q=0; q<total_cycle; q=q+1) begin
+                pmem_rd = 1;
+                if (q>0) pmem_add = pmem_add + 1;
+                #1;
+            end
+            pmem_rd  = 0;
+            pmem_add = 0;
+        end
+        begin
+            #2;
+            for (n=0; n<total_cycle; n=n+1) begin
+            `ifdef DUAL_CORE_EN
+                for (t=0; t<2*col; t=t+1) begin
+            `else
+                for (t=0; t<col; t=t+1) begin
+            `endif
+                    temp5b = result[n][t];
+                `ifdef DUAL_CORE_EN
+                    temp16b = {temp16b[299:0], temp5b};
+                `else
+                    temp16b = {temp16b[139:0], temp5b};
+                `endif
+                end
+                if (temp16b == out) begin
+                `ifndef DUAL_CORE_EN
+                    $display("PASS 6C cycle%2d: K*Q matched golden ref: %40h", n, temp16b);
+                `else
+                    $display("PASS 6C cycle%2d: K*Q matched golden ref: %80h", n, temp16b);
+                `endif
+                end else begin
+                    $display("FAIL 6C cycle%2d: K*Q mismatch (OPR_ISO corrupted normal computation)", n);
+                `ifndef DUAL_CORE_EN
+                    $display("  Expected: %40h", temp16b);
+                    $display("  Observed: %40h", out);
+                `else
+                    $display("  Expected: %80h", temp16b);
+                    $display("  Observed: %80h", out);
+                `endif
+                    opr_iso_pass = 0;
+                end
+                #1;
+            end
+        end
+    join
+
+    // ----------------------------------------------------------------
+    // 6D : Functional correctness check - N*V with original N and V
+    //
+    // Reload original N (KMEM addrs 8..15) and stream original V
+    // (QMEM addrs 8..15), then compare against golden result2[][].
+    // ----------------------------------------------------------------
+    $display("--- 6D: N*V functional correctness after OPR_ISO gating checks ---");
+
+    // Reset load_ready_q then load N into MAC array from KMEM addrs 8..col+7
+    execute = 1; load = 1; #1; execute = 0; load = 0; #9;
+
+    qkmem_add = 8;
+    kmem_rd   = 1;
+    load      = 1;
+    for (q=0; q<col; q=q+1) begin
+        if (q>0) qkmem_add = qkmem_add + 1;
+        #1;
+    end
+    kmem_rd   = 0;
+    qkmem_add = 0;
+    load      = 0;
+    #1;
+
+    // Stream V through MAC (QMEM addrs 8..total_cycle+7)
+    qmem_rd   = 1;
+    qkmem_add = 8;
+    execute   = 1;
+    for (q=0; q<total_cycle; q=q+1) begin
+        if (q>0) qkmem_add = qkmem_add + 1;
+        #1;
+    end
+    qmem_rd   = 0;
+    qkmem_add = 0;
+    execute   = 0;
+    #2;  // match STEP_4: execute=0 #2 then #1 before ofifo_rd = 4 cycles total
+
+    // Drain OFIFO -> PMEM
+    // Extra #1 ensures col_id=8 (deepest pipeline) has fully flushed into OFIFO.
+    pmem_src_sel = 1;
+    #1;
+    ofifo_rd     = 1;
+    #1;
+    pmem_wr  = 1;
+    pmem_add = 0;
+    for (q=0; q<total_cycle; q=q+1) begin
+        if (q>0) pmem_add = pmem_add + 1;
+        #1;
+    end
+    ofifo_rd = 0;
+    #1;
+    pmem_wr  = 0;
+    pmem_add = 0;
+    #1;
+
+    // Verify N*V against golden result2[][]
+    fork
+        begin
+            for (q=0; q<total_cycle; q=q+1) begin
+                pmem_rd = 1;
+                if (q>0) pmem_add = pmem_add + 1;
+                #1;
+            end
+            pmem_rd  = 0;
+            pmem_add = 0;
+        end
+        begin
+            #2;
+            for (n=0; n<total_cycle; n=n+1) begin
+            `ifndef DUAL_CORE_EN
+                for (t=0; t<col; t=t+1) begin
+            `else
+                for (t=0; t<2*col; t=t+1) begin
+            `endif
+                    temp5b = result2[n][t];
+                `ifndef DUAL_CORE_EN
+                    temp16b = {temp16b[139:0], temp5b};
+                `else
+                    temp16b = {temp16b[299:0], temp5b};
+                `endif
+                end
+                if (temp16b == out) begin
+                `ifndef DUAL_CORE_EN
+                    $display("PASS 6D cycle%2d: N*V matched golden ref: %40h", n, temp16b);
+                `else
+                    $display("PASS 6D cycle%2d: N*V matched golden ref: %80h", n, temp16b);
+                `endif
+                end else begin
+                    $display("FAIL 6D cycle%2d: N*V mismatch (OPR_ISO corrupted normal computation)", n);
+                `ifndef DUAL_CORE_EN
+                    $display("  Expected: %40h", temp16b);
+                    $display("  Observed: %40h", out);
+                `else
+                    $display("  Expected: %80h", temp16b);
+                    $display("  Observed: %80h", out);
+                `endif
+                    opr_iso_pass = 0;
+                end
+                #1;
+            end
+        end
+    join
+
+    // ----------------------------------------------------------------
+    // OPR_ISO summary
+    // ----------------------------------------------------------------
+    if (opr_iso_pass)
+        $display("\n##### OPR_ISO : ALL CHECKS PASSED (6A zero-Q, 6B zero-K, 6C K*Q golden, 6D N*V golden) #####\n");
+    else
+        $display("\n##### OPR_ISO : ONE OR MORE CHECKS FAILED - SEE ABOVE #####\n");
+
+`endif  // OPR_ISO
 
     $finish;
 end
 
 // -----------------------------------------------------------------------
-// Pipeline register: capture control signals one cycle later ¿ inst bus
+// Pipeline register: capture control signals one cycle later -> inst bus
 // -----------------------------------------------------------------------
 always @(posedge clk) begin
     ofifo_rd_q     <= ofifo_rd;
