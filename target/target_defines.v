@@ -6,5 +6,5 @@
 `define DUAL_CORE_EN
 `define RAND_SEED 50
 `define OPR_ISO
-//`define RANDOM_TEST_MODE
+`define RANDOM_TEST_MODE
 //`define MULT_PIPE_EN 
