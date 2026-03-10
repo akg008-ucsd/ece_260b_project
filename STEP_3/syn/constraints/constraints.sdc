@@ -8,9 +8,8 @@ create_clock -name clk -period $clock_cycle [get_ports $clock_port]
 set_input_delay  $io_delay -clock $clock_port [all_inputs]
 set_output_delay $io_delay -clock $clock_port [all_outputs]
 
-# Drive strength and output load
-#set_driving_cell -lib_cell BUFFD4BWP7T -pin Z [all_inputs]
-#set_load 0.005 [all_outputs]
+set_clock_uncertainty -setup 0.1 [get_clocks clk]
+set_clock_transition   0.1       [get_clocks clk]
 
 #false path for async reset:
 set_false_path -from [get_ports reset]
