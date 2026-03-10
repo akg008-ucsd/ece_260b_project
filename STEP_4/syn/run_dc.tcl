@@ -1,5 +1,7 @@
 set top_module fullchip
-set rtlPath "../../design"
+#set PROJ_DIR "../../"
+set DESIGN_DIR "/home/linux/ieng6/ECE260B_WI26_A00/s3goyal/ece_260b_project/design"
+set rtlPath "/home/linux/ieng6/ECE260B_WI26_A00/s3goyal/ece_260b_project/design"
 
 # Target library
 set target_library /home/linux/ieng6/ECE260B_WI26_A00/public/PDKdata/db/tcbn65gplustc.db 
@@ -39,7 +41,7 @@ set compile_no_new_cells_at_top_level false
 set hdlin_enable_vpp true
 set hdlin_auto_save_templates false
 
-define_design_lib WORK -path .template
+define_design_lib WORK -path ./template
 set verilogout_single_bit false
 
 #set search path for RTL files
@@ -58,8 +60,9 @@ set search_path [list \
 
 # read RTL
 analyze -format verilog -define {SYN} [list 	\
-	${DESIGN_DIR}/common_ip/buffer.v	\
 	${DESIGN_DIR}/fullchip.v		\
+	${DESIGN_DIR}/core.v		\
+	${DESIGN_DIR}/common_ip/buffer.v		\
 	]
 
 elaborate fullchip
