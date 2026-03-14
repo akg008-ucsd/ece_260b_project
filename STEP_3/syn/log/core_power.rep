@@ -5,13 +5,9 @@ Warning: Design has unannotated sequential cell outputs. (PWR-415)
 ****************************************
 Report : power
         -analysis_effort low
-Design : fullchip
+Design : core
 Version: K-2015.06-SP2
-<<<<<<<< HEAD:STEP_3/syn/syn/log/core_power.rep
-Date   : Fri Mar 13 19:58:39 2026
-========
-Date   : Thu Mar  5 19:51:49 2026
->>>>>>>> parent of 7ed0f97 (step 3 top level synth complete):STEP_3/syn/syn/log/fullchip_power.rep
+Date   : Tue Mar 10 00:02:19 2026
 ****************************************
 
 
@@ -26,10 +22,7 @@ Wire Load Model Mode: segmented
 
 Design        Wire Load Model            Library
 ------------------------------------------------
-fullchip               ZeroWireload      tcbn65gplustc
-buffer                 ZeroWireload      tcbn65gplustc
-core_col8_bw8_bw_psum20_pr8
-                       ZeroWireload      tcbn65gplustc
+core                   ZeroWireload      tcbn65gplustc
 mac_array_col8_bw8_bw_psum20_pr8
                        ZeroWireload      tcbn65gplustc
 ofifo_col8_bw20        ZeroWireload      tcbn65gplustc
@@ -86,6 +79,62 @@ fifo_depth16_bw20_simd1_4
                        ZeroWireload      tcbn65gplustc
 fifo_depth16_bw20_simd1_5
                        ZeroWireload      tcbn65gplustc
+mac_16in_bw8_bw_psum20_pr8_0
+                       ZeroWireload      tcbn65gplustc
+mac_16in_bw8_bw_psum20_pr8_1
+                       ZeroWireload      tcbn65gplustc
+mac_16in_bw8_bw_psum20_pr8_2
+                       ZeroWireload      tcbn65gplustc
+mac_16in_bw8_bw_psum20_pr8_3
+                       ZeroWireload      tcbn65gplustc
+mac_16in_bw8_bw_psum20_pr8_4
+                       ZeroWireload      tcbn65gplustc
+mac_16in_bw8_bw_psum20_pr8_5
+                       ZeroWireload      tcbn65gplustc
+mac_16in_bw8_bw_psum20_pr8_6
+                       ZeroWireload      tcbn65gplustc
+fifo_mux_16_1_bw20_simd1_0
+                       ZeroWireload      tcbn65gplustc
+fifo_mux_16_1_bw20_simd1_1
+                       ZeroWireload      tcbn65gplustc
+fifo_mux_16_1_bw20_simd1_2
+                       ZeroWireload      tcbn65gplustc
+fifo_mux_16_1_bw20_simd1_3
+                       ZeroWireload      tcbn65gplustc
+fifo_mux_16_1_bw20_simd1_4
+                       ZeroWireload      tcbn65gplustc
+fifo_mux_16_1_bw20_simd1_5
+                       ZeroWireload      tcbn65gplustc
+fifo_mux_2_1_bw24_simd1_0
+                       ZeroWireload      tcbn65gplustc
+fifo_mux_2_1_bw24_simd1_1
+                       ZeroWireload      tcbn65gplustc
+fifo_mux_2_1_bw24_simd1_2
+                       ZeroWireload      tcbn65gplustc
+fifo_mux_2_1_bw24_simd1_3
+                       ZeroWireload      tcbn65gplustc
+fifo_mux_2_1_bw24_simd1_4
+                       ZeroWireload      tcbn65gplustc
+fifo_mux_2_1_bw24_simd1_5
+                       ZeroWireload      tcbn65gplustc
+fifo_mux_2_1_bw24_simd1_6
+                       ZeroWireload      tcbn65gplustc
+fifo_mux_2_1_bw24_simd1_7
+                       ZeroWireload      tcbn65gplustc
+fifo_mux_2_1_bw24_simd1_8
+                       ZeroWireload      tcbn65gplustc
+fifo_mux_2_1_bw24_simd1_9
+                       ZeroWireload      tcbn65gplustc
+fifo_mux_2_1_bw24_simd1_10
+                       ZeroWireload      tcbn65gplustc
+fifo_mux_2_1_bw24_simd1_11
+                       ZeroWireload      tcbn65gplustc
+fifo_mux_2_1_bw24_simd1_12
+                       ZeroWireload      tcbn65gplustc
+fifo_mux_2_1_bw24_simd1_13
+                       ZeroWireload      tcbn65gplustc
+fifo_mux_8_1_bw24_simd1_0
+                       ZeroWireload      tcbn65gplustc
 fifo_mux_8_1_bw20_simd1_0
                        ZeroWireload      tcbn65gplustc
 fifo_mux_8_1_bw20_simd1_1
@@ -115,36 +164,6 @@ fifo_mux_8_1_bw20_simd1_12
 fifo_mux_8_1_bw20_simd1_13
                        ZeroWireload      tcbn65gplustc
 fifo_mux_8_1_bw20_simd1_14
-                       ZeroWireload      tcbn65gplustc
-fifo_mux_8_1_bw24_simd1_0
-                       ZeroWireload      tcbn65gplustc
-fifo_mux_2_1_bw24_simd1_0
-                       ZeroWireload      tcbn65gplustc
-fifo_mux_2_1_bw24_simd1_1
-                       ZeroWireload      tcbn65gplustc
-fifo_mux_2_1_bw24_simd1_2
-                       ZeroWireload      tcbn65gplustc
-fifo_mux_2_1_bw24_simd1_3
-                       ZeroWireload      tcbn65gplustc
-fifo_mux_2_1_bw24_simd1_4
-                       ZeroWireload      tcbn65gplustc
-fifo_mux_2_1_bw24_simd1_5
-                       ZeroWireload      tcbn65gplustc
-fifo_mux_2_1_bw24_simd1_6
-                       ZeroWireload      tcbn65gplustc
-fifo_mux_2_1_bw24_simd1_7
-                       ZeroWireload      tcbn65gplustc
-fifo_mux_2_1_bw24_simd1_8
-                       ZeroWireload      tcbn65gplustc
-fifo_mux_2_1_bw24_simd1_9
-                       ZeroWireload      tcbn65gplustc
-fifo_mux_2_1_bw24_simd1_10
-                       ZeroWireload      tcbn65gplustc
-fifo_mux_2_1_bw24_simd1_11
-                       ZeroWireload      tcbn65gplustc
-fifo_mux_2_1_bw24_simd1_12
-                       ZeroWireload      tcbn65gplustc
-fifo_mux_2_1_bw24_simd1_13
                        ZeroWireload      tcbn65gplustc
 fifo_mux_2_1_bw20_simd1_0
                        ZeroWireload      tcbn65gplustc
@@ -384,32 +403,6 @@ fifo_mux_2_1_bw20_simd1_117
                        ZeroWireload      tcbn65gplustc
 fifo_mux_2_1_bw20_simd1_118
                        ZeroWireload      tcbn65gplustc
-mac_16in_bw8_bw_psum20_pr8_0
-                       ZeroWireload      tcbn65gplustc
-mac_16in_bw8_bw_psum20_pr8_1
-                       ZeroWireload      tcbn65gplustc
-mac_16in_bw8_bw_psum20_pr8_2
-                       ZeroWireload      tcbn65gplustc
-mac_16in_bw8_bw_psum20_pr8_3
-                       ZeroWireload      tcbn65gplustc
-mac_16in_bw8_bw_psum20_pr8_4
-                       ZeroWireload      tcbn65gplustc
-mac_16in_bw8_bw_psum20_pr8_5
-                       ZeroWireload      tcbn65gplustc
-mac_16in_bw8_bw_psum20_pr8_6
-                       ZeroWireload      tcbn65gplustc
-fifo_mux_16_1_bw20_simd1_0
-                       ZeroWireload      tcbn65gplustc
-fifo_mux_16_1_bw20_simd1_1
-                       ZeroWireload      tcbn65gplustc
-fifo_mux_16_1_bw20_simd1_2
-                       ZeroWireload      tcbn65gplustc
-fifo_mux_16_1_bw20_simd1_3
-                       ZeroWireload      tcbn65gplustc
-fifo_mux_16_1_bw20_simd1_4
-                       ZeroWireload      tcbn65gplustc
-fifo_mux_16_1_bw20_simd1_5
-                       ZeroWireload      tcbn65gplustc
 
 
 Global Operating Voltage = 1    
@@ -421,21 +414,12 @@ Power-specific unit information :
     Leakage Power Units = 1nW
 
 
-<<<<<<<< HEAD:STEP_3/syn/syn/log/core_power.rep
-  Cell Internal Power  =  47.2251 mW   (93%)
-  Net Switching Power  =   3.3854 mW    (7%)
+  Cell Internal Power  =  48.3445 mW   (90%)
+  Net Switching Power  =   5.2231 mW   (10%)
                          ---------
-Total Dynamic Power    =  50.6105 mW  (100%)
+Total Dynamic Power    =  53.5676 mW  (100%)
 
-Cell Leakage Power     = 723.5599 uW
-========
-  Cell Internal Power  =  43.7618 mW    (4%)
-  Net Switching Power  =   1.0011  W   (96%)
-                         ---------
-Total Dynamic Power    =   1.0448  W  (100%)
-
-Cell Leakage Power     = 894.1290 uW
->>>>>>>> parent of 7ed0f97 (step 3 top level synth complete):STEP_3/syn/syn/log/fullchip_power.rep
+Cell Leakage Power     = 989.6302 uW
 
 
                  Internal         Switching           Leakage            Total
@@ -444,19 +428,10 @@ Power Group      Power            Power               Power              Power  
 io_pad             0.0000            0.0000            0.0000            0.0000  (   0.00%)
 memory             0.0000            0.0000            0.0000            0.0000  (   0.00%)
 black_box          0.0000            0.0000            0.0000            0.0000  (   0.00%)
-<<<<<<<< HEAD:STEP_3/syn/syn/log/core_power.rep
 clock_network      0.0000            0.0000            0.0000            0.0000  (   0.00%)
-register          42.8319            0.1174        2.0971e+05           43.1591  (  84.08%)
+register          43.0668            0.1076        2.1330e+05           43.3878  (  79.53%)
 sequential         0.0000            0.0000            0.0000            0.0000  (   0.00%)
-combinational      4.3931            3.2679        5.1385e+05            8.1749  (  15.92%)
+combinational      5.2776            5.1153        7.7633e+05           11.1693  (  20.47%)
 --------------------------------------------------------------------------------------------------
-Total             47.2250 mW         3.3854 mW     7.2356e+05 nW        51.3340 mW
-========
-clock_network      0.3416        1.0000e+03          136.2480        1.0003e+03  (  95.66%)
-register          42.7311            0.1099        2.0966e+05           43.0505  (   4.12%)
-sequential         0.0000            0.0000            0.0000            0.0000  (   0.00%)
-combinational      0.6892            0.9564        6.8433e+05            2.3299  (   0.22%)
---------------------------------------------------------------------------------------------------
-Total             43.7618 mW     1.0011e+03 mW     8.9413e+05 nW     1.0457e+03 mW
->>>>>>>> parent of 7ed0f97 (step 3 top level synth complete):STEP_3/syn/syn/log/fullchip_power.rep
+Total             48.3445 mW         5.2229 mW     9.8963e+05 nW        54.5570 mW
 1
