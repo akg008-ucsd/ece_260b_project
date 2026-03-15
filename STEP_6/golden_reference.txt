@@ -1,0 +1,137 @@
+========================================================================
+GOLDEN REFERENCE — Step 6 B2 Row-Level Sparsity
+Parameters: bw=8, bw_psum=20, bw_psum_sum=24
+            col=8, pr=8, total_cycle=8
+numpy seed = 42 (fixed for reproducibility)
+========================================================================
+
+========================================================================
+SECTION 1: INPUT DATA
+Load these into qmem and kmem in your testbench
+========================================================================
+
+Q matrix (8-bit signed, decimal):
+  Q[0] = [   -26,     51,    -36,   -114,    -22,    -57,     60,   -108]
+  Q[1] = [   -26,     -7,     82,     86,    -54,     74,    -41,    -12]
+  Q[2] = [   -29,    -25,     23,      2,     21,    -76,   -127,    -41]
+  Q[3] = [   107,     29,    -91,      1,     63,     59,   -108,     32]
+  Q[4] = [    75,    -71,   -107,    124,    107,    -40,    -80,     90]
+  Q[5] = [   -70,    126,     41,     91,     59,     79,   -114,     61]
+  Q[6] = [    61,     46,     61,    -78,    -21,    -74,    115,    -65]
+  Q[7] = [   120,      2,    100,    -78,      6,   -108,    -56,     38]
+
+Q matrix (8-bit signed, hex):
+  Q[0] = [0xE6, 0x33, 0xDC, 0x8E, 0xEA, 0xC7, 0x3C, 0x94]
+  Q[1] = [0xE6, 0xF9, 0x52, 0x56, 0xCA, 0x4A, 0xD7, 0xF4]
+  Q[2] = [0xE3, 0xE7, 0x17, 0x02, 0x15, 0xB4, 0x81, 0xD7]
+  Q[3] = [0x6B, 0x1D, 0xA5, 0x01, 0x3F, 0x3B, 0x94, 0x20]
+  Q[4] = [0x4B, 0xB9, 0x95, 0x7C, 0x6B, 0xD8, 0xB0, 0x5A]
+  Q[5] = [0xBA, 0x7E, 0x29, 0x5B, 0x3B, 0x4F, 0x8E, 0x3D]
+  Q[6] = [0x3D, 0x2E, 0x3D, 0xB2, 0xEB, 0xB6, 0x73, 0xBF]
+  Q[7] = [0x78, 0x02, 0x64, 0xB2, 0x06, 0x94, 0xC8, 0x26]
+
+K matrix (8-bit signed, decimal):
+  K[0] = [  -111,      3,    -40,    -69,   -115,    113,    121,   -120]
+  K[1] = [   -39,    -76,      1,    -45,    -37,    -18,     59,     70]
+  K[2] = [    43,    124,   -121,     46,    -94,     77,    -48,     35]
+  K[3] = [   -79,    -25,      3,   -127,    125,      5,    -75,    -23]
+  K[4] = [  -125,    -75,     92,     62,     17,     89,    -85,     33]
+  K[5] = [    73,     61,     99,   -115,    -34,    -81,   -114,     71]
+  K[6] = [    77,     86,    123,    120,     61,    -89,     84,     79]
+  K[7] = [   108,    -47,    -18,    -76,   -105,     25,     88,    123]
+
+K matrix (8-bit signed, hex):
+  K[0] = [0x91, 0x03, 0xD8, 0xBB, 0x8D, 0x71, 0x79, 0x88]
+  K[1] = [0xD9, 0xB4, 0x01, 0xD3, 0xDB, 0xEE, 0x3B, 0x46]
+  K[2] = [0x2B, 0x7C, 0x87, 0x2E, 0xA2, 0x4D, 0xD0, 0x23]
+  K[3] = [0xB1, 0xE7, 0x03, 0x81, 0x7D, 0x05, 0xB5, 0xE9]
+  K[4] = [0x83, 0xB5, 0x5C, 0x3E, 0x11, 0x59, 0xAB, 0x21]
+  K[5] = [0x49, 0x3D, 0x63, 0x8D, 0xDE, 0xAF, 0x8E, 0x47]
+  K[6] = [0x4D, 0x56, 0x7B, 0x78, 0x3D, 0xA7, 0x54, 0x4F]
+  K[7] = [0x6C, 0xD1, 0xEE, 0xB4, 0x97, 0x19, 0x58, 0x7B]
+
+========================================================================
+SECTION 2: EXPECTED PMEM CONTENTS
+Verify MAC array output — these are QK dot products
+Each value is 20-bit signed (bw_psum=20)
+========================================================================
+
+QK products (decimal):
+  Row[0] = [ 28654,     52,  -4663,  10098, -25066,   1616, -15485,  -3012]
+  Row[1] = [  4702,  -4835,   4370, -11476,  25408,  -4433,   3530,  -8055]
+  Row[2] = [-19364,  -6808, -10203,  15444,  10775,  15414,  -7176, -22847]
+  Row[3] = [-25705, -14038,  24179,   5956,  -7302,   8119,  -8292,   1047]
+  Row[4] = [-50119,  -4875,   6924,  -3114,   1823,  -8597,  11865,  -4266]
+  Row[5] = [-18743, -16961,  19983,   5863,  28451,   5092,  13220, -27885]
+  Row[6] = [ 12077,   2040, -14161,  -6005, -29162,  11251,  16626,  11736]
+  Row[7] = [-36162,   -144, -15142,   4212, -14282,  45378,  20628,  13410]
+
+QK products (20-bit signed hex):
+  Row[0] = [0x06FEE, 0x00034, 0xFEDC9, 0x02772, 0xF9E16, 0x00650, 0xFC383, 0xFF43C]
+  Row[1] = [0x0125E, 0xFED1D, 0x01112, 0xFD32C, 0x06340, 0xFEEAF, 0x00DCA, 0xFE089]
+  Row[2] = [0xFB45C, 0xFE568, 0xFD825, 0x03C54, 0x02A17, 0x03C36, 0xFE3F8, 0xFA6C1]
+  Row[3] = [0xF9B97, 0xFC92A, 0x05E73, 0x01744, 0xFE37A, 0x01FB7, 0xFDF9C, 0x00417]
+  Row[4] = [0xF3C39, 0xFECF5, 0x01B0C, 0xFF3D6, 0x0071F, 0xFDE6B, 0x02E59, 0xFEF56]
+  Row[5] = [0xFB6C9, 0xFBDBF, 0x04E0F, 0x016E7, 0x06F23, 0x013E4, 0x033A4, 0xF9313]
+  Row[6] = [0x02F2D, 0x007F8, 0xFC8AF, 0xFE88B, 0xF8E16, 0x02BF3, 0x040F2, 0x02DD8]
+  Row[7] = [0xF72BE, 0xFFF70, 0xFC4DA, 0x01074, 0xFC836, 0x0B142, 0x05094, 0x03462]
+
+========================================================================
+SECTION 3: ROW ENERGIES Si
+Si = sum of abs values across each pmem row
+Each Si is 24-bit unsigned (bw_psum_sum=24)
+Verify your row energy accumulator and comparator
+========================================================================
+
+  S[0] =      88646 = 0x015A46  -> SKIP <- below threshold
+  S[1] =      66809 = 0x0104F9  -> SKIP <- below threshold
+  S[2] =     108031 = 0x01A5FF  -> PASS
+  S[3] =      94638 = 0x0171AE  -> PASS
+  S[4] =      91583 = 0x0165BF  -> SKIP <- below threshold
+  S[5] =     136198 = 0x021406  -> PASS
+  S[6] =     103058 = 0x019292  -> PASS
+  S[7] =     149358 = 0x02476E  -> PASS
+
+THRESHOLD = 91888 = 0x0166F0
+  (30th percentile of S values -> ~30% of rows skipped)
+
+Skipped rows : [0, 1, 4]
+Passing rows : [2, 3, 5, 6, 7]
+
+========================================================================
+SECTION 4: EXPECTED FINAL OUTPUT
+Compare these against your gate-level simulation VCD
+Passing rows: output[i][j] = QK[i][j] / S[i]
+Skipped rows: output[i]    = all zeros
+========================================================================
+
+  out[0] = ZEROED (row skipped — Si below threshold)
+  out[1] = ZEROED (row skipped — Si below threshold)
+  out[2] = [-0.17924, -0.06302, -0.09445,  0.14296,  0.09974,  0.14268, -0.06643, -0.21149]
+  out[3] = [-0.27161, -0.14833,  0.25549,  0.06293, -0.07716,  0.08579, -0.08762,  0.01106]
+  out[4] = ZEROED (row skipped — Si below threshold)
+  out[5] = [-0.13762, -0.12453,  0.14672,  0.04305,  0.20889,  0.03739,  0.09706, -0.20474]
+  out[6] = [ 0.11719,  0.01979, -0.13741, -0.05827, -0.28297,  0.10917,  0.16133,  0.11388]
+  out[7] = [-0.24212, -0.00096, -0.10138,  0.02820, -0.09562,  0.30382,  0.13811,  0.08978]
+
+========================================================================
+SECTION 5: NOTES
+========================================================================
+
+1. Threshold value to hardcode into threshold_reg:
+      threshold_reg = 24'd91888;
+      threshold_reg = 24'h0166F0;
+
+2. Row energy accumulator bit width should be 24-bit unsigned
+      (bw_psum_sum = bw_psum + 4 = 20 + 4 = 24)
+
+3. Skipped rows: sfp should be gated, output should be 0
+
+4. Passing rows: sfp normalizes QK[i][j] / S[i] for each j
+
+5. PLEASE CONFIRM with golden reference team:
+   - Does pmem store fully accumulated dot products?
+   - Is each pmem entry one 20-bit value per (Qi, Kj) pair?
+   - Is a full pmem row available at once to the accumulator?
+
+========================================================================
