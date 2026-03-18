@@ -232,3 +232,154 @@ core_col8_bw8_bw_psum20_pr8     671.760027       1    671.760027  b, h, n
 -----------------------------------------------------------------------------
 Total 2 references                                    671.760027
 1
+Error: Current design is not defined. (UID-4)
+0
+Warning: Design 'fullchip' has '2' unresolved references. For more detailed information, use the "link" command. (UID-341)
+ 
+****************************************
+Report : reference
+Design : fullchip
+Version: K-2015.06-SP2
+Date   : Tue Mar 17 21:40:57 2026
+****************************************
+
+Attributes:
+    b - black box (unknown)
+   bo - allows boundary optimization
+    d - dont_touch
+   mo - map_only
+    h - hierarchical
+    n - noncombinational
+    r - removable
+    s - synthetic operator
+    u - contains unmapped logic
+
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+buffer                            0.000000       1      0.000000  b
+core                              0.000000       1      0.000000  b
+-----------------------------------------------------------------------------
+Total 2 references                                      0.000000
+1
+Error: Current design is not defined. (UID-4)
+0
+Warning: Design 'fullchip' has '2' unresolved references. For more detailed information, use the "link" command. (UID-341)
+ 
+****************************************
+Report : reference
+Design : fullchip
+Version: K-2015.06-SP2
+Date   : Wed Mar 18 16:08:02 2026
+****************************************
+
+Attributes:
+    b - black box (unknown)
+   bo - allows boundary optimization
+    d - dont_touch
+   mo - map_only
+    h - hierarchical
+    n - noncombinational
+    r - removable
+    s - synthetic operator
+    u - contains unmapped logic
+
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+async_fifo                        0.000000       2      0.000000  b
+buffer_0                          0.000000       1      0.000000  h
+buffer_1                          0.000000       1      0.000000  h
+core                              0.000000       2      0.000000  b
+-----------------------------------------------------------------------------
+Total 4 references                                      0.000000
+1
+Error: Current design is not defined. (UID-4)
+0
+Error: Current design is not defined. (UID-4)
+0
+Warning: Design 'fullchip' has '2' unresolved references. For more detailed information, use the "link" command. (UID-341)
+ 
+****************************************
+Report : reference
+Design : fullchip
+Version: K-2015.06-SP2
+Date   : Wed Mar 18 16:34:32 2026
+****************************************
+
+Attributes:
+    b - black box (unknown)
+   bo - allows boundary optimization
+    d - dont_touch
+   mo - map_only
+    h - hierarchical
+    n - noncombinational
+    r - removable
+    s - synthetic operator
+    u - contains unmapped logic
+
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+async_fifo                        0.000000       2      0.000000  b
+buffer_0                          0.000000       1      0.000000  h
+buffer_1                          0.000000       1      0.000000  h
+core                              0.000000       2      0.000000  b
+-----------------------------------------------------------------------------
+Total 4 references                                      0.000000
+1
+Warning: Design 'fullchip' has '2' unresolved references. For more detailed information, use the "link" command. (UID-341)
+ 
+****************************************
+Report : reference
+Design : fullchip
+Version: K-2015.06-SP2
+Date   : Wed Mar 18 16:37:42 2026
+****************************************
+
+Attributes:
+    b - black box (unknown)
+   bo - allows boundary optimization
+    d - dont_touch
+   mo - map_only
+    h - hierarchical
+    n - noncombinational
+    r - removable
+    s - synthetic operator
+    u - contains unmapped logic
+
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+async_fifo                        0.000000       2      0.000000  b
+buffer_0                          0.000000       1      0.000000  h
+buffer_1                          0.000000       1      0.000000  h
+core                              0.000000       2      0.000000  b
+-----------------------------------------------------------------------------
+Total 4 references                                      0.000000
+1
+Warning: Design 'fullchip' has '2' unresolved references. For more detailed information, use the "link" command. (UID-341)
+ 
+****************************************
+Report : reference
+Design : fullchip
+Version: K-2015.06-SP2
+Date   : Wed Mar 18 16:44:25 2026
+****************************************
+
+Attributes:
+    b - black box (unknown)
+   bo - allows boundary optimization
+    d - dont_touch
+   mo - map_only
+    h - hierarchical
+    n - noncombinational
+    r - removable
+    s - synthetic operator
+    u - contains unmapped logic
+
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+async_fifo                        0.000000       2      0.000000  b
+buffer_0                          0.000000       1      0.000000  h
+buffer_1                          0.000000       1      0.000000  h
+core                              0.000000       2      0.000000  b
+-----------------------------------------------------------------------------
+Total 4 references                                      0.000000
+1

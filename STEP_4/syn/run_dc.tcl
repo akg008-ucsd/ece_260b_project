@@ -46,6 +46,7 @@ set verilogout_single_bit false
 
 #set search path for RTL files
 set search_path [list \
+	${DESIGN_DIR}/..	 \
 	${DESIGN_DIR}/common_ip  \
 	${DESIGN_DIR}/MAC        \
 	${DESIGN_DIR}/OFIFO	 \
@@ -60,13 +61,12 @@ set search_path [list \
 
 # read RTL
 analyze -format verilog -define {SYN} [list 	\
-	${DESIGN_DIR}/fullchip.v		\
-	${DESIGN_DIR}/core.v		\
-	${DESIGN_DIR}/common_ip/buffer.v		\
+    ${DESIGN_DIR}/../target/target_defines.v		\
+    ${DESIGN_DIR}/fullchip.v		\
+    ${DESIGN_DIR}/common_ip/buffer.v		\
 	]
 
-elaborate fullchip
-report_hierarchy
+elaborate fullchip -lib WORK -update
 current_design fullchip
 
 # Link Design
@@ -82,7 +82,7 @@ if { [sizeof_collection [all_clocks]] > 0 } {
     set_fix_hold [all_clocks]
 }
 
-set_driving_cell -lib_cell BUFFD4BWP7T -pin Z [all_inputs]
+set_driving_cell -lib_cell BUFFD8 -pin Z [all_inputs]
 set_load 0.005 [all_outputs]
 #foreach_in_collection p [all_outputs] {
 #	set_load 0.050 $p
