@@ -1,6 +1,6 @@
 ###################################################################
 
-# Created by write_sdc on Tue Mar 10 00:02:07 2026
+# Created by write_sdc on Tue Mar 17 20:12:46 2026
 
 ###################################################################
 set sdc_version 2.0
@@ -193,11 +193,6 @@ set_load -pin_load 0.005 [get_ports {out[2]}]
 set_load -pin_load 0.005 [get_ports {out[1]}]
 set_load -pin_load 0.005 [get_ports {out[0]}]
 create_clock [get_ports clk]  -period 1  -waveform {0 0.5}
-set_clock_uncertainty -setup 0.1  [get_clocks clk]
-set_clock_transition -max -rise 0.1 [get_clocks clk]
-set_clock_transition -max -fall 0.1 [get_clocks clk]
-set_clock_transition -min -rise 0.1 [get_clocks clk]
-set_clock_transition -min -fall 0.1 [get_clocks clk]
 set_false_path   -from [get_ports reset]
 set_input_delay -clock clk  0.1  [get_ports clk]
 set_input_delay -clock clk  0.1  [get_ports reset]

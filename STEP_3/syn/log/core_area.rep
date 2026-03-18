@@ -5,7 +5,7 @@ Warning: Design 'core' contains 4 high-fanout nets. A fanout number of 1000 will
 Report : area
 Design : core
 Version: K-2015.06-SP2
-Date   : Tue Mar 10 00:02:09 2026
+Date   : Tue Mar 17 20:12:47 2026
 ****************************************
 
 Information: Updating design information... (UID-85)
@@ -16,21 +16,21 @@ Library(s) Used:
     gtech (File: /software/nonrdist64/dc-2015.06-64/libraries/syn/gtech.db)
 
 Number of ports:                        19651
-Number of nets:                         81671
-Number of cells:                        59632
-Number of combinational cells:          49859
+Number of nets:                         80372
+Number of cells:                        58299
+Number of combinational cells:          48526
 Number of sequential cells:              9580
 Number of macros/black boxes:               0
-Number of buf/inv:                       8924
+Number of buf/inv:                       8667
 Number of references:                      10
 
-Combinational area:             134402.040995
-Buf/Inv area:                    11507.760397
-Noncombinational area:           53938.080832
+Combinational area:             133626.960909
+Buf/Inv area:                    11323.080387
+Noncombinational area:           53757.000807
 Macro/Black Box area:                0.000000
 Net Interconnect area:      undefined  (Wire load has zero net area)
 
-Total cell area:                188340.121826
+Total cell area:                187383.961716
 Total area:                 undefined
 
 Information: This design contains unmapped logic. (RPT-7)
@@ -43,44 +43,44 @@ Hierarchical area distribution
 Hierarchical cell                 Absolute     Percent  Combi-       Noncombi-   Black-
                                   Total        Total    national     national    boxes   Design
 --------------------------------  -----------  -------  -----------  ----------  ------  ---------------------------------
-core                              188340.1218    100.0     735.8400      7.9200  0.0000  core
+core                              187383.9617    100.0     735.8400      7.9200  0.0000  core
 kmem_instance                          0.0000      0.0       0.0000      0.0000  0.0000  sram_w16_sram_bit64
-mac_array_instance                 59572.4401     31.6       0.0000      0.0000  0.0000  mac_array_col8_bw8_bw_psum20_pr8
+mac_array_instance                 59399.6400     31.7       0.0000      0.0000  0.0000  mac_array_col8_bw8_bw_psum20_pr8
 mac_array_instance/col_idx_1__mac_col_inst
-                                    7425.0000      3.9      49.3200   1508.7600  0.0000  mac_col_bw8_bw_psum20_pr8_col_id1
+                                    7401.9600      4.0      46.8000   1488.6000  0.0000  mac_col_bw8_bw_psum20_pr8_col_id1
 mac_array_instance/col_idx_1__mac_col_inst/mac_16in_instance
-                                    5866.9200      3.1    4853.1600   1013.7600  0.0000  mac_16in_bw8_bw_psum20_pr8_7
+                                    5866.5600      3.1    4852.8000   1013.7600  0.0000  mac_16in_bw8_bw_psum20_pr8_7
 mac_array_instance/col_idx_2__mac_col_inst
-                                    7449.1200      4.0     257.7600   1323.0000  0.0000  mac_col_bw8_bw_psum20_pr8_col_id2
+                                    7429.3200      4.0     257.7600   1302.8400  0.0000  mac_col_bw8_bw_psum20_pr8_col_id2
 mac_array_instance/col_idx_2__mac_col_inst/mac_16in_instance
-                                    5868.3600      3.1    4854.6000   1013.7600  0.0000  mac_16in_bw8_bw_psum20_pr8_6
+                                    5868.7200      3.1    4854.9600   1013.7600  0.0000  mac_16in_bw8_bw_psum20_pr8_6
 mac_array_instance/col_idx_3__mac_col_inst
-                                    7449.8400      4.0     258.4800   1324.4400  0.0000  mac_col_bw8_bw_psum20_pr8_col_id3
+                                    7433.6400      4.0     262.4400   1304.2800  0.0000  mac_col_bw8_bw_psum20_pr8_col_id3
 mac_array_instance/col_idx_3__mac_col_inst/mac_16in_instance
                                     5866.9200      3.1    4853.1600   1013.7600  0.0000  mac_16in_bw8_bw_psum20_pr8_5
 mac_array_instance/col_idx_4__mac_col_inst
-                                    7449.4800      4.0     258.8400   1323.7200  0.0000  mac_col_bw8_bw_psum20_pr8_col_id4
+                                    7430.0400      4.0     259.5600   1303.5600  0.0000  mac_col_bw8_bw_psum20_pr8_col_id4
 mac_array_instance/col_idx_4__mac_col_inst/mac_16in_instance
                                     5866.9200      3.1    4853.1600   1013.7600  0.0000  mac_16in_bw8_bw_psum20_pr8_4
 mac_array_instance/col_idx_5__mac_col_inst
-                                    7453.0800      4.0     261.3600   1324.4400  0.0000  mac_col_bw8_bw_psum20_pr8_col_id5
+                                    7432.5600      4.0     261.3600   1304.2800  0.0000  mac_col_bw8_bw_psum20_pr8_col_id5
 mac_array_instance/col_idx_5__mac_col_inst/mac_16in_instance
-                                    5867.2800      3.1    4853.5200   1013.7600  0.0000  mac_16in_bw8_bw_psum20_pr8_3
+                                    5866.9200      3.1    4853.1600   1013.7600  0.0000  mac_16in_bw8_bw_psum20_pr8_3
 mac_array_instance/col_idx_6__mac_col_inst
-                                    7448.0400      4.0     257.0400   1323.7200  0.0000  mac_col_bw8_bw_psum20_pr8_col_id6
+                                    7427.5200      4.0     257.0400   1303.5600  0.0000  mac_col_bw8_bw_psum20_pr8_col_id6
 mac_array_instance/col_idx_6__mac_col_inst/mac_16in_instance
-                                    5867.2800      3.1    4853.5200   1013.7600  0.0000  mac_16in_bw8_bw_psum20_pr8_2
+                                    5866.9200      3.1    4853.1600   1013.7600  0.0000  mac_16in_bw8_bw_psum20_pr8_2
 mac_array_instance/col_idx_7__mac_col_inst
-                                    7462.8000      4.0     263.1600   1332.3600  0.0000  mac_col_bw8_bw_psum20_pr8_col_id7
+                                    7433.6400      4.0     263.1600   1303.5600  0.0000  mac_col_bw8_bw_psum20_pr8_col_id7
 mac_array_instance/col_idx_7__mac_col_inst/mac_16in_instance
-                                    5867.2800      3.1    4853.5200   1013.7600  0.0000  mac_16in_bw8_bw_psum20_pr8_1
+                                    5866.9200      3.1    4853.1600   1013.7600  0.0000  mac_16in_bw8_bw_psum20_pr8_1
 mac_array_instance/col_idx_8__mac_col_inst
-                                    7435.0800      3.9     259.2000   1311.4800  0.0000  mac_col_bw8_bw_psum20_pr8_col_id8
+                                    7410.9600      4.0     256.6800   1285.5600  0.0000  mac_col_bw8_bw_psum20_pr8_col_id8
 mac_array_instance/col_idx_8__mac_col_inst/mac_16in_instance
-                                    5864.4000      3.1    4850.6400   1013.7600  0.0000  mac_16in_bw8_bw_psum20_pr8_0
-ofifo_instance                     38880.7206     20.6       0.0000      0.0000  0.0000  ofifo_col8_bw20
+                                    5868.7200      3.1    4854.9600   1013.7600  0.0000  mac_16in_bw8_bw_psum20_pr8_0
+ofifo_instance                     38889.7206     20.8       0.0000      0.0000  0.0000  ofifo_col8_bw20
 ofifo_instance/col_idx_0__ofifo_instance
-                                    4861.4401      2.6     103.3200   3779.6401  0.0000  fifo_depth16_bw20_simd1_7
+                                    4862.5201      2.6     104.4000   3779.6401  0.0000  fifo_depth16_bw20_simd1_7
 ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a
                                      978.4800      0.5       2.1600      0.0000  0.0000  fifo_mux_16_1_bw20_simd1_7
 ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_2_1a
@@ -118,7 +118,7 @@ ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1f
 ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1g
                                       64.8000      0.0      64.8000      0.0000  0.0000  fifo_mux_2_1_bw20_simd1_98
 ofifo_instance/col_idx_1__ofifo_instance
-                                    4857.1201      2.6      99.0000   3779.6401  0.0000  fifo_depth16_bw20_simd1_6
+                                    4858.9201      2.6     100.8000   3779.6401  0.0000  fifo_depth16_bw20_simd1_6
 ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a
                                      978.4800      0.5       2.1600      0.0000  0.0000  fifo_mux_16_1_bw20_simd1_6
 ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_2_1a
@@ -156,7 +156,7 @@ ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1f
 ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1g
                                       64.8000      0.0      64.8000      0.0000  0.0000  fifo_mux_2_1_bw20_simd1_84
 ofifo_instance/col_idx_2__ofifo_instance
-                                    4860.7201      2.6     102.6000   3779.6401  0.0000  fifo_depth16_bw20_simd1_5
+                                    4861.8001      2.6     103.6800   3779.6401  0.0000  fifo_depth16_bw20_simd1_5
 ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a
                                      978.4800      0.5       2.1600      0.0000  0.0000  fifo_mux_16_1_bw20_simd1_5
 ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_2_1a
@@ -194,7 +194,7 @@ ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1f
 ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1g
                                       64.8000      0.0      64.8000      0.0000  0.0000  fifo_mux_2_1_bw20_simd1_70
 ofifo_instance/col_idx_3__ofifo_instance
-                                    4860.7201      2.6     102.6000   3779.6401  0.0000  fifo_depth16_bw20_simd1_4
+                                    4861.8001      2.6     103.6800   3779.6401  0.0000  fifo_depth16_bw20_simd1_4
 ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a
                                      978.4800      0.5       2.1600      0.0000  0.0000  fifo_mux_16_1_bw20_simd1_4
 ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_2_1a
@@ -232,7 +232,7 @@ ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1f
 ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1g
                                       64.8000      0.0      64.8000      0.0000  0.0000  fifo_mux_2_1_bw20_simd1_56
 ofifo_instance/col_idx_4__ofifo_instance
-                                    4858.5601      2.6     100.4400   3779.6401  0.0000  fifo_depth16_bw20_simd1_3
+                                    4860.3601      2.6     102.2400   3779.6401  0.0000  fifo_depth16_bw20_simd1_3
 ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a
                                      978.4800      0.5       2.1600      0.0000  0.0000  fifo_mux_16_1_bw20_simd1_3
 ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_2_1a
@@ -270,7 +270,7 @@ ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1f
 ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1g
                                       64.8000      0.0      64.8000      0.0000  0.0000  fifo_mux_2_1_bw20_simd1_42
 ofifo_instance/col_idx_5__ofifo_instance
-                                    4861.4401      2.6     103.3200   3779.6401  0.0000  fifo_depth16_bw20_simd1_2
+                                    4862.5201      2.6     104.4000   3779.6401  0.0000  fifo_depth16_bw20_simd1_2
 ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a
                                      978.4800      0.5       2.1600      0.0000  0.0000  fifo_mux_16_1_bw20_simd1_2
 ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_2_1a
@@ -308,7 +308,7 @@ ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1f
 ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1g
                                       64.8000      0.0      64.8000      0.0000  0.0000  fifo_mux_2_1_bw20_simd1_28
 ofifo_instance/col_idx_6__ofifo_instance
-                                    4859.2801      2.6     101.1600   3779.6401  0.0000  fifo_depth16_bw20_simd1_1
+                                    4862.5201      2.6     104.4000   3779.6401  0.0000  fifo_depth16_bw20_simd1_1
 ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a
                                      978.4800      0.5       2.1600      0.0000  0.0000  fifo_mux_16_1_bw20_simd1_1
 ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_2_1a
@@ -346,7 +346,7 @@ ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1f
 ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1g
                                       64.8000      0.0      64.8000      0.0000  0.0000  fifo_mux_2_1_bw20_simd1_14
 ofifo_instance/col_idx_7__ofifo_instance
-                                    4861.4401      2.6     103.3200   3779.6401  0.0000  fifo_depth16_bw20_simd1_0
+                                    4859.2801      2.6     101.1600   3779.6401  0.0000  fifo_depth16_bw20_simd1_0
 ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a
                                      978.4800      0.5       2.1600      0.0000  0.0000  fifo_mux_16_1_bw20_simd1_0
 ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_2_1a
@@ -385,8 +385,8 @@ ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1g
                                       64.8000      0.0      64.8000      0.0000  0.0000  fifo_mux_2_1_bw20_simd1_0
 psum_mem_instance                      0.0000      0.0       0.0000      0.0000  0.0000  sram_w8_sram_bit160
 qmem_instance                          0.0000      0.0       0.0000      0.0000  0.0000  sram_w16_sram_bit64
-sfp_instance                       89143.2012     47.3   83396.1611   1555.2000  0.0000  sfp_row_col8_bw8_bw_psum20
-sfp_instance/fifo_inst_int          4191.8401      2.2     103.3200   3255.8401  0.0000  fifo_depth16_bw24
+sfp_instance                       88350.8411     47.1   82609.9210   1555.2000  0.0000  sfp_row_col8_bw8_bw_psum20
+sfp_instance/fifo_inst_int          4185.7201      2.2     102.6000   3250.4401  0.0000  fifo_depth16_bw24
 sfp_instance/fifo_inst_int/fifo_mux_16_1a
                                      832.6800      0.4       2.1600      0.0000  0.0000  fifo_mux_16_1_bw24_simd1
 sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_2_1a
@@ -424,7 +424,7 @@ sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1f
 sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1g
                                       55.0800      0.0      55.0800      0.0000  0.0000  fifo_mux_2_1_bw24_simd1_0
 --------------------------------  -----------  -------  -----------  ----------  ------  ---------------------------------
-Total                                                   134402.0410  53938.0808  0.0000
+Total                                                   133626.9609  53757.0008  0.0000
 
 1
  
@@ -432,7 +432,7 @@ Total                                                   134402.0410  53938.0808 
 Report : reference
 Design : core
 Version: K-2015.06-SP2
-Date   : Tue Mar 10 00:02:13 2026
+Date   : Tue Mar 17 20:12:50 2026
 ****************************************
 
 Attributes:
@@ -459,11 +459,11 @@ MUX2D0             tcbn65gplustc
 NR2D0              tcbn65gplustc
                                   1.440000       3      4.320000  
 mac_array_col8_bw8_bw_psum20_pr8
-                              59572.440062       1  59572.440062  h, n
-ofifo_col8_bw20               38880.720566       1  38880.720566  h, n
-sfp_row_col8_bw8_bw_psum20    89143.201196       1  89143.201196  h, n
+                              59399.640039       1  59399.640039  h, n
+ofifo_col8_bw20               38889.720566       1  38889.720566  h, n
+sfp_row_col8_bw8_bw_psum20    88350.841108       1  88350.841108  h, n
 sram_w8_sram_bit160               0.000000       1      0.000000  h, n, u
 sram_w16_sram_bit64               0.000000       2      0.000000  h, n, u
 -----------------------------------------------------------------------------
-Total 10 references                                 188340.121826
+Total 10 references                                 187383.961716
 1
