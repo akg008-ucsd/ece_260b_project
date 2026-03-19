@@ -1,0 +1,874 @@
+Information: Updating graph... (UID-83)
+Warning: Design 'fullchip' contains 8 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+ 
+****************************************
+Report : area
+Design : fullchip
+Version: K-2015.06-SP2
+Date   : Thu Mar 19 16:20:27 2026
+****************************************
+
+Information: Updating design information... (UID-85)
+Warning: Design 'fullchip' contains 8 high-fanout nets. A fanout number of 1000 will be used for delay calculations involving these nets. (TIM-134)
+Library(s) Used:
+
+    tcbn65gplustc (File: /home/linux/ieng6/ECE260B_WI26_A00/public/PDKdata/db/tcbn65gplustc.db)
+    gtech (File: /software/nonrdist64/dc-2015.06-64/libraries/syn/gtech.db)
+
+Number of ports:                        41389
+Number of nets:                        152966
+Number of cells:                       106992
+Number of combinational cells:          86654
+Number of sequential cells:             19934
+Number of macros/black boxes:               0
+Number of buf/inv:                      12027
+Number of references:                       6
+
+Combinational area:             228710.161465
+Buf/Inv area:                    13356.000507
+Noncombinational area:          116465.761836
+Macro/Black Box area:                0.000000
+Net Interconnect area:      undefined  (Wire load has zero net area)
+
+Total cell area:                345175.923301
+Total area:                 undefined
+
+Information: This design contains unmapped logic. (RPT-7)
+
+Hierarchical area distribution
+------------------------------
+
+                                  Global cell area              Local cell area
+                                  --------------------  -------------------------------- 
+Hierarchical cell                 Absolute     Percent  Combi-       Noncombi-    Black-
+                                  Total        Total    national     national     boxes   Design
+--------------------------------  -----------  -------  -----------  -----------  ------  -----------------------------------
+fullchip                          345175.9233    100.0       0.0000       0.0000  0.0000  fullchip
+async_fifo_core_01                  2294.6400      0.7       0.0000       0.0000  0.0000  async_fifo_DATA_WIDTH24_DEPTH8_1
+async_fifo_core_01/async_rd_fifo_instance
+                                     617.4000      0.2     320.0400     297.3600  0.0000  async_rd_fifo_DATA_WIDTH24_DEPTH8_1
+async_fifo_core_01/async_wr_fifo_instance
+                                    1677.2400      0.5     215.6400    1393.9200  0.0000  async_wr_fifo_DATA_WIDTH24_DEPTH8_1
+async_fifo_core_01/async_wr_fifo_instance/sync0
+                                      16.9200      0.0       1.0800      15.8400  0.0000  sync_7
+async_fifo_core_01/async_wr_fifo_instance/sync1
+                                      16.9200      0.0       1.0800      15.8400  0.0000  sync_6
+async_fifo_core_01/async_wr_fifo_instance/sync2
+                                      16.9200      0.0       1.0800      15.8400  0.0000  sync_5
+async_fifo_core_01/async_wr_fifo_instance/sync3
+                                      16.9200      0.0       1.0800      15.8400  0.0000  sync_4
+async_fifo_core_10                  2294.6400      0.7       0.0000       0.0000  0.0000  async_fifo_DATA_WIDTH24_DEPTH8_0
+async_fifo_core_10/async_rd_fifo_instance
+                                     617.4000      0.2     320.0400     297.3600  0.0000  async_rd_fifo_DATA_WIDTH24_DEPTH8_0
+async_fifo_core_10/async_wr_fifo_instance
+                                    1677.2400      0.5     215.6400    1393.9200  0.0000  async_wr_fifo_DATA_WIDTH24_DEPTH8_0
+async_fifo_core_10/async_wr_fifo_instance/sync0
+                                      16.9200      0.0       1.0800      15.8400  0.0000  sync_3
+async_fifo_core_10/async_wr_fifo_instance/sync1
+                                      16.9200      0.0       1.0800      15.8400  0.0000  sync_2
+async_fifo_core_10/async_wr_fifo_instance/sync2
+                                      16.9200      0.0       1.0800      15.8400  0.0000  sync_1
+async_fifo_core_10/async_wr_fifo_instance/sync3
+                                      16.9200      0.0       1.0800      15.8400  0.0000  sync_0
+clkbuf_core0                          10.4400      0.0      10.4400       0.0000  0.0000  buffer_1
+clkbuf_core1                          10.4400      0.0      10.4400       0.0000  0.0000  buffer_0
+core_instance0                    170208.0016     49.3     866.8800       7.9200  0.0000  core_col8_bw8_bw_psum20_pr8_1
+core_instance0/kmem_instance           0.0000      0.0       0.0000       0.0000  0.0000  sram_w16_sram_bit64
+core_instance0/mac_array_instance  67742.6399     19.6       0.0000       0.0000  0.0000  mac_array_col8_bw8_bw_psum20_pr8_1
+core_instance0/mac_array_instance/col_idx_1__mac_col_inst
+                                    8459.2800      2.5     118.0800    1611.0000  0.0000  mac_col_bw8_bw_psum20_pr8_col_id1_1
+core_instance0/mac_array_instance/col_idx_1__mac_col_inst/mac_16in_instance
+                                    6730.2000      1.9    5716.4400    1013.7600  0.0000  mac_16in_bw8_bw_psum20_pr8_15
+core_instance0/mac_array_instance/col_idx_2__mac_col_inst
+                                    8473.3200      2.5     108.7200    1609.2000  0.0000  mac_col_bw8_bw_psum20_pr8_col_id2_1
+core_instance0/mac_array_instance/col_idx_2__mac_col_inst/mac_16in_instance
+                                    6755.4000      2.0    5741.6400    1013.7600  0.0000  mac_16in_bw8_bw_psum20_pr8_14
+core_instance0/mac_array_instance/col_idx_3__mac_col_inst
+                                    8469.7200      2.5     108.7200    1608.4800  0.0000  mac_col_bw8_bw_psum20_pr8_col_id3_1
+core_instance0/mac_array_instance/col_idx_3__mac_col_inst/mac_16in_instance
+                                    6752.5200      2.0    5738.7600    1013.7600  0.0000  mac_16in_bw8_bw_psum20_pr8_13
+core_instance0/mac_array_instance/col_idx_4__mac_col_inst
+                                    8474.0400      2.5     110.8800    1607.7600  0.0000  mac_col_bw8_bw_psum20_pr8_col_id4_1
+core_instance0/mac_array_instance/col_idx_4__mac_col_inst/mac_16in_instance
+                                    6755.4000      2.0    5741.6400    1013.7600  0.0000  mac_16in_bw8_bw_psum20_pr8_12
+core_instance0/mac_array_instance/col_idx_5__mac_col_inst
+                                    8462.8800      2.5     117.7200    1609.9200  0.0000  mac_col_bw8_bw_psum20_pr8_col_id5_1
+core_instance0/mac_array_instance/col_idx_5__mac_col_inst/mac_16in_instance
+                                    6735.2400      2.0    5721.4800    1013.7600  0.0000  mac_16in_bw8_bw_psum20_pr8_11
+core_instance0/mac_array_instance/col_idx_6__mac_col_inst
+                                    8463.9600      2.5     110.5200    1608.8400  0.0000  mac_col_bw8_bw_psum20_pr8_col_id6_1
+core_instance0/mac_array_instance/col_idx_6__mac_col_inst/mac_16in_instance
+                                    6744.6000      2.0    5730.8400    1013.7600  0.0000  mac_16in_bw8_bw_psum20_pr8_10
+core_instance0/mac_array_instance/col_idx_7__mac_col_inst
+                                    8464.3200      2.5     114.4800    1609.9200  0.0000  mac_col_bw8_bw_psum20_pr8_col_id7_1
+core_instance0/mac_array_instance/col_idx_7__mac_col_inst/mac_16in_instance
+                                    6739.9200      2.0    5726.1600    1013.7600  0.0000  mac_16in_bw8_bw_psum20_pr8_9
+core_instance0/mac_array_instance/col_idx_8__mac_col_inst
+                                    8475.1200      2.5     108.0000    1598.4000  0.0000  mac_col_bw8_bw_psum20_pr8_col_id8_1
+core_instance0/mac_array_instance/col_idx_8__mac_col_inst/mac_16in_instance
+                                    6768.7200      2.0    5754.9600    1013.7600  0.0000  mac_16in_bw8_bw_psum20_pr8_8
+core_instance0/ofifo_instance      38868.4806     11.3       0.0000       0.0000  0.0000  ofifo_col8_bw20_1
+core_instance0/ofifo_instance/col_idx_0__ofifo_instance
+                                    4858.9201      1.4     100.8000    3779.6401  0.0000  fifo_depth16_bw20_simd1_15
+core_instance0/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a
+                                     978.4800      0.3       2.1600       0.0000  0.0000  fifo_mux_16_1_bw20_simd1_15
+core_instance0/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_239
+core_instance0/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1a
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_31
+core_instance0/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_223
+core_instance0/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_222
+core_instance0/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_221
+core_instance0/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_220
+core_instance0/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_219
+core_instance0/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_218
+core_instance0/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_217
+core_instance0/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1b
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_30
+core_instance0/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_216
+core_instance0/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_215
+core_instance0/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_214
+core_instance0/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_213
+core_instance0/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_212
+core_instance0/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_211
+core_instance0/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_210
+core_instance0/ofifo_instance/col_idx_1__ofifo_instance
+                                    4857.8401      1.4      99.7200    3779.6401  0.0000  fifo_depth16_bw20_simd1_14
+core_instance0/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a
+                                     978.4800      0.3       2.1600       0.0000  0.0000  fifo_mux_16_1_bw20_simd1_14
+core_instance0/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_238
+core_instance0/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1a
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_29
+core_instance0/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_209
+core_instance0/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_208
+core_instance0/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_207
+core_instance0/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_206
+core_instance0/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_205
+core_instance0/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_204
+core_instance0/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_203
+core_instance0/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1b
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_28
+core_instance0/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_202
+core_instance0/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_201
+core_instance0/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_200
+core_instance0/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_199
+core_instance0/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_198
+core_instance0/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_197
+core_instance0/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_196
+core_instance0/ofifo_instance/col_idx_2__ofifo_instance
+                                    4858.9201      1.4     100.8000    3779.6401  0.0000  fifo_depth16_bw20_simd1_13
+core_instance0/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a
+                                     978.4800      0.3       2.1600       0.0000  0.0000  fifo_mux_16_1_bw20_simd1_13
+core_instance0/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_237
+core_instance0/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1a
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_27
+core_instance0/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_195
+core_instance0/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_194
+core_instance0/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_193
+core_instance0/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_192
+core_instance0/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_191
+core_instance0/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_190
+core_instance0/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_189
+core_instance0/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1b
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_26
+core_instance0/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_188
+core_instance0/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_187
+core_instance0/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_186
+core_instance0/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_185
+core_instance0/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_184
+core_instance0/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_183
+core_instance0/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_182
+core_instance0/ofifo_instance/col_idx_3__ofifo_instance
+                                    4857.8401      1.4      99.7200    3779.6401  0.0000  fifo_depth16_bw20_simd1_12
+core_instance0/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a
+                                     978.4800      0.3       2.1600       0.0000  0.0000  fifo_mux_16_1_bw20_simd1_12
+core_instance0/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_236
+core_instance0/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1a
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_25
+core_instance0/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_181
+core_instance0/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_180
+core_instance0/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_179
+core_instance0/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_178
+core_instance0/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_177
+core_instance0/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_176
+core_instance0/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_175
+core_instance0/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1b
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_24
+core_instance0/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_174
+core_instance0/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_173
+core_instance0/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_172
+core_instance0/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_171
+core_instance0/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_170
+core_instance0/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_169
+core_instance0/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_168
+core_instance0/ofifo_instance/col_idx_4__ofifo_instance
+                                    4857.8401      1.4      99.7200    3779.6401  0.0000  fifo_depth16_bw20_simd1_11
+core_instance0/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a
+                                     978.4800      0.3       2.1600       0.0000  0.0000  fifo_mux_16_1_bw20_simd1_11
+core_instance0/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_235
+core_instance0/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1a
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_23
+core_instance0/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_167
+core_instance0/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_166
+core_instance0/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_165
+core_instance0/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_164
+core_instance0/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_163
+core_instance0/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_162
+core_instance0/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_161
+core_instance0/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1b
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_22
+core_instance0/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_160
+core_instance0/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_159
+core_instance0/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_158
+core_instance0/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_157
+core_instance0/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_156
+core_instance0/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_155
+core_instance0/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_154
+core_instance0/ofifo_instance/col_idx_5__ofifo_instance
+                                    4860.3601      1.4     102.2400    3779.6401  0.0000  fifo_depth16_bw20_simd1_10
+core_instance0/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a
+                                     978.4800      0.3       2.1600       0.0000  0.0000  fifo_mux_16_1_bw20_simd1_10
+core_instance0/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_234
+core_instance0/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1a
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_21
+core_instance0/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_153
+core_instance0/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_152
+core_instance0/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_151
+core_instance0/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_150
+core_instance0/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_149
+core_instance0/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_148
+core_instance0/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_147
+core_instance0/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1b
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_20
+core_instance0/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_146
+core_instance0/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_145
+core_instance0/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_144
+core_instance0/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_143
+core_instance0/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_142
+core_instance0/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_141
+core_instance0/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_140
+core_instance0/ofifo_instance/col_idx_6__ofifo_instance
+                                    4858.9201      1.4     100.8000    3779.6401  0.0000  fifo_depth16_bw20_simd1_9
+core_instance0/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a
+                                     978.4800      0.3       2.1600       0.0000  0.0000  fifo_mux_16_1_bw20_simd1_9
+core_instance0/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_233
+core_instance0/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1a
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_19
+core_instance0/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_139
+core_instance0/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_138
+core_instance0/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_137
+core_instance0/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_136
+core_instance0/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_135
+core_instance0/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_134
+core_instance0/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_133
+core_instance0/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1b
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_18
+core_instance0/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_132
+core_instance0/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_131
+core_instance0/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_130
+core_instance0/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_129
+core_instance0/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_128
+core_instance0/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_127
+core_instance0/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_126
+core_instance0/ofifo_instance/col_idx_7__ofifo_instance
+                                    4857.8401      1.4      99.7200    3779.6401  0.0000  fifo_depth16_bw20_simd1_8
+core_instance0/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a
+                                     978.4800      0.3       2.1600       0.0000  0.0000  fifo_mux_16_1_bw20_simd1_8
+core_instance0/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_232
+core_instance0/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1a
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_17
+core_instance0/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_125
+core_instance0/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_124
+core_instance0/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_123
+core_instance0/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_122
+core_instance0/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_121
+core_instance0/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_120
+core_instance0/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_119
+core_instance0/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1b
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_16
+core_instance0/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_118
+core_instance0/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_117
+core_instance0/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_116
+core_instance0/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_115
+core_instance0/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_114
+core_instance0/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_113
+core_instance0/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_112
+core_instance0/psum_mem_instance       0.0000      0.0       0.0000       0.0000  0.0000  sram_w8_sram_bit160
+core_instance0/qmem_instance           0.0000      0.0       0.0000       0.0000  0.0000  sram_w16_sram_bit64
+core_instance0/sfp_instance        62722.0811     18.2   56524.3210    2032.9200  0.0000  sfp_row_col8_bw8_bw_psum20_1
+core_instance0/sfp_instance/fifo_inst_int
+                                    4164.8401      1.2     103.3200    3228.8401  0.0000  fifo_depth16_bw24_1
+core_instance0/sfp_instance/fifo_inst_int/fifo_mux_16_1a
+                                     832.6800      0.2       2.1600       0.0000  0.0000  fifo_mux_16_1_bw24_simd1_1
+core_instance0/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_2_1a
+                                      55.0800      0.0      55.0800       0.0000  0.0000  fifo_mux_2_1_bw24_simd1_29
+core_instance0/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1a
+                                     387.7200      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw24_simd1_3
+core_instance0/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1a
+                                      55.0800      0.0      55.0800       0.0000  0.0000  fifo_mux_2_1_bw24_simd1_27
+core_instance0/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1b
+                                      55.0800      0.0      55.0800       0.0000  0.0000  fifo_mux_2_1_bw24_simd1_26
+core_instance0/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1c
+                                      55.0800      0.0      55.0800       0.0000  0.0000  fifo_mux_2_1_bw24_simd1_25
+core_instance0/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1d
+                                      55.0800      0.0      55.0800       0.0000  0.0000  fifo_mux_2_1_bw24_simd1_24
+core_instance0/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1e
+                                      55.0800      0.0      55.0800       0.0000  0.0000  fifo_mux_2_1_bw24_simd1_23
+core_instance0/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1f
+                                      55.0800      0.0      55.0800       0.0000  0.0000  fifo_mux_2_1_bw24_simd1_22
+core_instance0/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1g
+                                      55.0800      0.0      55.0800       0.0000  0.0000  fifo_mux_2_1_bw24_simd1_21
+core_instance0/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1b
+                                     387.7200      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw24_simd1_2
+core_instance0/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1a
+                                      55.0800      0.0      55.0800       0.0000  0.0000  fifo_mux_2_1_bw24_simd1_20
+core_instance0/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1b
+                                      55.0800      0.0      55.0800       0.0000  0.0000  fifo_mux_2_1_bw24_simd1_19
+core_instance0/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1c
+                                      55.0800      0.0      55.0800       0.0000  0.0000  fifo_mux_2_1_bw24_simd1_18
+core_instance0/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1d
+                                      55.0800      0.0      55.0800       0.0000  0.0000  fifo_mux_2_1_bw24_simd1_17
+core_instance0/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1e
+                                      55.0800      0.0      55.0800       0.0000  0.0000  fifo_mux_2_1_bw24_simd1_16
+core_instance0/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1f
+                                      55.0800      0.0      55.0800       0.0000  0.0000  fifo_mux_2_1_bw24_simd1_15
+core_instance0/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1g
+                                      55.0800      0.0      55.0800       0.0000  0.0000  fifo_mux_2_1_bw24_simd1_14
+core_instance1                    170357.7616     49.4     866.8800       7.9200  0.0000  core_col8_bw8_bw_psum20_pr8_0
+core_instance1/kmem_instance           0.0000      0.0       0.0000       0.0000  0.0000  sram_w16_sram_bit64
+core_instance1/mac_array_instance  67717.0799     19.6       0.0000       0.0000  0.0000  mac_array_col8_bw8_bw_psum20_pr8_0
+core_instance1/mac_array_instance/col_idx_1__mac_col_inst
+                                    8471.5200      2.5     118.0800    1608.8400  0.0000  mac_col_bw8_bw_psum20_pr8_col_id1_0
+core_instance1/mac_array_instance/col_idx_1__mac_col_inst/mac_16in_instance
+                                    6744.6000      2.0    5730.8400    1013.7600  0.0000  mac_16in_bw8_bw_psum20_pr8_7
+core_instance1/mac_array_instance/col_idx_2__mac_col_inst
+                                    8456.0400      2.4     108.7200    1611.3600  0.0000  mac_col_bw8_bw_psum20_pr8_col_id2_0
+core_instance1/mac_array_instance/col_idx_2__mac_col_inst/mac_16in_instance
+                                    6735.9600      2.0    5722.2000    1013.7600  0.0000  mac_16in_bw8_bw_psum20_pr8_6
+core_instance1/mac_array_instance/col_idx_3__mac_col_inst
+                                    8463.9600      2.5     109.8000    1609.5600  0.0000  mac_col_bw8_bw_psum20_pr8_col_id3_0
+core_instance1/mac_array_instance/col_idx_3__mac_col_inst/mac_16in_instance
+                                    6744.6000      2.0    5730.8400    1013.7600  0.0000  mac_16in_bw8_bw_psum20_pr8_5
+core_instance1/mac_array_instance/col_idx_4__mac_col_inst
+                                    8453.1600      2.4     111.9600    1611.0000  0.0000  mac_col_bw8_bw_psum20_pr8_col_id4_0
+core_instance1/mac_array_instance/col_idx_4__mac_col_inst/mac_16in_instance
+                                    6730.2000      1.9    5716.4400    1013.7600  0.0000  mac_16in_bw8_bw_psum20_pr8_4
+core_instance1/mac_array_instance/col_idx_5__mac_col_inst
+                                    8480.1600      2.5     117.7200    1607.7600  0.0000  mac_col_bw8_bw_psum20_pr8_col_id5_0
+core_instance1/mac_array_instance/col_idx_5__mac_col_inst/mac_16in_instance
+                                    6754.6800      2.0    5740.9200    1013.7600  0.0000  mac_16in_bw8_bw_psum20_pr8_3
+core_instance1/mac_array_instance/col_idx_6__mac_col_inst
+                                    8451.7200      2.4     110.5200    1611.0000  0.0000  mac_col_bw8_bw_psum20_pr8_col_id6_0
+core_instance1/mac_array_instance/col_idx_6__mac_col_inst/mac_16in_instance
+                                    6730.2000      1.9    5716.4400    1013.7600  0.0000  mac_16in_bw8_bw_psum20_pr8_2
+core_instance1/mac_array_instance/col_idx_7__mac_col_inst
+                                    8467.5600      2.5     114.4800    1607.7600  0.0000  mac_col_bw8_bw_psum20_pr8_col_id7_0
+core_instance1/mac_array_instance/col_idx_7__mac_col_inst/mac_16in_instance
+                                    6745.3200      2.0    5731.5600    1013.7600  0.0000  mac_16in_bw8_bw_psum20_pr8_1
+core_instance1/mac_array_instance/col_idx_8__mac_col_inst
+                                    8472.9600      2.5     108.0000    1597.3200  0.0000  mac_col_bw8_bw_psum20_pr8_col_id8_0
+core_instance1/mac_array_instance/col_idx_8__mac_col_inst/mac_16in_instance
+                                    6767.6400      2.0    5753.8800    1013.7600  0.0000  mac_16in_bw8_bw_psum20_pr8_0
+core_instance1/ofifo_instance      38867.0406     11.3       0.0000       0.0000  0.0000  ofifo_col8_bw20_0
+core_instance1/ofifo_instance/col_idx_0__ofifo_instance
+                                    4857.8401      1.4      99.7200    3779.6401  0.0000  fifo_depth16_bw20_simd1_7
+core_instance1/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a
+                                     978.4800      0.3       2.1600       0.0000  0.0000  fifo_mux_16_1_bw20_simd1_7
+core_instance1/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_231
+core_instance1/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1a
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_15
+core_instance1/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_111
+core_instance1/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_110
+core_instance1/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_109
+core_instance1/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_108
+core_instance1/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_107
+core_instance1/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_106
+core_instance1/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_105
+core_instance1/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1b
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_14
+core_instance1/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_104
+core_instance1/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_103
+core_instance1/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_102
+core_instance1/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_101
+core_instance1/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_100
+core_instance1/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_99
+core_instance1/ofifo_instance/col_idx_0__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_98
+core_instance1/ofifo_instance/col_idx_1__ofifo_instance
+                                    4857.8401      1.4      99.7200    3779.6401  0.0000  fifo_depth16_bw20_simd1_6
+core_instance1/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a
+                                     978.4800      0.3       2.1600       0.0000  0.0000  fifo_mux_16_1_bw20_simd1_6
+core_instance1/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_230
+core_instance1/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1a
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_13
+core_instance1/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_97
+core_instance1/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_96
+core_instance1/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_95
+core_instance1/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_94
+core_instance1/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_93
+core_instance1/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_92
+core_instance1/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_91
+core_instance1/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1b
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_12
+core_instance1/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_90
+core_instance1/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_89
+core_instance1/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_88
+core_instance1/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_87
+core_instance1/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_86
+core_instance1/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_85
+core_instance1/ofifo_instance/col_idx_1__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_84
+core_instance1/ofifo_instance/col_idx_2__ofifo_instance
+                                    4858.9201      1.4     100.8000    3779.6401  0.0000  fifo_depth16_bw20_simd1_5
+core_instance1/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a
+                                     978.4800      0.3       2.1600       0.0000  0.0000  fifo_mux_16_1_bw20_simd1_5
+core_instance1/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_229
+core_instance1/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1a
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_11
+core_instance1/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_83
+core_instance1/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_82
+core_instance1/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_81
+core_instance1/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_80
+core_instance1/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_79
+core_instance1/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_78
+core_instance1/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_77
+core_instance1/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1b
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_10
+core_instance1/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_76
+core_instance1/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_75
+core_instance1/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_74
+core_instance1/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_73
+core_instance1/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_72
+core_instance1/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_71
+core_instance1/ofifo_instance/col_idx_2__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_70
+core_instance1/ofifo_instance/col_idx_3__ofifo_instance
+                                    4857.8401      1.4      99.7200    3779.6401  0.0000  fifo_depth16_bw20_simd1_4
+core_instance1/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a
+                                     978.4800      0.3       2.1600       0.0000  0.0000  fifo_mux_16_1_bw20_simd1_4
+core_instance1/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_228
+core_instance1/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1a
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_9
+core_instance1/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_69
+core_instance1/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_68
+core_instance1/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_67
+core_instance1/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_66
+core_instance1/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_65
+core_instance1/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_64
+core_instance1/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_63
+core_instance1/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1b
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_8
+core_instance1/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_62
+core_instance1/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_61
+core_instance1/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_60
+core_instance1/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_59
+core_instance1/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_58
+core_instance1/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_57
+core_instance1/ofifo_instance/col_idx_3__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_56
+core_instance1/ofifo_instance/col_idx_4__ofifo_instance
+                                    4858.9201      1.4     100.8000    3779.6401  0.0000  fifo_depth16_bw20_simd1_3
+core_instance1/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a
+                                     978.4800      0.3       2.1600       0.0000  0.0000  fifo_mux_16_1_bw20_simd1_3
+core_instance1/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_227
+core_instance1/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1a
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_7
+core_instance1/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_55
+core_instance1/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_54
+core_instance1/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_53
+core_instance1/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_52
+core_instance1/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_51
+core_instance1/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_50
+core_instance1/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_49
+core_instance1/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1b
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_6
+core_instance1/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_48
+core_instance1/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_47
+core_instance1/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_46
+core_instance1/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_45
+core_instance1/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_44
+core_instance1/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_43
+core_instance1/ofifo_instance/col_idx_4__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_42
+core_instance1/ofifo_instance/col_idx_5__ofifo_instance
+                                    4857.8401      1.4      99.7200    3779.6401  0.0000  fifo_depth16_bw20_simd1_2
+core_instance1/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a
+                                     978.4800      0.3       2.1600       0.0000  0.0000  fifo_mux_16_1_bw20_simd1_2
+core_instance1/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_226
+core_instance1/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1a
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_5
+core_instance1/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_41
+core_instance1/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_40
+core_instance1/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_39
+core_instance1/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_38
+core_instance1/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_37
+core_instance1/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_36
+core_instance1/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_35
+core_instance1/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1b
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_4
+core_instance1/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_34
+core_instance1/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_33
+core_instance1/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_32
+core_instance1/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_31
+core_instance1/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_30
+core_instance1/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_29
+core_instance1/ofifo_instance/col_idx_5__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_28
+core_instance1/ofifo_instance/col_idx_6__ofifo_instance
+                                    4858.9201      1.4     100.8000    3779.6401  0.0000  fifo_depth16_bw20_simd1_1
+core_instance1/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a
+                                     978.4800      0.3       2.1600       0.0000  0.0000  fifo_mux_16_1_bw20_simd1_1
+core_instance1/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_225
+core_instance1/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1a
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_3
+core_instance1/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_27
+core_instance1/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_26
+core_instance1/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_25
+core_instance1/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_24
+core_instance1/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_23
+core_instance1/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_22
+core_instance1/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_21
+core_instance1/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1b
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_2
+core_instance1/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_20
+core_instance1/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_19
+core_instance1/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_18
+core_instance1/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_17
+core_instance1/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_16
+core_instance1/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_15
+core_instance1/ofifo_instance/col_idx_6__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_14
+core_instance1/ofifo_instance/col_idx_7__ofifo_instance
+                                    4858.9201      1.4     100.8000    3779.6401  0.0000  fifo_depth16_bw20_simd1_0
+core_instance1/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a
+                                     978.4800      0.3       2.1600       0.0000  0.0000  fifo_mux_16_1_bw20_simd1_0
+core_instance1/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_224
+core_instance1/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1a
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_1
+core_instance1/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_13
+core_instance1/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_12
+core_instance1/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_11
+core_instance1/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_10
+core_instance1/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_9
+core_instance1/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_8
+core_instance1/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_7
+core_instance1/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1b
+                                     455.7600      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw20_simd1_0
+core_instance1/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1a
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_6
+core_instance1/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1b
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_5
+core_instance1/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1c
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_4
+core_instance1/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1d
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_3
+core_instance1/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1e
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_2
+core_instance1/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1f
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_1
+core_instance1/ofifo_instance/col_idx_7__ofifo_instance/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1g
+                                      64.8000      0.0      64.8000       0.0000  0.0000  fifo_mux_2_1_bw20_simd1_0
+core_instance1/psum_mem_instance       0.0000      0.0       0.0000       0.0000  0.0000  sram_w8_sram_bit160
+core_instance1/qmem_instance           0.0000      0.0       0.0000       0.0000  0.0000  sram_w16_sram_bit64
+core_instance1/sfp_instance        62898.8411     18.2   56706.4810    2027.5200  0.0000  sfp_row_col8_bw8_bw_psum20_0
+core_instance1/sfp_instance/fifo_inst_int
+                                    4164.8401      1.2     103.3200    3228.8401  0.0000  fifo_depth16_bw24_0
+core_instance1/sfp_instance/fifo_inst_int/fifo_mux_16_1a
+                                     832.6800      0.2       2.1600       0.0000  0.0000  fifo_mux_16_1_bw24_simd1_0
+core_instance1/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_2_1a
+                                      55.0800      0.0      55.0800       0.0000  0.0000  fifo_mux_2_1_bw24_simd1_28
+core_instance1/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1a
+                                     387.7200      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw24_simd1_1
+core_instance1/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1a
+                                      55.0800      0.0      55.0800       0.0000  0.0000  fifo_mux_2_1_bw24_simd1_13
+core_instance1/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1b
+                                      55.0800      0.0      55.0800       0.0000  0.0000  fifo_mux_2_1_bw24_simd1_12
+core_instance1/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1c
+                                      55.0800      0.0      55.0800       0.0000  0.0000  fifo_mux_2_1_bw24_simd1_11
+core_instance1/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1d
+                                      55.0800      0.0      55.0800       0.0000  0.0000  fifo_mux_2_1_bw24_simd1_10
+core_instance1/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1e
+                                      55.0800      0.0      55.0800       0.0000  0.0000  fifo_mux_2_1_bw24_simd1_9
+core_instance1/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1f
+                                      55.0800      0.0      55.0800       0.0000  0.0000  fifo_mux_2_1_bw24_simd1_8
+core_instance1/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1a/fifo_mux_2_1g
+                                      55.0800      0.0      55.0800       0.0000  0.0000  fifo_mux_2_1_bw24_simd1_7
+core_instance1/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1b
+                                     387.7200      0.1       2.1600       0.0000  0.0000  fifo_mux_8_1_bw24_simd1_0
+core_instance1/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1a
+                                      55.0800      0.0      55.0800       0.0000  0.0000  fifo_mux_2_1_bw24_simd1_6
+core_instance1/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1b
+                                      55.0800      0.0      55.0800       0.0000  0.0000  fifo_mux_2_1_bw24_simd1_5
+core_instance1/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1c
+                                      55.0800      0.0      55.0800       0.0000  0.0000  fifo_mux_2_1_bw24_simd1_4
+core_instance1/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1d
+                                      55.0800      0.0      55.0800       0.0000  0.0000  fifo_mux_2_1_bw24_simd1_3
+core_instance1/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1e
+                                      55.0800      0.0      55.0800       0.0000  0.0000  fifo_mux_2_1_bw24_simd1_2
+core_instance1/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1f
+                                      55.0800      0.0      55.0800       0.0000  0.0000  fifo_mux_2_1_bw24_simd1_1
+core_instance1/sfp_instance/fifo_inst_int/fifo_mux_16_1a/mux_8_1b/fifo_mux_2_1g
+                                      55.0800      0.0      55.0800       0.0000  0.0000  fifo_mux_2_1_bw24_simd1_0
+--------------------------------  -----------  -------  -----------  -----------  ------  -----------------------------------
+Total                                                   228710.1615  116465.7618  0.0000
+
+1
+ 
+****************************************
+Report : reference
+Design : fullchip
+Version: K-2015.06-SP2
+Date   : Thu Mar 19 16:20:33 2026
+****************************************
+
+Attributes:
+    b - black box (unknown)
+   bo - allows boundary optimization
+    d - dont_touch
+   mo - map_only
+    h - hierarchical
+    n - noncombinational
+    r - removable
+    s - synthetic operator
+    u - contains unmapped logic
+
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+async_fifo_DATA_WIDTH24_DEPTH8_0
+                               2294.640036       1   2294.640036  h, n
+async_fifo_DATA_WIDTH24_DEPTH8_1
+                               2294.640036       1   2294.640036  h, n
+buffer_0                         10.440000       1     10.440000  h
+buffer_1                         10.440000       1     10.440000  h
+core_col8_bw8_bw_psum20_pr8_0 170357.761613
+                                                 1  170357.761613 h, n, u
+core_col8_bw8_bw_psum20_pr8_1 170208.001617
+                                                 1  170208.001617 h, n, u
+-----------------------------------------------------------------------------
+Total 6 references                                  345175.923301
+1
