@@ -7,4 +7,5 @@
 `define RAND_SEED 50
 `define OPR_ISO
 `define RANDOM_TEST_MODE
+`define SPARSITY_AWARE
 //`define MULT_PIPE_EN 
