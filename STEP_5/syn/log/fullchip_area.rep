@@ -30,3 +30,71 @@ core_col8_bw8_bw_psum20_pr8_1 253941.842684
 -----------------------------------------------------------------------------
 Total 5 references                                  507088.805361
 1
+ 
+****************************************
+Report : reference
+Design : fullchip
+Version: K-2015.06-SP2
+Date   : Sat Mar 21 02:43:02 2026
+****************************************
+
+Attributes:
+    b - black box (unknown)
+   bo - allows boundary optimization
+    d - dont_touch
+   mo - map_only
+    h - hierarchical
+    n - noncombinational
+    r - removable
+    s - synthetic operator
+    u - contains unmapped logic
+
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+async_fifo_DATA_WIDTH24_DEPTH8_0
+                               2382.120036       1   2382.120036  h, n
+async_fifo_DATA_WIDTH24_DEPTH8_1
+                               2383.200038       1   2383.200038  h, n
+buffer_0                         10.440000       1     10.440000  h
+buffer_1                         10.440000       1     10.440000  h
+core_col8_bw8_bw_psum20_pr8_0 244430.642662
+                                                 1  244430.642662 h, n
+core_col8_bw8_bw_psum20_pr8_1 244347.122651
+                                                 1  244347.122651 h, n
+-----------------------------------------------------------------------------
+Total 6 references                                  493563.965386
+1
+ 
+****************************************
+Report : reference
+Design : fullchip
+Version: K-2015.06-SP2
+Date   : Sat Mar 21 10:50:01 2026
+****************************************
+
+Attributes:
+    b - black box (unknown)
+   bo - allows boundary optimization
+    d - dont_touch
+   mo - map_only
+    h - hierarchical
+    n - noncombinational
+    r - removable
+    s - synthetic operator
+    u - contains unmapped logic
+
+Reference          Library       Unit Area   Count    Total Area   Attributes
+-----------------------------------------------------------------------------
+async_fifo_DATA_WIDTH24_DEPTH8_0
+                               2369.520037       1   2369.520037  h, n
+async_fifo_DATA_WIDTH24_DEPTH8_1
+                               2380.680037       1   2380.680037  h, n
+buffer_0                         10.440000       1     10.440000  h
+buffer_1                         10.440000       1     10.440000  h
+core_col8_bw8_bw_psum20_pr8_0 230419.442528
+                                                 1  230419.442528 h, n
+core_col8_bw8_bw_psum20_pr8_1 230051.162541
+                                                 1  230051.162541 h, n
+-----------------------------------------------------------------------------
+Total 6 references                                  465241.685141
+1
