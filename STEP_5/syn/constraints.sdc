@@ -11,14 +11,23 @@ set_output_delay $io_delay -clock $clock_port [all_outputs]
 #false path for async reset:
 set_false_path -from [get_ports reset]
 
-#set_multicycle_path 3 -setup -to [get_cells "sfp_instance/sfp_out_sign*_reg\[*\]"]
-#set_multicycle_path 2 -hold -to [get_cells "sfp_instance/sfp_out_sign*_reg\[*\]"]
+set_multicycle_path 3 -setup -to [get_cells "core_instance0/sfp_instance/sfp_out_sign*_reg\[*\]"]
+set_multicycle_path 2 -hold -to [get_cells "core_instance0/sfp_instance/sfp_out_sign*_reg\[*\]"]
 
-#set_multicycle_path 2 -setup -to [get_cells "sfp_instance/sum_q_reg\[*\]"]
-#set_multicycle_path 1 -hold -to [get_cells "sfp_instance/sum_q_reg\[*\]"]
+set_multicycle_path 2 -setup -to [get_cells "core_instance0/sfp_instance/sum_q_reg\[*\]"]
+set_multicycle_path 1 -hold -to [get_cells "core_instance0/sfp_instance/sum_q_reg\[*\]"]
 
-#set_multicycle_path 2 -setup -to [get_cells "ofifo_instance/*/q*_reg\[*\]"]
-#set_multicycle_path 1 -hold -to [get_cells "ofifo_instance/*/q*_reg\[*\]"]
+set_multicycle_path 2 -setup -to [get_cells "core_instance0/ofifo_instance/*/q*_reg\[*\]"]
+set_multicycle_path 1 -hold -to [get_cells "core_instance0/ofifo_instance/*/q*_reg\[*\]"]
+
+set_multicycle_path 3 -setup -to [get_cells "core_instance1/sfp_instance/sfp_out_sign*_reg\[*\]"]
+set_multicycle_path 2 -hold -to [get_cells "core_instance1/sfp_instance/sfp_out_sign*_reg\[*\]"]
+
+set_multicycle_path 2 -setup -to [get_cells "core_instance1/sfp_instance/sum_q_reg\[*\]"]
+set_multicycle_path 1 -hold -to [get_cells "core_instance1/sfp_instance/sum_q_reg\[*\]"]
+
+set_multicycle_path 2 -setup -to [get_cells "core_instance1/ofifo_instance/*/q*_reg\[*\]"]
+set_multicycle_path 1 -hold -to [get_cells "core_instance1/ofifo_instance/*/q*_reg\[*\]"]
 
 
 

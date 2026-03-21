@@ -52,7 +52,8 @@ set search_path [list \
 	${DESIGN_DIR}/OFIFO	 \
 	${DESIGN_DIR}/memories	 \
 	${DESIGN_DIR}/SFP	 \
-	${DESIGN_DIR}		\
+	${DESIGN_DIR}/ASYNC_FIFO \
+	${DESIGN_DIR}/		 \
 	]
 
 
@@ -77,6 +78,9 @@ analyze -format verilog -define {SYN} [list 	\
     ${DESIGN_DIR}/OFIFO/ofifo.v                \
     ${DESIGN_DIR}/SFP/sfp_row.v                \
     ${DESIGN_DIR}/core.v                       \
+    ${DESIGN_DIR}/ASYNC_FIFO/async_fifo.v		\
+    ${DESIGN_DIR}/ASYNC_FIFO/async_wr_fifo.v		\
+    ${DESIGN_DIR}/ASYNC_FIFO/async_rd_fifo.v		\
     ${DESIGN_DIR}/fullchip.v		\
 	]
 
