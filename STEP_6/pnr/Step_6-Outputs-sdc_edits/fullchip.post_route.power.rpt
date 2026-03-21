@@ -1,0 +1,94 @@
+*----------------------------------------------------------------------------------------
+*	Innovus 15.23-s045_1 (64bit) 04/22/2016 12:32 (Linux 2.6.18-194.el5)
+*	
+*
+* 	Date & Time:	2026-Mar-21 00:16:37 (2026-Mar-21 07:16:37 GMT)
+*
+*----------------------------------------------------------------------------------------
+*
+*	Design: fullchip
+*
+*	Liberty Libraries used: 
+*	        WC_VIEW: /home/linux/ieng6/ECE260B_WI26_A00/public/PDKdata/lib/tcbn65gplustc.lib
+*	        WC_VIEW: ./subckt/sram_w16_WC.lib
+*	        WC_VIEW: ./subckt/sram_w8_WC.lib
+*
+*	Power Domain used: 
+*		Rail:        VDD 	Voltage:          1 
+*
+*       Power View : WC_VIEW
+*
+*       User-Defined Activity : N.A.
+*
+*       Activity File: N.A.
+*
+*       Hierarchical Global Activity: N.A.
+*
+*       Global Activity: N.A.
+*
+*       Sequential Element Activity: 0.200000
+*
+*       Primary Input Activity: 0.200000
+*
+*       Default icg ratio: N.A.
+*
+*       Global Comb ClockGate Ratio: N.A.
+*
+*	Power Units = 1mW
+*
+*	Time Units = 1e-09 secs 
+*
+*       report_power -outfile fullchip.post_route.power.rpt
+*
+-----------------------------------------------------------------------------------------
+
+
+Total Power 
+-----------------------------------------------------------------------------------------
+Total Internal Power:      241.34300055 	   60.8897%
+Total Switching Power:     148.35493987 	   37.4293%
+Total Leakage Power:         6.66284840 	    1.6810%
+Total Power:               396.36078864 
+-----------------------------------------------------------------------------------------
+
+
+Group                           Internal   Switching     Leakage       Total  Percentage 
+                                Power      Power         Power         Power  (%)        
+-----------------------------------------------------------------------------------------
+Sequential                         130.1       5.102        0.47       135.6       34.22 
+Macro                                  0           0       4.754       4.754       1.199 
+IO                                     0           0    6.41e-06    6.41e-06   1.617e-06 
+Combinational                      111.2       126.3       1.439         239       60.29 
+Clock (Combinational)            0.09651        16.9   0.0002725          17       4.289 
+Clock (Sequential)                     0           0           0           0           0 
+-----------------------------------------------------------------------------------------
+Total                              241.3       148.4       6.663       396.4         100 
+-----------------------------------------------------------------------------------------
+
+
+Rail                  Voltage   Internal   Switching     Leakage       Total  Percentage 
+                                Power      Power         Power         Power  (%)        
+-----------------------------------------------------------------------------------------
+VDD                         1      241.3       148.4       6.663       396.4         100 
+
+
+Clock                           Internal   Switching     Leakage       Total  Percentage 
+                                Power      Power         Power         Power  (%)        
+-----------------------------------------------------------------------------------------
+clk                              0.09651        16.9   0.0002725          17       4.289 
+-----------------------------------------------------------------------------------------
+Total (excluding duplicates)     0.09651        16.9   0.0002725          17       4.289 
+-----------------------------------------------------------------------------------------
+
+
+-----------------------------------------------------------------------------------------
+*	Power Distribution Summary: 
+* 		Highest Average Power:           clkbuf_core1/U1 (BUFFD16): 	     8.516 
+* 		Highest Leakage Power: core_instance1/sfp_instance/U7741 (ND3D8): 	 0.0001744 
+* 		Total Cap: 	5.95855e-10 F
+* 		Total instances in design: 186714
+* 		Total instances in design with no power:     0
+*          Total instances in design with no activity:     0
+* 		Total Fillers and Decap: 86306
+-----------------------------------------------------------------------------------------
+
