@@ -1,0 +1,16 @@
+xrun \
++gui \
++access+rwc \
++xm64bit \
++xmstatus \
++xmtimescale+1ns/1ps \
++xmoveride_timescale \
++xminitialize+0 \
+-v ./netlist/fullchip.pnr.v \
+-v ./netlist/tcbn65gplus.v \
+-v ./netlist/seqgen.v \
+-v ./netlist/gtech.v \
+-v $SYNOPSYS/dw/sim_ver/GTECH.v \
+./netlist/fullchip_tb.v \
++xmseq_udp_delay+0ps
+
