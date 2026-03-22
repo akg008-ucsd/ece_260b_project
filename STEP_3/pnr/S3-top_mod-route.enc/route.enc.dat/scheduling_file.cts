@@ -1,0 +1,17 @@
+MacroModel pin sfp_instance/fifo_inst_int/out_reg_21_/CP  200.00ps 200.00ps 200.00ps 200.00ps 0pf WC_VIEW
+MacroModel pin sfp_instance/fifo_inst_int/out_reg_7_/CP  200.00ps 200.00ps 200.00ps 200.00ps 0pf WC_VIEW
+MacroModel pin sfp_instance/fifo_inst_int/out_reg_8_/CP  200.00ps 200.00ps 200.00ps 200.00ps 0pf WC_VIEW
+MacroModel pin sfp_instance/fifo_inst_int/out_reg_9_/CP  200.00ps 200.00ps 200.00ps 200.00ps 0pf WC_VIEW
+MacroModel pin sfp_instance/fifo_inst_int/out_reg_17_/CP  200.00ps 200.00ps 200.00ps 200.00ps 0pf WC_VIEW
+MacroModel pin sfp_instance/fifo_inst_int/out_reg_18_/CP  200.00ps 200.00ps 200.00ps 200.00ps 0pf WC_VIEW
+MacroModel pin sfp_instance/fifo_inst_int/out_reg_10_/CP  200.00ps 200.00ps 200.00ps 200.00ps 0pf WC_VIEW
+MacroModel pin sfp_instance/fifo_inst_int/out_reg_16_/CP  200.00ps 200.00ps 200.00ps 200.00ps 0pf WC_VIEW
+MacroModel pin sfp_instance/fifo_inst_int/out_reg_15_/CP  200.00ps 200.00ps 200.00ps 200.00ps 0pf WC_VIEW
+MacroModel pin sfp_instance/fifo_inst_int/out_reg_20_/CP  200.00ps 200.00ps 200.00ps 200.00ps 0pf WC_VIEW
+MacroModel pin sfp_instance/fifo_inst_int/out_reg_19_/CP  200.00ps 200.00ps 200.00ps 200.00ps 0pf WC_VIEW
+MacroModel pin sfp_instance/fifo_inst_int/out_reg_23_/CP  200.00ps 200.00ps 200.00ps 200.00ps 0pf WC_VIEW
+MacroModel pin sfp_instance/fifo_inst_int/out_reg_14_/CP  200.00ps 200.00ps 200.00ps 200.00ps 0pf WC_VIEW
+MacroModel pin sfp_instance/fifo_inst_int/out_reg_22_/CP  200.00ps 200.00ps 200.00ps 200.00ps 0pf WC_VIEW
+MacroModel pin sfp_instance/fifo_inst_int/out_reg_13_/CP  200.00ps 200.00ps 200.00ps 200.00ps 0pf WC_VIEW
+MacroModel pin sfp_instance/fifo_inst_int/out_reg_12_/CP  200.00ps 200.00ps 200.00ps 200.00ps 0pf WC_VIEW
+MacroModel pin sfp_instance/fifo_inst_int/out_reg_11_/CP  200.00ps 200.00ps 200.00ps 200.00ps 0pf WC_VIEW
